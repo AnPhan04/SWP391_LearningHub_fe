@@ -1,0 +1,29 @@
+.card-row {
+    width: 50em;
+    margin: auto;
+    /* border: 1px solid black; */
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 4px #888888;
+}
+
+.card-header {
+    padding: 10px 20px;
+    border-bottom: 1px solid black;
+}
+
+.card-header {
+    display: flex;
+    background-color: rgb(255, 255, 255);
+    justify-content: space-between;
+}
+
+.card-icons {
+    display: flex;
+    align-items: center;
+}
+
+.card-icon {
+    margin-left: 20px;
+}
