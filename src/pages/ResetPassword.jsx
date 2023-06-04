@@ -1,4 +1,4 @@
-import { React } from "react";
+import React, { useState } from "react";
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Link from "../components/MUIComponent/Link";
@@ -10,13 +10,40 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import SignUp from "./SignUp";
 
 const ResetPassword = () => {
-  const handleSubmit = (event) => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const data = new FormData(event.currentTarget);
-    console.log({
+    const requestParam = {
       email: data.get("email"),
-      password: data.get("password"),
-    });
+    };
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8080/api/v1/user/password?email=${requestParam.email}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestParam),
+        }
+      );
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setErrorMessage("");
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message);
+      }
+    } catch (error) {
+      console.log("Error: ", error.message);
+    }
+    setIsLoading(false);
   };
 
   return (
@@ -51,7 +78,13 @@ const ResetPassword = () => {
           name="email"
           style={{ marginBottom: "2em" }}
         />
-        <Button style={{ width: "100%" }}>Reset Password</Button>
+        {!isLoading&&<Button style={{ width: "100%" }}>Reset Password</Button>}
+        {isLoading && <p>Loading...</p>}
+        {errorMessage && (
+          <TypoText variant="h4" color={A.colors.black}>
+            {errorMessage}
+          </TypoText>
+        )}
         <Grid container justifyContent="center">
           <Grid item>
             <Grid

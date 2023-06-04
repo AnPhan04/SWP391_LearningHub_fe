@@ -1,4 +1,5 @@
-import {React} from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Grid from "@mui/material/Grid";
@@ -6,17 +7,47 @@ import Box from "@mui/material/Box";
 import TypoText from "../components/MUIComponent/TypoText";
 
 const ChangePassword = () => {
-  const handleSubmit = (event) => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const history = useHistory();
+  const handleChangePassword = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    const form = document.getElementById("changePasswordForm");
+  const data = new FormData(form);
+    const requestBody = {
+      oldpass: data.get("oldpass"),
+      newpass: data.get("newpass"),
+      verpass: data.get("verpass"),
+    };
+
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8080/api/v1/user/password",
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setErrorMessage("");
+        history.push("/success");
+      } else {
+        const errorData = await response.json();
+        setErrorMessage(errorData.message);
+      }
+    } catch (error) {
+      console.log("Error:", error.message);
+    }
   };
 
   return (
     <form
+      id="changePasswordForm"
       style={{
         width: "25rem",
         position: "absolute",
@@ -35,7 +66,7 @@ const ChangePassword = () => {
       </TypoText>
       <Box
         component="form"
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         noValidate
         sx={{ mt: 1, margin: "0 22px" }}
       >
@@ -43,38 +74,38 @@ const ChangePassword = () => {
           required
           fullWidth
           name="password"
-          label="Password"
+          label="Current password"
           type="password"
-          id="password"
+          id="oldpass"
         />
         <TextField
           required
           fullWidth
           name="password"
-          label="Password"
+          label="New password"
           type="password"
-          id="password"
+          id="newpass"
         />
         <TextField
           required
           fullWidth
           name="password"
-          label="Password"
+          label="Confirm new password"
           type="password"
-          id="password"
+          id="verpass"
           style={{ marginBottom: "2em" }}
         />
-        {/* <Link href="#" style={{ textAlign: "right", color: A.colors.link }}>
-          Forgot password?
-        </Link> */}
+        {errorMessage && (
+          <TypoText variant="h4" style={{ color: "red" }}>
+            {errorMessage}
+          </TypoText>
+        )}
         <Grid container spacing={2} justifyContent="right">
           <Grid item xs={6} textAlign="right">
             <Button variant="cancel">Cancel</Button>
-            {/* <Button>Change</Button> */}
           </Grid>
           <Grid item xs={6} textAlign="left">
-            {/* <Button variant="cancel">Cancel</Button> */}
-            <Button>Change</Button>
+            <Button onClick={handleChangePassword}>Change</Button>
           </Grid>
         </Grid>
       </Box>

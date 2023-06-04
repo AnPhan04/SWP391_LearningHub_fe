@@ -7,14 +7,15 @@ import AccountSetting from './pages/AccountSetting';
 import UserList from './pages/UserList';
 import UserDashBoard from './pages/UserDashboard';
 import Header from './components/layout/Header';
+import ChangePassword from './pages/ChangePassword';
+import ResetPassword from './pages/ResetPassword';
 
 function App() {
   return (
     <div className="App">
-      {/* <UserDashBoard /> */}
-      <UserDashBoard />
-      {/* <SignIn/> */}
-      {/* <AccountSetting /> */}
+      {/* <ResetPassword/> */}
+      <SignIn />
+      
     </div>
   );
 }

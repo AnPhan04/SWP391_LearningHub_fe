@@ -1,14 +1,20 @@
-import * as React from "react";
-import { BrowserRouter as Router, Route, Switch, Link as RouterLink } from "react-router-dom";
+import React, { useState, useRef } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Link as RouterLink,
+} from "react-router-dom";
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Link from "../components/MUIComponent/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../components/MUIComponent/TypoText";
-import A from "../common/assets"
+import A from "../common/assets";
 import ResetPassword from "./ResetPassword";
 import SignUp from "./SignUp";
+import ChangePassword from "./ChangePassword";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
@@ -16,13 +22,40 @@ const CustomLink = React.forwardRef((props, ref) => {
 });
 
 const SignIn = () => {
-  const handleSubmit = (event) => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const passwordRef = useRef(null);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const requestBody = {
       email: data.get("email"),
       password: data.get("password"),
-    });
+    };
+    try {
+      const response = await fetch("http://127.0.0.1:8080/api/v1/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      if (response.ok) {
+        const responseData = await response.json();
+        console.log(responseData);
+        setErrorMessage("");
+      } else {
+        const errorData = await response.json();
+        // Log the error message
+        // console.log("Error:", errorData.message);
+        setErrorMessage(errorData.message);
+        passwordRef.current.value = "";
+      }
+    } catch (error) {
+      // Handle any network or other errors
+      console.log("Error:", error.message);
+    }
   };
 
   return (
@@ -48,7 +81,13 @@ const SignIn = () => {
           Make a new doc to bring your words, data, and much more. For free.
         </TypoText>
 
-        <TextField required fullWidth id="email" label="Email" name="email" />
+        <TextField
+          required
+          fullWidth
+          id="email"
+          label="Email"
+          name="email"
+        />
         <TextField
           required
           fullWidth
@@ -56,6 +95,7 @@ const SignIn = () => {
           label="Password"
           type="password"
           id="password"
+          inputRef={passwordRef}
         />
 
         <Link
@@ -67,6 +107,11 @@ const SignIn = () => {
         </Link>
 
         <Button style={{ width: "100%" }}>Sign In</Button>
+        {errorMessage && (
+          <TypoText variant="h4" style={{ color: "red" }}>
+            {errorMessage}
+          </TypoText>
+        )}
 
         <Grid container justifyContent="center">
           <Grid item>
@@ -96,7 +141,7 @@ const SignIn = () => {
       </Box>
 
       <Switch>
-        <Route path="/forgotpassword" component={ResetPassword} />
+        <Route path="/forgotpassword" component={ChangePassword} />
         <Route path="/signup" component={SignUp} />
       </Switch>
     </Router>

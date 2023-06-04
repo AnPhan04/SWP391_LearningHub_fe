@@ -1,4 +1,4 @@
-import {React} from "react";
+import React, { useState } from "react";
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Link from "../components/MUIComponent/Link";
@@ -10,13 +10,39 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import SignIn from "./SignIn";
 
 const SignUp = () => {
-  const handleSubmit = (event) => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const currentDate = new Date();
+    const requestBody = {
       email: data.get("email"),
+      realName: data.get("name"),
+      phoneNum: data.get("phone"),
       password: data.get("password"),
-    });
+      roleId: "",
+      isActive: "",
+      signupDate: "2023-06-04",
+    };
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:8080/api/v1/user/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
+      const responseData = await response.json();
+      if (response.ok) {
+        console.log(responseData);
+        setErrorMessage("");
+      } else {
+        setErrorMessage(responseData.message);
+      }
+    } catch (error) {}
   };
 
   return (
@@ -81,17 +107,12 @@ const SignUp = () => {
           id="password"
           style={{ marginTop: 0, marginBottom: 0 }}
         />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          name="cpassword"
-          label="Confirm Password"
-          type="password"
-          id="cpassword"
-          style={{ marginTop: 0, marginBottom: "2em" }}
-        />
         <Button style={{ width: "100%" }}>Sign Up</Button>
+        {errorMessage && (
+          <TypoText variant="h4" style={{ color: "red" }}>
+            {errorMessage}
+          </TypoText>
+        )}
         <Grid container justifyContent="center">
           <Grid item>
             <Grid
