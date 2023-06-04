@@ -5,6 +5,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../components/MUIComponent/TypoText";
 
+
 const ChangePassword = () => {
   const handleSubmit = (event) => {
     event.preventDefault();

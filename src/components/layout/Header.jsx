@@ -34,20 +34,20 @@ const Header = () => {
         <div className="menu">
           {!isLoggedIn && (
             <React.Fragment>
-              <Link href="/aboutus" color={A.colors.black}>
-                Product
+              <Link href="/aboutus" color={A.colors.black} style={{ marginRight: '15px' }}>
+              Product
               </Link>
-              <Link href="/aboutus" color={A.colors.black}>
+              <Link href="/aboutus" color={A.colors.black} style={{ marginRight: '15px' }}>
                 About us
               </Link>
-              <Link href="/contact" color={A.colors.black}>
+              <Link href="/contact" color={A.colors.black} style={{ marginRight: '15px' }}>
                 Contact us
               </Link>
-              <ButtonLink variant="cancel" onClick={handleLogin} href="/login">
+              <ButtonLink variant="cancel" style={{ marginRight: '15px' }} onClick={handleLogin} href="/login">
                 Sign In
               </ButtonLink>
               <ButtonLink
-                color={A.colors.white}
+                color={A.colors.white} style={{ marginRight: '15px' }}
                 variant="button"
                 onClick={() => {
                   console.info("I'm a button.");
