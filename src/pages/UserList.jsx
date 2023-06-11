@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UserList.css';
-
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 const UserList = () => {
   const [activeTab, setActiveTab] = useState('userManagement');
@@ -15,19 +16,22 @@ const UserList = () => {
 
   const handleSearch = async () => {
     try {
-      // Gửi yêu cầu HTTP để lấy dữ liệu từ MySQL dựa trên từ khóa tìm kiếm
-      const response = await axios.get(`URL_API_SEARCH_ENDPOINT?keyword=${searchKeyword}`);
-      
-      // Cập nhật state với dữ liệu từ server
+      const response = await axios.get("http://127.0.0.1:8080/api/v1/user");
+      const data = response.data;
+  
       if (activeTab === 'userManagement') {
-        setUserData(response.data);
+        setUserData(data.data);
       } else if (activeTab === 'featureManagement') {
-        setFeatureData(response.data);
+        setFeatureData(data.data);
       }
     } catch (error) {
       console.error('Lỗi khi tìm kiếm:', error);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [activeTab]); // Gọi handleSearch khi activeTab thay đổi
 
   const renderUserManagement = () => {
     return (
@@ -108,6 +112,8 @@ const UserList = () => {
   };
 
   return (
+    <div>
+      <Header></Header>
     <div className="user-list-container">
       <div className="left-column">
         <h1>Learning Hub</h1>
@@ -125,12 +131,11 @@ const UserList = () => {
         </button>
       </div>
       <div className="right-column">
-        <div className="user-button">
-          <button className="user-avatar">User Name</button>
-        </div>
         {activeTab === 'userManagement' && renderUserManagement()}
         {activeTab === 'featureManagement' && renderFeatureManagement()}
       </div>
+    </div>
+    <Footer></Footer>
     </div>
   );
 };
