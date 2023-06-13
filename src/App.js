@@ -9,14 +9,20 @@ import UserDashBoard from './pages/UserDashboard';
 import Header from './components/layout/Header';
 import ChangePassword from './pages/ChangePassword';
 import ResetPassword from './pages/ResetPassword';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import FlashcardDashBoard from './pages/FlashcardDashBoard';
+import SignUp from './pages/SignUp';
+import CreateSet from './pages/Flashcard/CreateSet';
 
 function App() {
   return (
-    <div className="App">
-      {/* <ResetPassword/> */}
-      <SignIn />
-      
-    </div>
+    
+    <>
+    <FlipCard></FlipCard>
+    </>
+
+    // <UserList />
   );
 }
 

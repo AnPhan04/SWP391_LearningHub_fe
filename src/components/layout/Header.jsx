@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import "./Header.css";
 import Button from "../MUIComponent/Button/Button";
-import { BrowserRouter, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link as RouterLink,
+  useHistory,
+} from "react-router-dom";
 import SignIn from "../../pages/SignIn";
 import Link from "../MUIComponent/Link";
 import ButtonLink from "../MUIComponent/ButtonLink";
@@ -9,17 +15,22 @@ import A from "../../common/assets";
 import SignUp from "../../pages/SignUp";
 import AccountSetting from "../../pages/AccountSetting";
 
+const CustomLink = React.forwardRef((props, ref) => {
+  const { href, ...other } = props;
+  return <RouterLink to={href} ref={ref} {...other} />;
+});
+
 const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const history = useHistory();
 
   const handleLogin = () => {
-    // Xử lý đăng nhập ở đây
     setIsLoggedIn(true);
+    history.push("/");
   };
 
   const handleLogout = () => {
-    // Xử lý đăng xuất ở đây
     setIsLoggedIn(false);
   };
 
@@ -34,20 +45,38 @@ const Header = () => {
         <div className="menu">
           {!isLoggedIn && (
             <React.Fragment>
-              <Link href="/aboutus" color={A.colors.black} style={{ marginRight: '15px' }}>
-              Product
+              <Link
+                href="/aboutus"
+                color={A.colors.black}
+                style={{ marginRight: "15px" }}
+              >
+                Product
               </Link>
-              <Link href="/aboutus" color={A.colors.black} style={{ marginRight: '15px' }}>
+              <Link
+                href="/aboutus"
+                color={A.colors.black}
+                style={{ marginRight: "15px" }}
+              >
                 About us
               </Link>
-              <Link href="/contact" color={A.colors.black} style={{ marginRight: '15px' }}>
+              <Link
+                href="/contact"
+                color={A.colors.black}
+                style={{ marginRight: "15px" }}
+              >
                 Contact us
               </Link>
-              <ButtonLink variant="cancel" style={{ marginRight: '15px' }} onClick={handleLogin} href="/login">
+              <ButtonLink
+                variant="cancel"
+                style={{ marginRight: "15px" }}
+                onClick={handleLogin}
+                href="/login"
+              >
                 Sign In
               </ButtonLink>
               <ButtonLink
-                color={A.colors.white} style={{ marginRight: '15px' }}
+                color={A.colors.white}
+                style={{ marginRight: "15px" }}
                 variant="button"
                 onClick={() => {
                   console.info("I'm a button.");
@@ -84,7 +113,9 @@ const Header = () => {
         </div>
       </div>
       <Switch>
-        <Route path="/login" component={SignIn}></Route>
+        <Route path="/login">
+          <SignIn handleLogin={handleLogin} />
+        </Route>
         <Route path="/signup" component={SignUp}></Route>
         <Route path="/accountsetting" component={AccountSetting}></Route>
       </Switch>

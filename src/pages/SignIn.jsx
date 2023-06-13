@@ -4,6 +4,7 @@ import {
   Route,
   Switch,
   Link as RouterLink,
+  Redirect
 } from "react-router-dom";
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
@@ -15,6 +16,7 @@ import A from "../common/assets";
 import ResetPassword from "./ResetPassword";
 import SignUp from "./SignUp";
 import ChangePassword from "./ChangePassword";
+import UserDashBoard from "./UserDashboard";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
@@ -22,6 +24,7 @@ const CustomLink = React.forwardRef((props, ref) => {
 });
 
 const SignIn = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const passwordRef = useRef(null);
 
@@ -45,6 +48,7 @@ const SignIn = () => {
         const responseData = await response.json();
         console.log(responseData);
         setErrorMessage("");
+        setIsAuthenticated(true);
       } else {
         const errorData = await response.json();
         // Log the error message
@@ -58,8 +62,11 @@ const SignIn = () => {
     }
   };
 
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
+
   return (
-    <Router>
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -100,7 +107,7 @@ const SignIn = () => {
 
         <Link
           component={CustomLink}
-          href="/forgotpassword"
+          href="/changepw"
           style={{ textAlign: "right", color: A.colors.link }}
         >
           Forgot password?
@@ -138,13 +145,7 @@ const SignIn = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>
-
-      <Switch>
-        <Route path="/forgotpassword" component={ChangePassword} />
-        <Route path="/signup" component={SignUp} />
-      </Switch>
-    </Router>
+      </Box>   
   );
 };
 

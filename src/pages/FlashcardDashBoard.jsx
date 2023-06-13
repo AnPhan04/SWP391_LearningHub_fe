@@ -30,7 +30,7 @@ const FlashcardDashBoard = () => {
               </div>
             </div>
             <div className="set-info">10 cards</div>
-            <div className="progress-bar"></div>
+            <div className="set-progress-bar"></div>
           </div>
           {/* Add new set */}
           <div className="add-new-set">

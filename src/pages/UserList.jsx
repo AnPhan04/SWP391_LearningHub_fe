@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './UserList.css';
 import Header from "../components/layout/Header";
@@ -16,8 +16,8 @@ const UserList = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/v1/user');
-      const data = await response.json();
+      const response = await axios.get("http://127.0.0.1:8080/api/v1/user");
+      const data = response.data;
   
       if (activeTab === 'userManagement') {
         setUserData(data.data);
@@ -28,10 +28,13 @@ const UserList = () => {
       console.error('Lỗi khi tìm kiếm:', error);
     }
   };
+
+  useEffect(() => {
+    handleSearch();
+  }, [activeTab]); // Gọi handleSearch khi activeTab thay đổi
+
   const renderUserManagement = () => {
     return (
-      <div>
-      <Header></Header>
       <div className="management-wrapper">
         <h2>User Management</h2>
         <div className="search-bar">
@@ -67,15 +70,11 @@ const UserList = () => {
           </tbody>
         </table>
       </div>
-      <Footer></Footer>
-    </div>
     );
   };
 
   const renderFeatureManagement = () => {
     return (
-      <div>
-      <Header></Header>
       <div className="management-wrapper">
         <h2>Feature Management</h2>
         <div className="search-bar">
@@ -109,12 +108,12 @@ const UserList = () => {
           </tbody>
         </table>
       </div>
-      <Footer></Footer>
-      </div>
     );
   };
 
   return (
+    <div>
+      <Header></Header>
     <div className="user-list-container">
       <div className="left-column">
         <h1>Learning Hub</h1>
@@ -135,6 +134,8 @@ const UserList = () => {
         {activeTab === 'userManagement' && renderUserManagement()}
         {activeTab === 'featureManagement' && renderFeatureManagement()}
       </div>
+    </div>
+    <Footer></Footer>
     </div>
   );
 };
