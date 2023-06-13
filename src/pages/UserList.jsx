@@ -29,9 +29,9 @@ const UserList = () => {
     }
   };
 
-  useEffect(() => {
-    handleSearch();
-  }, [activeTab]); // Gọi handleSearch khi activeTab thay đổi
+  // useEffect(() => {
+  //   handleSearch();
+  // }, [activeTab]); // Gọi handleSearch khi activeTab thay đổi
 
   const renderUserManagement = () => {
     return (

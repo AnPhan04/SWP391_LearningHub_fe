@@ -1,11 +1,5 @@
 import React, { useState, useRef } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link as RouterLink,
-  Redirect
-} from "react-router-dom";
+import { Router, Route, Routes } from "react-router-dom";
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Link from "../components/MUIComponent/Link";
@@ -13,16 +7,23 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../components/MUIComponent/TypoText";
 import A from "../common/assets";
-import ResetPassword from "./ResetPassword";
-import SignUp from "./SignUp";
-import ChangePassword from "./ChangePassword";
+import { Link as DomLink } from "react-router-dom";
 import UserDashBoard from "./UserDashboard";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
-  return <RouterLink to={href} ref={ref} {...other} />;
+  return <DomLink to={href} ref={ref} {...other} />;
 });
 
+const Current = async () => {
+  fetch('http://localhost:8080/api/v1/user/current',
+    {
+      credentials: "include",
+    })
+    .then(response => response.json())
+    .then(json => console.log(json))
+    .catch(error => console.log(error));
+}
 const SignIn = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,10 +37,11 @@ const SignIn = () => {
       password: data.get("password"),
     };
     try {
-      const response = await fetch("http://127.0.0.1:8080/api/v1/user/login", {
+      const response = await fetch("http://localhost:8080/api/v1/user/login", {
         method: "POST",
+        credentials: 'include',  // Include session cookies
         headers: {
-          "Content-Type": "application/json",
+          "content-Type": "application/json",
         },
         body: JSON.stringify(requestBody),
       });
@@ -48,6 +50,7 @@ const SignIn = () => {
         const responseData = await response.json();
         console.log(responseData);
         setErrorMessage("");
+        Current();
         setIsAuthenticated(true);
       } else {
         const errorData = await response.json();
@@ -60,10 +63,15 @@ const SignIn = () => {
   };
 
   if (isAuthenticated) {
-    return <Redirect to="/" />;
+    return (
+      <Routes>
+        <Route path="/" element={<UserDashBoard />} />;
+      </Routes>
+    );
   }
 
   return (
+    <>
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -142,7 +150,8 @@ const SignIn = () => {
             </Grid>
           </Grid>
         </Grid>
-      </Box>   
+      </Box>
+    </>
   );
 };
 

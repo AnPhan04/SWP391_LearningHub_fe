@@ -1,5 +1,5 @@
 import { React } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Grid from "@mui/material/Grid";
@@ -16,11 +16,11 @@ const EditProfile = () => {
     });
   };
 
-  const history = useHistory();
+  const history = useNavigate();
 
   const handleCancel = (event) => {
     event.preventDefault();
-    history.replace("/accountsetting");
+    history("/accountsetting");
     // history.push("/accountsetting");
   };
 

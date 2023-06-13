@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 import { React } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Router } from "react-router-dom";
 import Link from "../components/MUIComponent/Link";
 import A from "../common/assets";
 import ProfileButton from "../components/MUIComponent/ProfileButton";
@@ -46,13 +46,13 @@ const AccountSetting = () => {
         </ProfileButton>
       </Box>
 
-      <Switch>
+      <Router>
         <Route exact path="/editprofile" component={EditProfile}></Route>
         <Route path="/changepw" component={ChangePassword}></Route>
 
         {/* Need to confirm next screen of this function */}
         <Route path="/deactive"></Route>
-      </Switch>
+      </Router>
     </BrowserRouter>
   );
 };

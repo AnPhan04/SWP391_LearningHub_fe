@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../components/MUIComponent/TypoText";
 import A from "../common/assets";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Router } from "react-router-dom";
 import SignUp from "./SignUp";
 
 const ResetPassword = () => {
@@ -108,9 +108,9 @@ const ResetPassword = () => {
         </Grid>
       </Box>
 
-      <Switch>
+      <Router>
         <Route path="/signup" component={SignUp} />
-      </Switch>
+      </Router>
     </BrowserRouter>
   );
 };

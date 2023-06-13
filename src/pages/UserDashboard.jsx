@@ -2,10 +2,8 @@ import React from "react";
 import "./UserDashboard.css";
 import Header from "../components/layout/Header";
 import Footer from "../components/layout/Footer";
-import ProfileButton from "../components/MUIComponent/ProfileButton";
 import ButtonLink from "../components/MUIComponent/ButtonLink";
-import { BrowserRouter, Route, Switch } from "react-router-dom/cjs/react-router-dom";
-import FlashcardDashBoard from "./FlashcardDashBoard";
+
 
 const UserDashBoard = () => {
   return (

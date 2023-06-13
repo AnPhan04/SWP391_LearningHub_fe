@@ -6,8 +6,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../components/MUIComponent/TypoText";
 import A from "../common/assets";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import SignIn from "./SignIn";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -46,7 +44,6 @@ const SignUp = () => {
   };
 
   return (
-    <BrowserRouter>
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -135,11 +132,9 @@ const SignUp = () => {
           </Grid>
         </Grid>
       </Box>
-
-      <Switch>
-        <Route path="/login" component={SignIn}></Route>
-      </Switch>
-    </BrowserRouter>
+      // <Routes>
+      //   <Route path="/login" component={SignIn}></Route>
+      // </Routes>
   );
 };
 export default SignUp;
