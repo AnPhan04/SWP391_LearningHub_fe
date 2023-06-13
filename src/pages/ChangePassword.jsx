@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+=======
+import { Navigate, useNavigate } from "react-router-dom";
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Grid from "@mui/material/Grid";
@@ -8,11 +12,19 @@ import TypoText from "../components/MUIComponent/TypoText";
 
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
+<<<<<<< HEAD
   const history = useHistory();
   const handleChangePassword = async (event) => {
     event.preventDefault();
     const form = document.getElementById("changePasswordForm");
   const data = new FormData(form);
+=======
+  const history = useNavigate();
+  const handleChangePassword = async (event) => {
+    event.preventDefault();
+    const form = document.getElementById("changePasswordForm");
+    const data = new FormData(form);
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
     const requestBody = {
       oldpass: data.get("oldpass"),
       newpass: data.get("newpass"),

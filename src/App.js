@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+<<<<<<< HEAD
 import SignIn from './pages/SignIn';
 import FlipCard from './pages/Flashcard/FlipCard';
 import CardList from './pages/Flashcard/CardList';
@@ -23,6 +23,14 @@ function App() {
     </>
 
     // <UserList />
+=======
+import { RouterProvider } from 'react-router-dom';
+import routes from './services/Routes';
+
+function App() {
+  return (
+    <RouterProvider router={routes}/>
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
   );
 }
 

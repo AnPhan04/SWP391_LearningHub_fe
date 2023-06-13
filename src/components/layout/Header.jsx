@@ -3,10 +3,18 @@ import "./Header.css";
 import Button from "../MUIComponent/Button/Button";
 import {
   BrowserRouter,
+<<<<<<< HEAD
   Switch,
   Route,
   Link as RouterLink,
   useHistory,
+=======
+  Router,
+  useNavigate,
+  Route,
+  Link as RouterLink,
+  Routes,
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
 } from "react-router-dom";
 import SignIn from "../../pages/SignIn";
 import Link from "../MUIComponent/Link";
@@ -15,14 +23,19 @@ import A from "../../common/assets";
 import SignUp from "../../pages/SignUp";
 import AccountSetting from "../../pages/AccountSetting";
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
   return <RouterLink to={href} ref={ref} {...other} />;
 });
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+<<<<<<< HEAD
   const history = useHistory();
 
   const handleLogin = () => {
@@ -33,17 +46,26 @@ const Header = () => {
   const handleLogout = () => {
     setIsLoggedIn(false);
   };
+=======
+  const [logged, setLogged] = useState(false);
+  const nav = useNavigate();
+  try {
+    nav("/");
+  } catch (error) {
+    console.log(error.message);
+  }
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
 
   return (
-    <BrowserRouter>
+    <>
       <div className="header">
         <div className="logo">Learning Hub</div>
         <div className="menu">
-          {!isLoggedIn && (
+          {!logged && (
             <React.Fragment>
               <Link
                 href="/aboutus"
@@ -67,9 +89,13 @@ const Header = () => {
                 Contact us
               </Link>
               <ButtonLink
+<<<<<<< HEAD
                 variant="cancel"
                 style={{ marginRight: "15px" }}
                 onClick={handleLogin}
+=======
+                style={{ marginRight: "15px" }}
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
                 href="/login"
               >
                 Sign In
@@ -87,10 +113,10 @@ const Header = () => {
               </ButtonLink>
             </React.Fragment>
           )}
-          {isLoggedIn && (
+          {logged && (
             <React.Fragment>
               <Link href="/aboutus" color={A.colors.black}>
-                About us
+                User Profile
               </Link>
               <Link href="/contact" color={A.colors.black}>
                 Contact us
@@ -104,7 +130,7 @@ const Header = () => {
                     <ButtonLink variant="cancel" href="/accountsetting">
                       Account Setting
                     </ButtonLink>
-                    <button onClick={handleLogout}>Logout</button>
+                    <button>Logout</button>
                   </div>
                 )}
               </button>
@@ -112,6 +138,7 @@ const Header = () => {
           )}
         </div>
       </div>
+<<<<<<< HEAD
       <Switch>
         <Route path="/login">
           <SignIn handleLogin={handleLogin} />
@@ -120,6 +147,14 @@ const Header = () => {
         <Route path="/accountsetting" component={AccountSetting}></Route>
       </Switch>
     </BrowserRouter>
+=======
+      <Routes>
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/signup" element={SignUp}></Route>
+        <Route path="/accountsetting" element={AccountSetting}></Route>
+      </Routes>
+    </>
+>>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
   );
 };
 
