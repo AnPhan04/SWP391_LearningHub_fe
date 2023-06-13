@@ -1,15 +1,5 @@
 import React, { useState, useRef } from "react";
-<<<<<<< HEAD
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Link as RouterLink,
-  Redirect
-} from "react-router-dom";
-=======
 import { Router, Route, Routes } from "react-router-dom";
->>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
 import Button from "../components/MUIComponent/Button/Button";
 import TextField from "../components/MUIComponent/TextField";
 import Link from "../components/MUIComponent/Link";
@@ -17,13 +7,10 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../components/MUIComponent/TypoText";
 import A from "../common/assets";
-<<<<<<< HEAD
 import ResetPassword from "./ResetPassword";
 import SignUp from "./SignUp";
 import ChangePassword from "./ChangePassword";
-=======
 import { Link as DomLink } from "react-router-dom";
->>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
 import UserDashBoard from "./UserDashboard";
 
 const CustomLink = React.forwardRef((props, ref) => {
@@ -66,10 +53,7 @@ const SignIn = () => {
         const responseData = await response.json();
         console.log(responseData);
         setErrorMessage("");
-<<<<<<< HEAD
-=======
         Current();
->>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
         setIsAuthenticated(true);
       } else {
         const errorData = await response.json();
@@ -82,12 +66,6 @@ const SignIn = () => {
   };
 
   if (isAuthenticated) {
-<<<<<<< HEAD
-    return <Redirect to="/" />;
-  }
-
-  return (
-=======
     return (
       <Routes>
         <Route path="/" element={<UserDashBoard />} />;
@@ -97,7 +75,6 @@ const SignIn = () => {
 
   return (
     <>
->>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -176,12 +153,8 @@ const SignIn = () => {
             </Grid>
           </Grid>
         </Grid>
-<<<<<<< HEAD
-      </Box>   
-=======
       </Box>
     </>
->>>>>>> 2ef6af3c2d2fe1a00a94b39f1dba873e98e9346c
   );
 };
 
