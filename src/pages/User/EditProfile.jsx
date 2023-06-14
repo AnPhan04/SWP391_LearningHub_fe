@@ -1,11 +1,11 @@
 import { React } from "react";
-import { useNavigate } from "react-router-dom";
-import Button from "../components/MUIComponent/Button/Button";
-import TextField from "../components/MUIComponent/TextField";
+// import { useNavigate } from "react-router-dom";
+import Button from "../../components/MUIComponent/Button/Button";
+import TextField from "../../components/MUIComponent/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TypoText from "../components/MUIComponent/TypoText";
-import A from "../common/assets";
+import TypoText from "../../components/MUIComponent/TypoText";
+import A from "../../common/assets";
 const EditProfile = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -16,11 +16,11 @@ const EditProfile = () => {
     });
   };
 
-  const history = useNavigate();
+  // const history = useNavigate();
 
   const handleCancel = (event) => {
     event.preventDefault();
-    history("/accountsetting");
+    // history("/accountsetting");
     // history.push("/accountsetting");
   };
 
