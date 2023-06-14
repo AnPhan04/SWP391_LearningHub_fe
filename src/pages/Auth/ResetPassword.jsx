@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Button from "../components/MUIComponent/Button/Button";
-import TextField from "../components/MUIComponent/TextField";
-import Link from "../components/MUIComponent/Link";
+import Button from "../../components/MUIComponent/Button/Button";
+import TextField from "../../components/MUIComponent/TextField";
+import Link from "../../components/MUIComponent/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TypoText from "../components/MUIComponent/TypoText";
-import A from "../common/assets";
+import TypoText from "../../components/MUIComponent/TypoText";
+import A from "../../common/assets";
 import { BrowserRouter, Route, Router } from "react-router-dom";
 import SignUp from "./SignUp";
 

@@ -4,19 +4,17 @@ import Button from "../MUIComponent/Button/Button";
 import {
   BrowserRouter,
   Router,
-  useNavigate,
+  // useNavigate,
   Route,
   Link as RouterLink,
   Routes,
 } from "react-router-dom";
-import SignIn from "../../pages/SignIn";
+import SignIn from "../../pages/Auth/SignIn";
 import Link from "../MUIComponent/Link";
 import ButtonLink from "../MUIComponent/ButtonLink";
 import A from "../../common/assets";
-import SignUp from "../../pages/SignUp";
-import AccountSetting from "../../pages/AccountSetting";
-
-
+import SignUp from "../../pages/Auth/SignUp";
+import AccountSetting from "../../pages/User/AccountSetting";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
@@ -26,9 +24,9 @@ const CustomLink = React.forwardRef((props, ref) => {
 const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [logged, setLogged] = useState(false);
-  const nav = useNavigate();
+  // const nav = useNavigate();
   try {
-    nav("/");
+    // nav("/");
   } catch (error) {
     console.log(error.message);
   }
@@ -40,7 +38,11 @@ const Header = () => {
   return (
     <>
       <div className="header">
-        <div className="logo">Learning Hub</div>
+        <div className="logo">
+          <Link href="/" color={A.colors.white}>
+            Learning Hub
+          </Link>
+        </div>
         <div className="menu">
           {!logged && (
             <React.Fragment>
@@ -68,6 +70,7 @@ const Header = () => {
               <ButtonLink
                 style={{ marginRight: "15px" }}
                 href="/login"
+                variant="cancel"
               >
                 Sign In
               </ButtonLink>

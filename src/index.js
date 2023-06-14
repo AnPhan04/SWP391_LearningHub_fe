@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
-
+import { BrowserRouter, RouterProvider } from 'react-router-dom';
+import router from './services/Routes'
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <App />
+  <React.StrictMode>
+    <RouterProvider router={router}>
+      <App />
+    </RouterProvider>
+  </React.StrictMode>
+
 );
 
 // If you want to start measuring performance in your app, pass a function

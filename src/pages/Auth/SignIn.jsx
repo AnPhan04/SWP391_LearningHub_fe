@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react";
 import { Router, Route, Routes } from "react-router-dom";
-import Button from "../components/MUIComponent/Button/Button";
-import TextField from "../components/MUIComponent/TextField";
-import Link from "../components/MUIComponent/Link";
+import Button from "../../components/MUIComponent/Button/Button";
+import TextField from "../../components/MUIComponent/TextField";
+import Link from "../../components/MUIComponent/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TypoText from "../components/MUIComponent/TypoText";
-import A from "../common/assets";
+import TypoText from "../../components/MUIComponent/TypoText";
+import A from "../../common/assets";
 import { Link as DomLink } from "react-router-dom";
-import UserDashBoard from "./UserDashboard";
+import UserDashBoard from "../User/UserDashboard";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;

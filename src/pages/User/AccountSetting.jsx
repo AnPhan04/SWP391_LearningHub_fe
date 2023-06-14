@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import { React } from "react";
 import { BrowserRouter, Route, Router } from "react-router-dom";
-import Link from "../components/MUIComponent/Link";
-import A from "../common/assets";
-import ProfileButton from "../components/MUIComponent/ProfileButton";
-import TypoText from "../components/MUIComponent/TypoText";
+import Link from "../../components/MUIComponent/Link";
+import A from "../../common/assets";
+import ProfileButton from "../../components/MUIComponent/ProfileButton";
+import TypoText from "../../components/MUIComponent/TypoText";
 import EditProfile from "./EditProfile";
 import ChangePassword from "./ChangePassword";
 

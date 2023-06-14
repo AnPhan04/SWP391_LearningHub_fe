@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
-import Button from "../components/MUIComponent/Button/Button";
-import TextField from "../components/MUIComponent/TextField";
+// import { Navigate, useNavigate } from "react-router-dom";
+import Button from "../../components/MUIComponent/Button/Button";
+import TextField from "../../components/MUIComponent/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import TypoText from "../components/MUIComponent/TypoText";
+import TypoText from "../../components/MUIComponent/TypoText";
 
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const history = useNavigate();
+  // const history = useNavigate();
   const handleChangePassword = async (event) => {
     event.preventDefault();
     const form = document.getElementById("changePasswordForm");
@@ -35,7 +35,7 @@ const ChangePassword = () => {
         const responseData = await response.json();
         console.log(responseData);
         setErrorMessage("");
-        history.push("/success");
+        // history.push("/success");
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message);
@@ -71,7 +71,7 @@ const ChangePassword = () => {
         sx={{ mt: 1, margin: "0 22px" }}
       >
         <TextField
-          required
+          // required
           fullWidth
           name="password"
           label="Current password"
