@@ -12,7 +12,12 @@ import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 import TaskManagementDashBoard from "../pages/Task/TaskManagementDashboard";
 import ErrorPage from "../pages/ErrorPage";
+import AddTask from "../pages/Task/AddTask";
 const routes = createBrowserRouter([
+    {
+        path: "/addtask",
+        element: <AddTask />
+    },
     {
         path: "/",
         element: <UserDashBoard />,
