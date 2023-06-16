@@ -8,6 +8,15 @@ import ButtonLink from "../components/MUIComponent/ButtonLink";
 import { BrowserRouter, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import FlashcardDashBoard from "./FlashcardDashBoard";
 
+const Current = async () => {
+  fetch("http://localhost:8080/api/v1/user/current", {
+    method: "GET",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json))
+    .catch((error) => console.log(error));
+};
 const UserDashBoard = () => {
   return (
     // <BrowserRouter>
@@ -44,6 +53,7 @@ const UserDashBoard = () => {
           </div>
         </div>
         <Footer />
+        {Current()}
       </div>
 
   );
