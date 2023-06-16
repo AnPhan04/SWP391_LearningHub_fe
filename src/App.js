@@ -8,10 +8,12 @@ import RecentlyVisited from './components/MUIComponent/RecentlyVisited';
 import FlashcardDashBoard from './pages/Flashcard/FlashcardDashBoard';
 import TaskManagementDashBoard from './pages/Task/TaskManagementDashboard';
 import NavBar from './components/layout/NavBar';
+import Kanban from './components/Kanban/Kanban';
 
 const App = () => {
   return (
     <TaskManagementDashBoard />
+   
   );
 };
 
