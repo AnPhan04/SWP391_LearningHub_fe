@@ -106,7 +106,7 @@ const SignIn = () => {
 
         <Link
           component={CustomLink}
-          href="/changepw"
+          href="/forgotpassword"
           style={{ textAlign: "right", color: A.colors.link }}
         >
           Forgot password?
