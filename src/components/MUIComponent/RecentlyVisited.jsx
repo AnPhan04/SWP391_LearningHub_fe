@@ -1,11 +1,39 @@
-import React from "react";
-import Box from "@mui/material/Box";
+import React, { useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import { CardContent, Grid } from "@mui/material";
 import TypoText from "./TypoText";
 import MenuList from "../MUIComponent/MenuList";
 
 const RecentlyVisited = () => {
+  const [noteTitles, setNoteTitles] = useState([]);
+  useEffect(() => {
+    const getListNotes = async () => {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/v1/note/notes",
+          {
+            method: "GET",
+            credentials: "include",
+          }
+        );
+        const jsonData = await response.json();
+        if (jsonData.status === "Success" && jsonData.data) {
+          const titles = jsonData.data.map((note) => note.title);
+          setNoteTitles(titles);
+        }
+        console.log(noteTitles);
+      } catch (error) {
+        setNoteTitles([]);
+      }
+    };
+    const localStorageData = localStorage.getItem("sessionData");
+    const sessionUser = JSON.parse(localStorageData);
+
+    if (sessionUser != null) {
+      getListNotes();
+    }
+  }, []);
+
   return (
     <Card
       sx={{
@@ -19,7 +47,10 @@ const RecentlyVisited = () => {
       <CardContent>
         <Grid container spacing={2}>
           <Grid item xs={6}>
-            <TypoText variant="h2">Note 1</TypoText>
+            {/* {noteTitles?.map((note) => {
+              <TypoText variant="h2">{note.title}</TypoText>;
+            })} */}
+            <TypoText variant="h3">{noteTitles}</TypoText>
           </Grid>
           <Grid
             item
@@ -29,7 +60,6 @@ const RecentlyVisited = () => {
             <MenuList />
           </Grid>
         </Grid>
-
         <TypoText variant="h5">10 cards</TypoText>
       </CardContent>
     </Card>
