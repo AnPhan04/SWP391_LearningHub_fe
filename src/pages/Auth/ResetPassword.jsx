@@ -47,7 +47,7 @@ const ResetPassword = () => {
   };
 
   return (
-    <BrowserRouter>
+    
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -108,10 +108,7 @@ const ResetPassword = () => {
         </Grid>
       </Box>
 
-      <Router>
-        <Route path="/signup" component={SignUp} />
-      </Router>
-    </BrowserRouter>
+    
   );
 };
 
