@@ -1,8 +1,6 @@
 import React from "react";
 import "../Dashboard.css";
 import Header from "../../components/layout/Header";
-import Footer from "../../components/layout/Footer";
-import MenuList from "../../components/MUIComponent/MenuList";
 import RecentlyVisited from "../../components/MUIComponent/RecentlyVisited";
 import TypoText from "../../components/MUIComponent/TypoText";
 import NavBar from "../../components/layout/NavBar";
@@ -26,11 +24,6 @@ const TaskManagementDashBoard = () => {
             </TypoText>
             <div className="dashboard-container-content notes-container">
               {/* Flashcard sets */}
-              <RecentlyVisited />
-              <RecentlyVisited />
-              <RecentlyVisited />
-
-              {/* Add new set */}
               <RecentlyVisited />
             </div>
           </div>
