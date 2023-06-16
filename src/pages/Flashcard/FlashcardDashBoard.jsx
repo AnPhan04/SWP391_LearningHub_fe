@@ -26,10 +26,6 @@ const FlashcardDashboard = () => {
             <div className="dashboard-container-content sets-container">
               {/* Flashcard sets */}
               <RecentlyVisited />
-              <RecentlyVisited />
-              <RecentlyVisited />
-
-              <RecentlyVisited />
             </div>
           </div>
         </div>
