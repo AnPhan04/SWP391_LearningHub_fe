@@ -22,7 +22,7 @@ const ResetPassword = () => {
 
     try {
       const response = await fetch(
-        `http://127.0.0.1:8080/api/v1/user/password?email=${requestParam.email}`,
+        `http://localhost:8080/api/v1/user/password?email=${requestParam.email}`,
         {
           method: "POST",
           headers: {
