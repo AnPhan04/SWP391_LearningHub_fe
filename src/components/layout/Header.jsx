@@ -15,6 +15,7 @@ import ButtonLink from "../MUIComponent/ButtonLink";
 import A from "../../common/assets";
 import SignUp from "../../pages/Auth/SignUp";
 import AccountSetting from "../../pages/User/AccountSetting";
+import UserDashBoard from "../../pages/User/UserDashboard";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
@@ -24,17 +25,35 @@ const CustomLink = React.forwardRef((props, ref) => {
 const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [logged, setLogged] = useState(false);
-  // const nav = useNavigate();
-  try {
-    // nav("/");
-  } catch (error) {
-    console.log(error.message);
-  }
+  fetch("http://localhost:8080/api/v1/user/current", {
+    method: "GET",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((json) => {
+      console.log(json);
+      setLogged(json.active)
+    })
+    .catch((error) => setLogged(false));
 
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
 
+  async function logout() {
+    await fetch("http://localhost:8080/api/v1/user/logout", {
+      method: "POST",
+      credentials: "include",
+    }).then(response => {
+      if (response.ok) {
+        return (
+          <Routes>
+            <Route path="/" element={<UserDashBoard />} />;
+          </Routes>
+        );
+      }
+    }).catch(err => console.log(err));
+  }
   return (
     <>
       <div className="header">
@@ -104,7 +123,7 @@ const Header = () => {
                     <ButtonLink variant="cancel" href="/accountsetting">
                       Account Setting
                     </ButtonLink>
-                    <button>Logout</button>
+                    <button onClick={()=>{logout()}}>Logout</button>
                   </div>
                 )}
               </button>
