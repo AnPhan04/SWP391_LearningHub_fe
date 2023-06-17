@@ -15,10 +15,6 @@ import ErrorPage from "../pages/ErrorPage";
 import AddTask from "../pages/Task/AddTask";
 const routes = createBrowserRouter([
     {
-        path: "/addtask",
-        element: <AddTask />
-    },
-    {
         path: "/",
         element: <UserDashBoard />,
         errorElement: <ErrorPage />
@@ -63,6 +59,10 @@ const routes = createBrowserRouter([
     {
         path: "/taskmanagement",
         element: <TaskManagementDashBoard />
-    }
+    },
+    {
+        path: "/addtask",
+        element: <AddTask />
+    },
 ]);
 export default routes;
