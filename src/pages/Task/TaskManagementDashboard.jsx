@@ -23,7 +23,7 @@ const TaskManagementDashBoard = () => {
               YOUR NOTES
             </TypoText>
             <div className="dashboard-container-content notes-container">
-              {/* Flashcard sets */}
+              {/* List notes */}
               <RecentlyVisited />
             </div>
           </div>

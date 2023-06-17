@@ -3,8 +3,10 @@ import Card from "@mui/material/Card";
 import { CardContent, Grid } from "@mui/material";
 import TypoText from "./TypoText";
 import MenuList from "../MUIComponent/MenuList";
+import QuickAdd from "./QuickAdd";
 
 const RecentlyVisited = () => {
+  /* fetch API to check current user in session */
   const Current = async () => {
     try {
       const response = await fetch(
@@ -23,6 +25,7 @@ const RecentlyVisited = () => {
     }
   };
 
+  /* fetch API to show all notes */
   const [noteTitles, setNoteTitles] = useState([]);
   useEffect(() => {
     const getListNotes = async () => {
@@ -56,39 +59,45 @@ const RecentlyVisited = () => {
   }, []);
 
   return (
-    <>
+    <Grid container spacing={2}>
+      {/* number of cards = number of notes of each logged in user */}
       {noteTitles.length > 0 ? (
         noteTitles.map((note) => (
-          <Card
-            key={note}
-            sx={{
-              margin: "0.5em 1.5em",
-              width: 250,
-              height: 150,
-              cursor: "pointer",
-              borderRadius: "10px",
-            }}
-          >
-            <CardContent>
-              <Grid container spacing={2}>
-                <Grid item xs={6}>
-                  <TypoText variant="h3">{note}</TypoText>
+          
+            <Card
+              key={note}
+              sx={{
+                margin: "0.5em 1.5em",
+                width: 250,
+                height: 150,
+                cursor: "pointer",
+                borderRadius: "10px",
+              }}
+            >
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TypoText variant="h3">{note}</TypoText>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{ display: "flex", justifyContent: "flex-end" }}
+                  >
+                    <MenuList />
+                  </Grid>
                 </Grid>
-                <Grid
-                  item
-                  xs={6}
-                  sx={{ display: "flex", justifyContent: "flex-end" }}
-                >
-                  <MenuList />
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          
         ))
       ) : (
-        <p>No notes available.</p> 
+        <TypoText style={{ marginBottom: "20px", marginLeft: "1em" }}>
+          No notes available
+        </TypoText>
       )}
-    </>
+      <QuickAdd />
+      </Grid>
   );
 };
 
