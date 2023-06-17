@@ -65,7 +65,7 @@ const SignIn = () => {
   if (isAuthenticated) {
     return (
       <Routes>
-        <Route path="/" element={<UserDashBoard />} />;
+        <Route path="/" element={<UserDashBoard logged={isAuthenticated}/>} />;
       </Routes>
     );
   }

@@ -7,10 +7,10 @@ import ButtonLink from "../components/MUIComponent/ButtonLink";
 import { BrowserRouter, Route, Switch } from "react-router-dom/cjs/react-router-dom";
 import FlashcardDashBoard from "./FlashcardDashBoard";
 
-const UserDashBoard = () => {
+const UserDashBoard = (props) => {
   return (
       <div>
-        <Header />
+        <Header logged={props.logged}/>
         <div className="dashboard-container">
           <div className="sidebar">
             <h1 className="sidebar-title">Learning Hub</h1>

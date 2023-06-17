@@ -9,11 +9,13 @@ import { Outlet, Route, Routes } from "react-router-dom";
 import TaskManagementDashBoard from "../Task/TaskManagementDashboard";
 import FlashcardDashboard from "../Flashcard/FlashcardDashBoard";
 
-const UserDashBoard = () => {
+const UserDashBoard = (props) => {
   return (
+    
     // <BrowserRouter>
     <div>
-      <Header />
+      {console.log(props.logged)}
+      <Header logged={props.logged} />
       <div className="dashboard-container">
         <div className="left-side">
           <NavBar />
