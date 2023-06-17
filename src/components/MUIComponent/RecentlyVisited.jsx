@@ -5,6 +5,24 @@ import TypoText from "./TypoText";
 import MenuList from "../MUIComponent/MenuList";
 
 const RecentlyVisited = () => {
+  const Current = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/user/current",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const json = await response.json();
+      console.log(json);
+      return json;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const [noteTitles, setNoteTitles] = useState([]);
   useEffect(() => {
     const getListNotes = async () => {
@@ -20,49 +38,57 @@ const RecentlyVisited = () => {
         if (jsonData.status === "Success" && jsonData.data) {
           const titles = jsonData.data.map((note) => note.title);
           setNoteTitles(titles);
+          console.log("Titles: " + titles);
         }
-        console.log(noteTitles);
       } catch (error) {
         setNoteTitles([]);
       }
     };
-    const localStorageData = localStorage.getItem("sessionData");
-    const sessionUser = JSON.parse(localStorageData);
+    console.log("noteTitles: " + noteTitles);
 
-    if (sessionUser != null) {
-      getListNotes();
-    }
+    const fetchNotes = async () => {
+      const sessionUser = await Current();
+      if (sessionUser != null) {
+        await getListNotes();
+      }
+    };
+    fetchNotes();
   }, []);
 
   return (
-    <Card
-      sx={{
-        margin: "0.5em 1.5em",
-        width: 250,
-        height: 150,
-        cursor: "pointer",
-        borderRadius: "10px",
-      }}
-    >
-      <CardContent>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            {/* {noteTitles?.map((note) => {
-              <TypoText variant="h2">{note.title}</TypoText>;
-            })} */}
-            <TypoText variant="h3">{noteTitles}</TypoText>
-          </Grid>
-          <Grid
-            item
-            xs={6}
-            sx={{ display: "flex", justifyContent: "flex-end" }}
+    <>
+      {noteTitles.length > 0 ? (
+        noteTitles.map((note) => (
+          <Card
+            key={note}
+            sx={{
+              margin: "0.5em 1.5em",
+              width: 250,
+              height: 150,
+              cursor: "pointer",
+              borderRadius: "10px",
+            }}
           >
-            <MenuList />
-          </Grid>
-        </Grid>
-        <TypoText variant="h5">10 cards</TypoText>
-      </CardContent>
-    </Card>
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TypoText variant="h3">{note}</TypoText>
+                </Grid>
+                <Grid
+                  item
+                  xs={6}
+                  sx={{ display: "flex", justifyContent: "flex-end" }}
+                >
+                  <MenuList />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        ))
+      ) : (
+        <p>No notes available.</p> 
+      )}
+    </>
   );
 };
 
