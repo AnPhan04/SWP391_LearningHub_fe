@@ -14,9 +14,27 @@ const QuickAdd = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
+  const Current = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/v1/user/current",
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
+      const json = await response.json();
+      console.log(json);
+      return json;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  };
+
   const addNote = async () => {
     const requestBody = {
-      id: null,
+      id: 20,
       title: title,
       description: description,
       // get from session
@@ -35,8 +53,8 @@ const QuickAdd = () => {
       // Handle the response here if needed
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
-        return data.data.id;
+        console.log(data.data);
+        // return data.data.id;
       }
     } catch (error) {
       // Handle error here
@@ -45,35 +63,34 @@ const QuickAdd = () => {
     }
   };
 
-  const addBoard = async () => {
-    const note_id = addNote();
-    console.log("noteId: " + note_id);
-    const requestBody = {
-      id: null,
-      name: title,
-      createdDate: new Date().toISOString().split("T")[0],
-      noteId: 12,
-      active: true,
-    };
-    try {
-      const response = await fetch("http://localhost:8080/api/v1/note/board", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-      // Handle the response here if needed
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-      }
-    } catch (error) {
-      // Handle error here
-      console.log(error);
-    }
-  };
+  // const addBoard = async (noteId) => {
+  //   const requestBody = {
+  //     id: null,
+  //     name: title,
+  //     createdDate: new Date().toISOString().split("T")[0],
+  //     noteId: noteId,
+  //     active: true,
+  //   };
+  //   console.log(requestBody.noteId);
+  //   try {
+  //     const response = await fetch("http://localhost:8080/api/v1/note/board", {
+  //       method: "POST",
+  //       credentials: "include",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(requestBody),
+  //     });
+  //     // Handle the response here if needed
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       console.log(data);
+  //     }
+  //   } catch (error) {
+  //     // Handle error here
+  //     console.log(error);
+  //   }
+  // };
 
   const handleAdd = () => {
     setOpen(true);
@@ -83,10 +100,8 @@ const QuickAdd = () => {
     setOpen(false);
   };
 
-  const handleFormSubmit = () => {
-    // addNote();
-    addBoard();
-    setOpen(false);
+  const handleFormSubmit = async () => {
+    addNote();
     setTitle("");
     setDescription("");
   };
