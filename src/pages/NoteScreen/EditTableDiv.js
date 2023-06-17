@@ -1,4 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
+import Button from '@mui/material/Button'
+import Stack from '@mui/material/Stack'
+import  Typography  from '@mui/material/Typography';
 
 function EditableDiv(props) {
   
@@ -28,7 +31,7 @@ function EditableDiv(props) {
         const response = await fetch(`http://localhost:8080/api/v1/note?id=${parameter}`, {method: "GET"});
         const data = await response.json();
         // console.log(data); // Xử lý dữ liệu API ở đây
-        console.log(data.data.title)
+        // console.log(data.data.title)
         editTitleRef.current.innerText = data.data.title;
         editContentRef.current.innerText = data.data.description;
       } catch (error) {
@@ -44,9 +47,9 @@ function EditableDiv(props) {
       
       const postData = {
         // Đối tượng bạn muốn truyền trong phần body
-        id:`${parameter}`,
-        title: `${editedTitle}`,
-        description: `${editedContent}`,
+        id:parameter,
+        title: editedTitle,
+        description: editedContent,
       };
   
       fetchSaveData(postData); // Gọi API và truyền đối tượng trong phần body
@@ -102,27 +105,27 @@ function EditableDiv(props) {
     ref={divRef}
     style={{width:600}}
     >
-      <h4
-        
+      <Typography
+        variant='h4' gutterBottom
         onClick={() => setShow(true)}
         contentEditable={true}
         ref={editTitleRef}
-        style={{ wordWrap: 'break-word', width: 500, padding: '5px', fontSize: 30, margin: 0 }}
+        style={{ wordWrap: 'break-word', width: 500, padding: '5px', fontSize: 40, margin: 0,fontWeight:'bold' }}
         dangerouslySetInnerHTML={{ __html: title }}
       />
-      <p
+      <Typography gutterBottom
         
         onClick={() => setShow(true)}
         contentEditable={true}
         ref={editContentRef}
-        style={{ wordWrap: 'break-word', width: 500, padding: '5px' }}
+        style={{ wordWrap: 'break-word', width: 500, padding: '5px',fontSize:20,color:'#8E8EAB' }}
         dangerouslySetInnerHTML={{ __html: content }}
       />
       {show && (
-        <>
-          <button onClick={handleSaveClick}>Save</button>
-          <button onClick={handleCancelClick}>Cancel</button>
-        </>
+        <Stack direction='row' spacing={1}>
+          <Button variant='contained' onClick={handleSaveClick}>Save</Button>
+          <Button variant='contained' onClick={handleCancelClick}>Cancel</Button>
+        </Stack>
       )}
     </div>
   );

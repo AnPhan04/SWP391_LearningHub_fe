@@ -8,11 +8,11 @@ import NoteScreen from './pages/NoteScreen/NoteScreen';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    {/* <RouterProvider router={router}>
+    <RouterProvider router={router}>
       <App />
-    </RouterProvider> */}
+    </RouterProvider>
     {/* <Kanban/> */}
-     <NoteScreen/> 
+     {/* <NoteScreen/>  */}
   </React.StrictMode>
 
 );
