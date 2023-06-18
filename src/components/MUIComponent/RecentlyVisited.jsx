@@ -17,7 +17,7 @@ const RecentlyVisited = () => {
         }
       );
       const json = await response.json();
-      console.log(json);
+      // console.log(json);
       return json;
     } catch (error) {
       console.log(error);
@@ -41,13 +41,13 @@ const RecentlyVisited = () => {
         if (jsonData.status === "Success" && jsonData.data) {
           const titles = jsonData.data.map((note) => note.title);
           setNoteTitles(titles);
-          console.log("Titles: " + titles);
+          // console.log("Titles: " + titles);
         }
       } catch (error) {
         setNoteTitles([]);
       }
     };
-    console.log("noteTitles: " + noteTitles);
+    // console.log("noteTitles: " + noteTitles);
 
     const fetchNotes = async () => {
       const sessionUser = await Current();
