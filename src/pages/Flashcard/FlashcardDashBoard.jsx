@@ -30,6 +30,7 @@ const FlashcardDashboard = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
