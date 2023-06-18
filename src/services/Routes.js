@@ -70,6 +70,10 @@ const routes = createBrowserRouter([
     {
         path: "/note",
         element: <NoteScreen />
+    },
+    {
+        path: "/dashboard",
+        element: <UserDashBoard />
     }
 ]);
 export default routes;

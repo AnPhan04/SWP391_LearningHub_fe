@@ -1,14 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Header.css";
-import Button from "../MUIComponent/Button/Button";
-import { Route, Link as RouterLink, Routes } from "react-router-dom";
-import SignIn from "../../pages/Auth/SignIn";
 import Link from "../MUIComponent/Link";
 import ButtonLink from "../MUIComponent/ButtonLink";
 import A from "../../common/assets";
-import SignUp from "../../pages/Auth/SignUp";
-import AccountSetting from "../../pages/User/AccountSetting";
-import Landing from "../../pages/Landing";
 
 async function logout() {
   await fetch("http://localhost:8080/api/v1/user/logout", {

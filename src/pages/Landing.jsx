@@ -7,13 +7,8 @@ const Landing = () => {
   return (
     <div>
     <Header />
-    <div className="dashboard-container">
-      <div className="left-side">
-        <NavBar />
-      </div>
-      <div className="right-side">
-        
-      </div>
+    <div className="dashboard-container" style={{justifyContent:"center",width:"100%",}}>
+        <img src="/img/error.png" alt="404 " style={{margin:"5rem 0"}}/>
     </div>
     <Footer />
   </div>

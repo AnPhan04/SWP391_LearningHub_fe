@@ -9,13 +9,13 @@ import NavBar from "../../components/layout/NavBar";
 const FlashcardDashboard = () => {
   return (
     <div>
-      <Header />
+      {/* <Header />
       <div className="dashboard-container">
         <div className="left-side">
           <NavBar />
         </div>
 
-        <div className="right-side">
+        <div className="right-side"> */}
           <div>
             <TypoText
               variant="h1"
@@ -29,9 +29,9 @@ const FlashcardDashboard = () => {
             </div>
           </div>
         </div>
-      </div>
-      <Footer />
-    </div>
+    //   </div>
+    //   <Footer />
+    // </div>
   );
 };
 

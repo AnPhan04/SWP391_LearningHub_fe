@@ -8,29 +8,29 @@ import Footer from "../../components/layout/Footer";
 const TaskManagementDashBoard = () => {
   return (
     <div>
-      <Header logged={true} />
+      {/* <Header logged={true} />
       <div className="dashboard-container">
         <div className="left-side">
           <NavBar />
         </div>
 
-        <div className="right-side">
-          <div>
-            <TypoText
-              variant="h1"
-              style={{ fontWeight: "bold", margin: "30px" }}
-            >
-              YOUR NOTES
-            </TypoText>
-            <div className="dashboard-container-content notes-container">
-              {/* List notes */}
-              <RecentlyVisited />
-            </div>
-          </div>
+        <div className="right-side"> */}
+      <div>
+        <TypoText
+          variant="h1"
+          style={{ fontWeight: "bold", margin: "30px" }}
+        >
+          YOUR NOTES
+        </TypoText>
+        <div className="dashboard-container-content notes-container">
+          {/* List notes */}
+          <RecentlyVisited />
         </div>
       </div>
-      <Footer />
     </div>
+    //   </div>
+    //   <Footer />
+    // </div>
   );
 };
 
