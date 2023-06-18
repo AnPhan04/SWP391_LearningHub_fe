@@ -58,38 +58,40 @@ const RecentlyVisited = () => {
     fetchNotes();
   }, []);
 
+  const editNote = async (note) => {
+    console.log("Edit Note:", note);
+  };
+
   return (
     <Grid container spacing={2}>
       {/* number of cards = number of notes of each logged in user */}
       {noteTitles.length > 0 ? (
         noteTitles.map((note) => (
-          
-            <Card
-              key={note}
-              sx={{
-                margin: "0.5em 1.5em",
-                width: 250,
-                height: 150,
-                cursor: "pointer",
-                borderRadius: "10px",
-              }}
-            >
-              <CardContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TypoText variant="h3">{note}</TypoText>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={6}
-                    sx={{ display: "flex", justifyContent: "flex-end" }}
-                  >
-                    <MenuList />
-                  </Grid>
+          <Card
+            key={note}
+            sx={{
+              margin: "0.5em 1.5em",
+              width: 250,
+              height: 150,
+              cursor: "pointer",
+              borderRadius: "10px",
+            }}
+          >
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TypoText variant="h3">{note}</TypoText>
                 </Grid>
-              </CardContent>
-            </Card>
-          
+                <Grid
+                  item
+                  xs={6}
+                  sx={{ display: "flex", justifyContent: "flex-end" }}
+                >
+                  <MenuList onEdit={() => editNote(note)} />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
         ))
       ) : (
         <TypoText style={{ marginBottom: "20px", marginLeft: "1em" }}>
@@ -97,7 +99,7 @@ const RecentlyVisited = () => {
         </TypoText>
       )}
       <QuickAdd />
-      </Grid>
+    </Grid>
   );
 };
 

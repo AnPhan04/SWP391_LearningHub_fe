@@ -1,16 +1,16 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
-import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
-import MenuItem from '@mui/material/MenuItem';
-import MenuList from '@mui/material/MenuList';
-import Stack from '@mui/material/Stack';
+import React, { useEffect, useState, useRef } from "react";
+import Button from "@mui/material/Button";
+import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Grow from "@mui/material/Grow";
+import Paper from "@mui/material/Paper";
+import Popper from "@mui/material/Popper";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
+import Stack from "@mui/material/Stack";
 
-export default function MenuListComposition() {
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+export default function MenuListComposition({onEdit}) {
+  const [open, setOpen] = useState(false);
+  const anchorRef = useRef(null);
 
   const handleToggle = () => {
     setOpen((prevOpen) => !prevOpen);
@@ -25,17 +25,17 @@ export default function MenuListComposition() {
   };
 
   function handleListKeyDown(event) {
-    if (event.key === 'Tab') {
+    if (event.key === "Tab") {
       event.preventDefault();
       setOpen(false);
-    } else if (event.key === 'Escape') {
+    } else if (event.key === "Escape") {
       setOpen(false);
     }
   }
 
   // return focus to the button when we transitioned from !open -> open
-  const prevOpen = React.useRef(open);
-  React.useEffect(() => {
+  const prevOpen = useRef(open);
+  useEffect(() => {
     if (prevOpen.current === true && open === false) {
       anchorRef.current.focus();
     }
@@ -49,8 +49,8 @@ export default function MenuListComposition() {
         <Button
           ref={anchorRef}
           id="composition-button"
-          aria-controls={open ? 'composition-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
+          aria-controls={open ? "composition-menu" : undefined}
+          aria-expanded={open ? "true" : undefined}
           aria-haspopup="true"
           onClick={handleToggle}
         >
@@ -69,7 +69,7 @@ export default function MenuListComposition() {
               {...TransitionProps}
               style={{
                 transformOrigin:
-                  placement === 'bottom-start' ? 'left top' : 'left bottom',
+                  placement === "bottom-start" ? "left top" : "left bottom",
               }}
             >
               <Paper>
@@ -80,7 +80,7 @@ export default function MenuListComposition() {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={handleClose}>Edit</MenuItem>
+                    <MenuItem onClick={onEdit}>Edit</MenuItem>
                     <MenuItem onClick={handleClose}>Delete</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
