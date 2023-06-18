@@ -31,7 +31,7 @@ const Header = () => {
   })
     .then((response) => response.json())
     .then((json) => {
-      console.log(json);
+      // console.log(json);
       setLogged(json.active)
     })
     .catch((error) => setLogged(false));
