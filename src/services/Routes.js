@@ -13,11 +13,12 @@ import SignUp from "../pages/Auth/SignUp";
 import TaskManagementDashBoard from "../pages/Task/TaskManagementDashboard";
 import ErrorPage from "../pages/ErrorPage";
 import NoteScreen from "../pages/NoteScreen/NoteScreen";
+import Landing from "../pages/Landing";
 
 const routes = createBrowserRouter([
     {
         path: "/",
-        element: <UserDashBoard />,
+        element: <Landing />,
         errorElement: <ErrorPage />
     },
     {
