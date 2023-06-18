@@ -63,35 +63,6 @@ const QuickAdd = () => {
     }
   };
 
-  // const addBoard = async (noteId) => {
-  //   const requestBody = {
-  //     id: null,
-  //     name: title,
-  //     createdDate: new Date().toISOString().split("T")[0],
-  //     noteId: noteId,
-  //     active: true,
-  //   };
-  //   console.log(requestBody.noteId);
-  //   try {
-  //     const response = await fetch("http://localhost:8080/api/v1/note/board", {
-  //       method: "POST",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(requestBody),
-  //     });
-  //     // Handle the response here if needed
-  //     if (response.ok) {
-  //       const data = await response.json();
-  //       console.log(data);
-  //     }
-  //   } catch (error) {
-  //     // Handle error here
-  //     console.log(error);
-  //   }
-  // };
-
   const handleAdd = () => {
     setOpen(true);
   };
@@ -104,6 +75,8 @@ const QuickAdd = () => {
     addNote();
     setTitle("");
     setDescription("");
+    setOpen(false);
+    window.location.reload(false);
   };
 
   return (
