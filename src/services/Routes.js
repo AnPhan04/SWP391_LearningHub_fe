@@ -12,6 +12,8 @@ import SignIn from "../pages/Auth/SignIn";
 import SignUp from "../pages/Auth/SignUp";
 import TaskManagementDashBoard from "../pages/Task/TaskManagementDashboard";
 import ErrorPage from "../pages/ErrorPage";
+import NoteScreen from "../pages/NoteScreen/NoteScreen";
+
 const routes = createBrowserRouter([
     {
         path: "/",
@@ -58,6 +60,10 @@ const routes = createBrowserRouter([
     {
         path: "/taskmanagement",
         element: <TaskManagementDashBoard />
+    },
+    {
+        path: "/note",
+        element: <NoteScreen />
     }
 ]);
 export default routes;

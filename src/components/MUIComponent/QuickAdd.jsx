@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React, { useState } from "react";
 import TypoText from "./TypoText";
-import { useNavigate } from "react-router-dom";
 
 const QuickAdd = () => {
   const [open, setOpen] = useState(false);

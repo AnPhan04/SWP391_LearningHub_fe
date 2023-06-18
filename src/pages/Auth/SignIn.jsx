@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Button from "../../components/MUIComponent/Button/Button";
 import TextField from "../../components/MUIComponent/TextField";
 import Link from "../../components/MUIComponent/Link";
@@ -16,14 +16,14 @@ const CustomLink = React.forwardRef((props, ref) => {
 });
 
 const Current = async () => {
-  fetch('http://localhost:8080/api/v1/user/current',
-    {
-      credentials: "include",
-    })
-    .then(response => response.json())
-    .then(json => console.log(json))
-    .catch(error => console.log(error));
-}
+  fetch("http://localhost:8080/api/v1/user/current", {
+    method: "GET",
+    credentials: "include",
+  })
+    .then((response) => response.json())
+    .then((json) => console.log(json))
+    .catch((error) => console.log(error));
+};
 const SignIn = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -39,9 +39,9 @@ const SignIn = () => {
     try {
       const response = await fetch("http://localhost:8080/api/v1/user/login", {
         method: "POST",
-        credentials: 'include',  // Include session cookies
+        credentials: "include", // Include session cookies
         headers: {
-          "content-Type": "application/json",
+          "content-type": "application/json",
         },
         body: JSON.stringify(requestBody),
       });
@@ -93,13 +93,7 @@ const SignIn = () => {
           Make a new doc to bring your words, data, and much more. For free.
         </TypoText>
 
-        <TextField
-          required
-          fullWidth
-          id="email"
-          label="Email"
-          name="email"
-        />
+        <TextField required fullWidth id="email" label="Email" name="email" />
         <TextField
           required
           fullWidth
@@ -112,7 +106,7 @@ const SignIn = () => {
 
         <Link
           component={CustomLink}
-          href="/changepw"
+          href="/forgotpassword"
           style={{ textAlign: "right", color: A.colors.link }}
         >
           Forgot password?
