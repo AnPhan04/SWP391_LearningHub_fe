@@ -27,6 +27,7 @@ const RecentlyVisited = () => {
 
   /* fetch API to show all notes */
   const [noteTitles, setNoteTitles] = useState([]);
+  const [noteIds, setNoteIds] = useState([]);
   useEffect(() => {
     const getListNotes = async () => {
       try {
@@ -40,11 +41,14 @@ const RecentlyVisited = () => {
         const jsonData = await response.json();
         if (jsonData.status === "Success" && jsonData.data) {
           const titles = jsonData.data.map((note) => note.title);
+          const ids = jsonData.data.map((note) => note.id);
           setNoteTitles(titles);
+          setNoteIds(ids);
           // console.log("Titles: " + titles);
         }
       } catch (error) {
         setNoteTitles([]);
+        setNoteIds([]);
       }
     };
     // console.log("noteTitles: " + noteTitles);
@@ -62,11 +66,31 @@ const RecentlyVisited = () => {
     console.log("Edit Note:", note);
   };
 
+  const deleteNote = async (noteId) => {
+    console.log("Delete note " + noteId);
+    try {
+      const noteIndex = noteIds.indexOf(noteId);
+      if (noteIndex !== -1) {
+        const deletedNote = noteTitles[noteIndex];
+        const response = await fetch(
+          `http://localhost:8080/api/v1/note/notes?id=${noteId}`,
+          { method: "DELETE" }
+        );
+        const data = await response.json();
+        console.log(data.message);
+        setNoteTitles((prevTitles) => prevTitles.filter((title) => title !== deletedNote));
+        setNoteIds((prevIds) => prevIds.filter((id) => id !== noteId));
+      }
+    } catch (error) {
+      console.log("Delete error: " + error);
+    }
+  };
+
   return (
     <Grid container spacing={2}>
       {/* number of cards = number of notes of each logged in user */}
       {noteTitles.length > 0 ? (
-        noteTitles.map((note) => (
+        noteTitles.map((note, index) => (
           <Card
             key={note}
             sx={{
@@ -87,7 +111,10 @@ const RecentlyVisited = () => {
                   xs={6}
                   sx={{ display: "flex", justifyContent: "flex-end" }}
                 >
-                  <MenuList onEdit={() => editNote(note)} />
+                  <MenuList
+                    onEdit={() => editNote(note)}
+                    onDelete={() => deleteNote(noteIds[index])}
+                  />
                 </Grid>
               </Grid>
             </CardContent>

@@ -8,7 +8,7 @@ import MenuItem from "@mui/material/MenuItem";
 import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
 
-export default function MenuListComposition({onEdit}) {
+export default function MenuListComposition({onEdit, onDelete}) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -81,7 +81,7 @@ export default function MenuListComposition({onEdit}) {
                     onKeyDown={handleListKeyDown}
                   >
                     <MenuItem onClick={onEdit}>Edit</MenuItem>
-                    <MenuItem onClick={handleClose}>Delete</MenuItem>
+                    <MenuItem onClick={onDelete}>Delete</MenuItem>
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
