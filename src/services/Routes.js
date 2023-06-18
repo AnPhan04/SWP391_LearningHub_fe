@@ -22,6 +22,11 @@ const routes = createBrowserRouter([
         errorElement: <ErrorPage />
     },
     {
+        path: "/landing",
+        element: <Landing />,
+        errorElement: <ErrorPage />
+    },
+    {
         path: "/login",
         element: <SignIn />
     },
@@ -65,6 +70,10 @@ const routes = createBrowserRouter([
     {
         path: "/note",
         element: <NoteScreen />
+    },
+    {
+        path: "/dashboard",
+        element: <UserDashBoard />
     }
 ]);
 export default routes;

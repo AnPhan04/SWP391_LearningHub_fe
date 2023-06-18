@@ -1,23 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Header.css";
-import Button from "../MUIComponent/Button/Button";
-import {
-  BrowserRouter,
-  Router,
-  // useNavigate,
-  Route,
-  Link as RouterLink,
-  Routes,
-} from "react-router-dom";
-import SignIn from "../../pages/Auth/SignIn";
 import Link from "../MUIComponent/Link";
 import ButtonLink from "../MUIComponent/ButtonLink";
 import A from "../../common/assets";
-import SignUp from "../../pages/Auth/SignUp";
-import AccountSetting from "../../pages/User/AccountSetting";
-import UserDashBoard from "../../pages/User/UserDashboard";
-
-
 
 async function logout() {
   await fetch("http://localhost:8080/api/v1/user/logout", {
@@ -25,11 +10,7 @@ async function logout() {
     credentials: "include",
   }).then(response => {
     if (response.ok) {
-      return (
-        <Routes>
-          <Route path="/" element={<UserDashBoard />} />;
-        </Routes>
-      );
+      return (<></>)
     }
   }).catch(err => console.log(err));
 }
@@ -52,7 +33,7 @@ const Header = () => {
         console.log(username)
       })
       .catch((error) => setLogged(false));
-  }, [isProfileOpen, logged, username])
+  }, [logged, username])
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
@@ -111,7 +92,7 @@ const Header = () => {
                 Contact us
               </Link>
               <button className="menu-item user" onClick={toggleProfile}>
-                {"Hi "+username}
+                {"Hi " + username}
                 {isProfileOpen && (
                   <div className="profile-dropdown">
                     {/* <button>Account Setting</button>
@@ -123,9 +104,11 @@ const Header = () => {
                     <button variant="cancel" href="/accountsetting">
                       Account Setting
                     </button>
-                    <button variant="cancel" onClick={() => { logout() }} >
-                      Logout
-                    </button>
+                    <Link href="/landing">
+                      <button variant="cancel" onClick={() => { logout(); setLogged(false) }} >
+                        Logout
+                      </button>
+                    </Link>
                   </div>
                 )}
               </button>
@@ -133,11 +116,7 @@ const Header = () => {
           )}
         </div>
       </div>
-      <Routes>
-        <Route path="/login" element={<SignIn />} />
-        <Route path="/signup" element={SignUp}></Route>
-        <Route path="/accountsetting" element={AccountSetting}></Route>
-      </Routes>
+
     </>
   );
 };
