@@ -1,14 +1,14 @@
 /* Định dạng giao diện nguyên thủy */
-html,
+/* html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   background-color: lightgray;
-}
+} */
 
 /* Quy tắc cho UserDashBoard */
-.dashboard-container {
+/* .dashboard-container {
   display: flex;
   height: 100%;
 }
@@ -76,4 +76,4 @@ body {
   margin-top: 10px;
   font-size: 18px;
   font-weight: bold;
-}
+} */
