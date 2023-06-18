@@ -8,8 +8,6 @@ import NavBar from "../../components/layout/NavBar";
 import { Outlet, Route, Routes } from "react-router-dom";
 import TaskManagementDashBoard from "../Task/TaskManagementDashboard";
 import FlashcardDashboard from "../Flashcard/FlashcardDashBoard";
-import TypoText from "../../components/MUIComponent/TypoText";
-import RecentlyVisited from "../../components/MUIComponent/RecentlyVisited";
 
 const UserDashBoard = () => {
   return (
@@ -20,21 +18,31 @@ const UserDashBoard = () => {
         <div className="left-side">
           <NavBar />
         </div>
-        <div className="right-side">
-          <div>
-            <TypoText
-              variant="h1"
-              style={{ fontWeight: "bold", margin: "30px" }}
-            >
-              YOUR NOTES
-            </TypoText>
-            <div className="dashboard-container-content notes-container">
-              <RecentlyVisited />
+        <div className="content right-side">
+          <div className="recent-note">
+            <h2 className="section-title">Recently Visited Note</h2>
+            <div className="note-buttons">
+              <button className="note-button"></button>
+              <button className="note-button"></button>
+              <button className="note-button"></button>
             </div>
           </div>
+          <div className="recent-flashcard">
+            <h2 className="section-title">Recently Visited Flashcard</h2>
+            <div className="flashcard-buttons">
+              <button className="flashcard-button"></button>
+              <button className="flashcard-button"></button>
+              <button className="flashcard-button"></button>
+            </div>
+          </div>
+          <button className="pomodoro-button">
+            Want to study effectively? Try our Pomodoro
+          </button>
         </div>
       </div>
-      <Footer />
+      {/* used in parent route elements to render their child route elements
+        => allow nested UI to show up when child routes are rendered */}
+      <Outlet />
     </div>
   );
 };

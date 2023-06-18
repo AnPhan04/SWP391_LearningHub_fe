@@ -6,14 +6,6 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
 import A from "../../common/assets";
-import { CircularProgress } from "@mui/material";
-import { red } from "@mui/material/colors";
-
-const loadingStyle = {
-  "margin": "10px auto",
-  "display": "flex",
-  "justify-content": "center",
-}
 
 const ResetPassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -41,7 +33,7 @@ const ResetPassword = () => {
       if (response.ok) {
         const responseData = await response.json();
         console.log(responseData);
-        setErrorMessage("Please check your email to get a new password");
+        setErrorMessage("");
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message);
@@ -67,7 +59,7 @@ const ResetPassword = () => {
         padding: "35px",
       }}
     >
-      <TypoText variant="h1" style={{ margin: "1vh 0" }}>
+      <TypoText variant="h1" style={{ margin: "0" }}>
         Reset password
       </TypoText>
       <TypoText variant="h5">
@@ -81,12 +73,12 @@ const ResetPassword = () => {
         id="email"
         label="Email"
         name="email"
-        style={{ marginBottom: "1em" }}
+        style={{ marginBottom: "2em" }}
       />
       {!isLoading && <Button style={{ width: "100%" }}>Reset Password</Button>}
-      {isLoading && <div style={loadingStyle}><CircularProgress /></div>}
+      {isLoading && <p>Loading...</p>}
       {errorMessage && (
-        <TypoText variant="h4" color={A.colors.red}>
+        <TypoText variant="h4" color={A.colors.black}>
           {errorMessage}
         </TypoText>
       )}
@@ -99,7 +91,7 @@ const ResetPassword = () => {
             justifyContent="center"
           >
             <Grid item>
-              <TypoText variant="h5" style={{ textAlign: "center",margin:0 }}>
+              <TypoText variant="h5" style={{ textAlign: "center" }}>
                 Don't have an account?
               </TypoText>
             </Grid>

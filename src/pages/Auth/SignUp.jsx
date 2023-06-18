@@ -36,7 +36,7 @@ const SignUp = () => {
       const responseData = await response.json();
       if (response.ok) {
         console.log(responseData);
-        setErrorMessage("Create new account successfully");
+        setErrorMessage("");
       } else {
         setErrorMessage(responseData.message);
       }

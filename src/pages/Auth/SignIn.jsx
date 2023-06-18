@@ -128,7 +128,7 @@ const SignIn = () => {
               justifyContent="center"
             >
               <Grid item>
-                <TypoText variant="h5" style={{ textAlign: "center", margin:0 }}>
+                <TypoText variant="h5" style={{ textAlign: "center" }}>
                   Don't have an account?
                 </TypoText>
               </Grid>

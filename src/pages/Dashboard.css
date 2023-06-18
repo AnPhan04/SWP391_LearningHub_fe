@@ -16,8 +16,7 @@ body {
     background-color: white;
     height: 100%;
     /* Full height */
-    position: relative;
-    height: auto;
+    position: fixed;
     /* Make it stick, even on scroll */
     overflow: hidden;
     /* Enable scrolling if the sidenav has too much content */
