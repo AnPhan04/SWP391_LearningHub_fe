@@ -1,6 +1,8 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Outlet, Route, Routes } from "react-router-dom";
 import ProfileButton from "../MUIComponent/ProfileButton";
+import TaskManagementDashBoard from "../../pages/Task/TaskManagementDashboard";
+import FlashcardDashboard from "../../pages/Flashcard/FlashcardDashBoard";
 
 const NavBar = () => {
   return (
@@ -11,6 +13,7 @@ const NavBar = () => {
       <Link to="/flashcardDash">
         <ProfileButton>Flashcard</ProfileButton>
       </Link>
+      {/* <Outlet /> */}
     </div>
   );
 };

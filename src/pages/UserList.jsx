@@ -16,9 +16,9 @@ const UserList = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch("Localhost:8080/api/v1/user");
-      const data = await response.json();
-
+      const response = await axios.get("http://127.0.0.1:8080/api/v1/user");
+      const data = response.data;
+  
       if (activeTab === 'userManagement') {
         setUserData(data.data);
       } else if (activeTab === 'featureManagement') {

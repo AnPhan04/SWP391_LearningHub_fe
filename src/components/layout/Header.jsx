@@ -1,42 +1,40 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import "./Header.css";
+import Button from "../MUIComponent/Button/Button";
+import {
+  BrowserRouter,
+  Router,
+  // useNavigate,
+  Route,
+  Link as RouterLink,
+  Routes,
+} from "react-router-dom";
+import SignIn from "../../pages/Auth/SignIn";
 import Link from "../MUIComponent/Link";
 import ButtonLink from "../MUIComponent/ButtonLink";
 import A from "../../common/assets";
+import SignUp from "../../pages/Auth/SignUp";
+import AccountSetting from "../../pages/User/AccountSetting";
 
-async function logout() {
-  await fetch("http://localhost:8080/api/v1/user/logout", {
-    method: "POST",
-    credentials: "include",
-  }).then(response => {
-    if (response.ok) {
-      return (<></>)
-    }
-  }).catch(err => console.log(err));
-}
+const CustomLink = React.forwardRef((props, ref) => {
+  const { href, ...other } = props;
+  return <RouterLink to={href} ref={ref} {...other} />;
+});
 
 const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [logged, setLogged] = useState(false);
-  const [username, setUsername] = useState("Guest");
-  useEffect(() => {
-    fetch("http://localhost:8080/api/v1/user/current", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        setLogged(json.active);
-        console.log(logged);
-        setUsername(json.email.substring(0, json.email.indexOf('@')));
-        console.log(username)
-      })
-      .catch((error) => setLogged(false));
-  }, [logged, username])
+  // const nav = useNavigate();
+  try {
+    // nav("/");
+  } catch (error) {
+    console.log(error.message);
+  }
+
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
+
   return (
     <>
       <div className="header">
@@ -47,24 +45,24 @@ const Header = () => {
         </div>
         <div className="menu">
           {!logged && (
-            <>
+            <React.Fragment>
               <Link
                 href="/aboutus"
-                color={A.colors.white}
+                color={A.colors.black}
                 style={{ marginRight: "15px" }}
               >
                 Product
               </Link>
               <Link
                 href="/aboutus"
-                color={A.colors.white}
+                color={A.colors.black}
                 style={{ marginRight: "15px" }}
               >
                 About us
               </Link>
               <Link
                 href="/contact"
-                color={A.colors.white}
+                color={A.colors.black}
                 style={{ marginRight: "15px" }}
               >
                 Contact us
@@ -79,55 +77,46 @@ const Header = () => {
               <ButtonLink
                 color={A.colors.white}
                 style={{ marginRight: "15px" }}
-                variant="cancel"
+                variant="button"
+                onClick={() => {
+                  console.info("I'm a button.");
+                }}
                 href="/signup"
               >
                 Sign Up
               </ButtonLink>
-            </>
+            </React.Fragment>
           )}
           {logged && (
-            <>
-              <Link href="/contact" color={A.colors.white} style={{ marginRight: "15px" }}>
+            <React.Fragment>
+              <Link href="/aboutus" color={A.colors.black}>
+                User Profile
+              </Link>
+              <Link href="/contact" color={A.colors.black}>
                 Contact us
               </Link>
               <button className="menu-item user" onClick={toggleProfile}>
-                {"Hi " + username}
+                User name
                 {isProfileOpen && (
                   <div className="profile-dropdown">
                     {/* <button>Account Setting</button>
                     <button onClick={handleLogout}>Logout</button> */}
-                    <Link href="/profile">
-                      <button color={A.colors.white} style={{ "width": "100%" }}>
-                        User Profile
-                      </button>
-                    </Link>
-
-                    <Link href="/accountsetting">
-                      <button variant="cancel" style={{ "width": "100%" }} >
-                        Account Setting
-                      </button>
-                    </Link>
-
-                    <Link href="/dashboard">
-                      <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
-                        Dashboard
-                      </button>
-                    </Link>
-
-                    <Link href="/landing">
-                      <button variant="cancel" onClick={() => { logout(); setLogged(false) }} style={{ "width": "100%" }} >
-                        Logout
-                      </button>
-                    </Link>
+                    <ButtonLink variant="cancel" href="/accountsetting">
+                      Account Setting
+                    </ButtonLink>
+                    <button>Logout</button>
                   </div>
                 )}
               </button>
-            </>
+            </React.Fragment>
           )}
         </div>
       </div>
-
+      <Routes>
+        <Route path="/login" element={<SignIn />} />
+        <Route path="/signup" element={SignUp}></Route>
+        <Route path="/accountsetting" element={AccountSetting}></Route>
+      </Routes>
     </>
   );
 };

@@ -1,7 +1,13 @@
-/* .user-list-container {
+.user-list-container {
     display: flex;
 }
 
+/* .left-column {
+    width: 25%;
+    background-color: #9747ff;
+    padding: 1rem;
+    height: 1000px;
+} */
 
 .management-button {
     width: 100%;
@@ -17,7 +23,9 @@
     background-color: white;
 }
 
-
+/* .right-column {
+    margin-left: 30%;
+} */
 
 .user-button {
     text-align: right;
@@ -77,4 +85,4 @@ th {
 
 .status-dot.inactive {
     background-color: red;
-} */
+}

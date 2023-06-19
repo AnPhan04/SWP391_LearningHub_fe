@@ -11,7 +11,7 @@ const TypoContent = styled.h3`
 const getFontSize = (variant) => {
   switch (variant) {
     case "h1":
-      return "2.6rem";
+      return "3rem";
     case "h2":
       return "1.8rem";
     case "h3":
