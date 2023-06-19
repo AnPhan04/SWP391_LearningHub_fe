@@ -1,16 +1,17 @@
 import Box from "@mui/material/Box";
 import { React } from "react";
-import { BrowserRouter, Route, Router } from "react-router-dom";
+import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import Link from "../../components/MUIComponent/Link";
 import A from "../../common/assets";
 import ProfileButton from "../../components/MUIComponent/ProfileButton";
 import TypoText from "../../components/MUIComponent/TypoText";
 import EditProfile from "./EditProfile";
 import ChangePassword from "./ChangePassword";
+import { Avatar } from "@mui/material";
 
 const AccountSetting = () => {
   return (
-    <BrowserRouter>
+    <>
       <Box
         component="form"
         noValidate
@@ -25,12 +26,16 @@ const AccountSetting = () => {
         }}
       >
         {/* reuse the component from header */}
-        <TypoText color={A.colors.primary} variant="h1" style={{ margin: "0" }}>
+        {/* <TypoText color={A.colors.primary} variant="h1" style={{ margin: "0" }}>
           User Avatar
-        </TypoText>
-
+        </TypoText> */}
+        <Avatar alt="User default avatar" src="/img/avatar.png" style={{
+          "width": "45%",
+          "height": "45%",
+          "margin": " 0 auto"
+        }} />
         <ProfileButton style={{ marginBlock: "2em 0" }}>
-          <Link href="/editprofile" hoverColor="white" color={A.colors.black}>
+          <Link href="/profile" hoverColor="white" color={A.colors.black}>
             Edit Profile
           </Link>
         </ProfileButton>
@@ -45,15 +50,7 @@ const AccountSetting = () => {
           </Link>
         </ProfileButton>
       </Box>
-
-      <Router>
-        <Route exact path="/editprofile" component={EditProfile}></Route>
-        <Route path="/changepw" component={ChangePassword}></Route>
-
-        {/* Need to confirm next screen of this function */}
-        <Route path="/deactive"></Route>
-      </Router>
-    </BrowserRouter>
+    </>
   );
 };
 

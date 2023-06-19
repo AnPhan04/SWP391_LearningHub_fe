@@ -8,7 +8,7 @@ const Landing = () => {
     <div>
     <Header />
     <div className="dashboard-container" style={{justifyContent:"center",width:"100%",}}>
-        <img src="/img/error.png" alt="404 " style={{margin:"5rem 0"}}/>
+        <img src="/img/landing.jpg" alt="landing " style={{margin:" 0"}}/>
     </div>
     <Footer />
   </div>

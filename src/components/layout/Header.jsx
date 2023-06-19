@@ -97,15 +97,26 @@ const Header = () => {
                   <div className="profile-dropdown">
                     {/* <button>Account Setting</button>
                     <button onClick={handleLogout}>Logout</button> */}
-                    <button href="/aboutus" color={A.colors.white}>
-                      User Profile
-                    </button>
+                    <Link href="/profile">
+                      <button color={A.colors.white} style={{ "width": "100%" }}>
+                        User Profile
+                      </button>
+                    </Link>
 
-                    <button variant="cancel" href="/accountsetting">
-                      Account Setting
-                    </button>
+                    <Link href="/accountsetting">
+                      <button variant="cancel" style={{ "width": "100%" }} >
+                        Account Setting
+                      </button>
+                    </Link>
+
+                    <Link href="/dashboard">
+                      <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
+                        Dashboard
+                      </button>
+                    </Link>
+
                     <Link href="/landing">
-                      <button variant="cancel" onClick={() => { logout(); setLogged(false) }} >
+                      <button variant="cancel" onClick={() => { logout(); setLogged(false) }} style={{ "width": "100%" }} >
                         Logout
                       </button>
                     </Link>

@@ -14,6 +14,7 @@ import TaskManagementDashBoard from "../pages/Task/TaskManagementDashboard";
 import ErrorPage from "../pages/ErrorPage";
 import NoteScreen from "../pages/NoteScreen/NoteScreen";
 import Landing from "../pages/Landing";
+import EditProfile from "../pages/User/EditProfile";
 
 const routes = createBrowserRouter([
     {
@@ -74,6 +75,10 @@ const routes = createBrowserRouter([
     {
         path: "/dashboard",
         element: <UserDashBoard />
+    },
+    {
+        path: "/profile",
+        element: <EditProfile />
     }
 ]);
 export default routes;
