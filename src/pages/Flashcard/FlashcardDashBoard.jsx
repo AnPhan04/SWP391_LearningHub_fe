@@ -6,17 +6,16 @@ import MenuList from "../../components/MUIComponent/MenuList";
 import RecentlyVisited from "../../components/MUIComponent/RecentlyVisited";
 import TypoText from "../../components/MUIComponent/TypoText";
 import NavBar from "../../components/layout/NavBar";
-
 const FlashcardDashboard = () => {
   return (
     <div>
-      <Header />
+      {/* <Header />
       <div className="dashboard-container">
         <div className="left-side">
           <NavBar />
         </div>
 
-        <div className="right-side">
+        <div className="right-side"> */}
           <div>
             <TypoText
               variant="h1"
@@ -27,16 +26,12 @@ const FlashcardDashboard = () => {
             <div className="dashboard-container-content sets-container">
               {/* Flashcard sets */}
               <RecentlyVisited />
-              <RecentlyVisited />
-              <RecentlyVisited />
-
-              {/* Add new set */}
-              <RecentlyVisited />
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    //   </div>
+    //   <Footer />
+    // </div>
   );
 };
 

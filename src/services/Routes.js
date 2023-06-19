@@ -13,11 +13,18 @@ import SignUp from "../pages/Auth/SignUp";
 import TaskManagementDashBoard from "../pages/Task/TaskManagementDashboard";
 import ErrorPage from "../pages/ErrorPage";
 import NoteScreen from "../pages/NoteScreen/NoteScreen";
+import Landing from "../pages/Landing";
+import EditProfile from "../pages/User/EditProfile";
 
 const routes = createBrowserRouter([
     {
         path: "/",
-        element: <UserDashBoard />,
+        element: <Landing />,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: "/landing",
+        element: <Landing />,
         errorElement: <ErrorPage />
     },
     {
@@ -64,6 +71,14 @@ const routes = createBrowserRouter([
     {
         path: "/note",
         element: <NoteScreen />
+    },
+    {
+        path: "/dashboard",
+        element: <UserDashBoard />
+    },
+    {
+        path: "/profile",
+        element: <EditProfile />
     }
 ]);
 export default routes;
