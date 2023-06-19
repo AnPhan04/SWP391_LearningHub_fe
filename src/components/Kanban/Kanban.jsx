@@ -5,8 +5,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import TaskCard from './TaskCard';
 import AddTask from './AddTask';
 import AddColumn from './AddColumn';
+import ArchiveColumn from './ArchiveColumn';
 const Container = styled.div`
   display: flex;
+  justify-content: center;
 `;
 
 const TaskList = styled.div`
@@ -15,15 +17,15 @@ const TaskList = styled.div`
   flex-direction: column;
   background: #f3f3f3;
   min-width: 341px;
-  border-radius: 5px;
+  border-radius: 13px;
   padding: 15px 15px;
   margin-right: 45px;
 `;
 
 const TaskColumnStyles = styled.div`
-  margin: 8px;
+  margin: 5rem;
   display: flex;
-  width: 100%;
+  width: auto;
   min-height: 80vh;
   justify-content: center;
 `;
@@ -32,7 +34,7 @@ const Title = styled.span`
   color: #10957d;
   background: rgba(16, 149, 125, 0.15);
   padding: 2px 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   font-family: roboto, sans-serif;
 
   align-self: flex-start;
@@ -49,9 +51,8 @@ const init = {
     items: [],
   }
 }
-const Kanban = ({countCardKey}) => {
+const Kanban = ({ countCardKey }) => {
   let [columns, setColumns] = useState(init);
-
   //https://mocki.io/v1/284745a5-3443-4340-a08d-112e88c970ae
   // http://localhost:8080/api/v1/note/kanban/data?boardId=1
   //insert data
@@ -138,7 +139,7 @@ const Kanban = ({countCardKey}) => {
                       >
                         <ColumnHeading>
                           <Title>{column.title}</Title>
-                          <DeleteIcon fontSize="small" />
+                          <ArchiveColumn target={columnId} />
                         </ColumnHeading>
                         {column.items.map((item, index) => (
                           <TaskCard key={item.id} item={item} index={index} />

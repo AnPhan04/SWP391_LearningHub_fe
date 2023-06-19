@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 export const AddButton = styled.button`
 &&&{
-    background-color: white;
-    color: gray;
+    background-color: #e3e3e3;
+    color: white;
     margin-top: 15px;
     // padding: 15px 20px;
     font-weight: 600;
