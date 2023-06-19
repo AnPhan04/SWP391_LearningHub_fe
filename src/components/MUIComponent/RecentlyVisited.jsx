@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import { CardContent, Grid } from "@mui/material";
 import TypoText from "./TypoText";
@@ -89,7 +89,7 @@ const RecentlyVisited = () => {
   const navigate = useNavigate();
   const navToNoteScreen = (noteId) => {
     navigate(`/note/${noteId}`);
-  }
+  };
 
   return (
     <Grid container spacing={2}>
@@ -98,7 +98,7 @@ const RecentlyVisited = () => {
         noteTitles.map((note, index) => (
           <Card
             onClick={(e) => {
-              if (e.target.tagName != "BUTTON") {
+              if (e.target.tagName !== "BUTTON") {
                 navToNoteScreen(noteIds[index]);
               }
             }}
@@ -123,7 +123,10 @@ const RecentlyVisited = () => {
                 >
                   <MenuList
                     onEdit={() => editNote(note)}
-                    onDelete={() => deleteNote(noteIds[index])}
+                    onDelete={(e) => {
+                      e.stopPropagation(); // Stop event propagation
+                      deleteNote(noteIds[index]);
+                    }}
                   />
                 </Grid>
               </Grid>
