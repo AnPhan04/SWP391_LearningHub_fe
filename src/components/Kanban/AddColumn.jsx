@@ -20,9 +20,8 @@ padding: 5px 10px;
 border: none;
 `;
 function AddColumn() {
-    const [show, setShow] = useState(false);
-    const [name, setName] = useState('');
-
+  const [show, setShow] = useState(false);
+  const [name, setName] = useState("");
     console.log(name)
     const handleOnClick = () => {
         const Data = {
