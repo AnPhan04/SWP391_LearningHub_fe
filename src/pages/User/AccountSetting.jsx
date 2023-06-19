@@ -1,12 +1,8 @@
 import Box from "@mui/material/Box";
 import { React } from "react";
-import { BrowserRouter, Route, Router, Routes } from "react-router-dom";
 import Link from "../../components/MUIComponent/Link";
 import A from "../../common/assets";
 import ProfileButton from "../../components/MUIComponent/ProfileButton";
-import TypoText from "../../components/MUIComponent/TypoText";
-import EditProfile from "./EditProfile";
-import ChangePassword from "./ChangePassword";
 import { Avatar } from "@mui/material";
 
 const AccountSetting = () => {
@@ -25,10 +21,9 @@ const AccountSetting = () => {
           padding: "35px",
         }}
       >
-        {/* reuse the component from header */}
-        {/* <TypoText color={A.colors.primary} variant="h1" style={{ margin: "0" }}>
-          User Avatar
-        </TypoText> */}
+        <Link href="/dashboard" color={A.colors.black}>
+          <i class="fa-solid fa-arrow-left fa-xl"></i>
+        </Link>
         <Avatar alt="User default avatar" src="/img/avatar.png" style={{
           "width": "45%",
           "height": "45%",

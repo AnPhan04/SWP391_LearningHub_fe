@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
 import A from "../../common/assets";
 const EditProfile = () => {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -16,12 +17,10 @@ const EditProfile = () => {
     });
   };
 
-  const history = useNavigate();
 
   const handleCancel = (event) => {
     event.preventDefault();
-    history("/accountsetting");
-    history.push("/accountsetting");
+    navigate(-1);
   };
 
   return (

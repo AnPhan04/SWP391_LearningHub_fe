@@ -17,7 +17,6 @@ const RecentlyVisited = () => {
         }
       );
       const json = await response.json();
-      // console.log(json);
       return json;
     } catch (error) {
       console.log(error);
@@ -44,14 +43,12 @@ const RecentlyVisited = () => {
           const ids = jsonData.data.map((note) => note.id);
           setNoteTitles(titles);
           setNoteIds(ids);
-          // console.log("Titles: " + titles);
         }
       } catch (error) {
         setNoteTitles([]);
         setNoteIds([]);
       }
     };
-    // console.log("noteTitles: " + noteTitles);
 
     const fetchNotes = async () => {
       const sessionUser = await Current();
