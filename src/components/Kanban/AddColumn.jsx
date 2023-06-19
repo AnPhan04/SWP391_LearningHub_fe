@@ -1,22 +1,22 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
 import styled from "styled-components";
 import TextField from '@mui/material/TextField';
 import TypoText from '../../components/MUIComponent/TypoText';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { Dialog } from "@mui/material";
 export const Button = styled.button`
 background-color: white;
 color: white;
-margin: 5rem 0;
+margin: 5rem 1rem 5rem 0;
 width: 100%;
 flex: 0 0 2%;
 border-radius: 5px;
-background-color: gainsboro;
+background-color: #00000073;
 font-weight: 600;
 font-size: 20px;
-padding: 5px 0;
+padding: 5px 10px;
 border: none;
 `;
 function AddColumn() {
@@ -24,35 +24,37 @@ function AddColumn() {
     const [name, setName] = useState('');
 
     console.log(name)
-    const handleOnClick=()=>{
+    const handleOnClick = () => {
         const Data = {
             // Đối tượng bạn muốn truyền trong phần body
-            boardId:1,
+            boardId: 1,
             name: name,
-            active:true,
-          };
+            active: true,
+        };
         fetchSaveData(Data);
-        setShow(false)
+        setShow(false);
+        window.location.reload(false);
     }
 
     async function fetchSaveData(Data) {
         try {
-          const response = await fetch('http://localhost:8080/api/v1/note/column', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(Data),
-          });
-          const data = await response.json();
-          console.log(data); // Xử lý dữ liệu API ở đây
+            const response = await fetch('http://localhost:8080/api/v1/note/column', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(Data),
+            });
+            const data = await response.json();
+            console.log(data); // Xử lý dữ liệu API ở đây
         } catch (error) {
-          console.log('Lỗi:', error);
+            console.log('Lỗi:', error);
         }
-      }
+    }
     return (
         <>
-            {show && (
+            {
+                <Dialog open={show}>
                 <Box
                     sx={{
                         position:'absolute',
@@ -88,7 +90,6 @@ function AddColumn() {
                     />
                     <Box>
                         <button style={{
-                            fontFamily: 'Poppins-Medium',
                             fontSize: '16px',
                             color: '#fff',
                             lineHheight: '1.2',
@@ -109,7 +110,7 @@ function AddColumn() {
                         </button>
                     </Box>
                 </Box >
-            )
+                </Dialog>
             }
             <Button onClick={() => setShow(!show)}>+</Button>
         </>

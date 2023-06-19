@@ -151,7 +151,7 @@ function NoteScreen() {
                 </Box>
             </Container>
             <Box ref={kanbanRef}>
-                <Kanban countCardKey={countCardKey}/>
+                <Kanban  countCardKey={countCardKey}/>
             </Box>
         </div>
     );
