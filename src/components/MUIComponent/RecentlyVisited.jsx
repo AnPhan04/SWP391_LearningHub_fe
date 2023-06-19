@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import {useNavigate} from 'react-router-dom';
 import Card from "@mui/material/Card";
 import { CardContent, Grid } from "@mui/material";
 import TypoText from "./TypoText";
@@ -75,7 +76,9 @@ const RecentlyVisited = () => {
         );
         const data = await response.json();
         console.log(data.message);
-        setNoteTitles((prevTitles) => prevTitles.filter((title) => title !== deletedNote));
+        setNoteTitles((prevTitles) =>
+          prevTitles.filter((title) => title !== deletedNote)
+        );
         setNoteIds((prevIds) => prevIds.filter((id) => id !== noteId));
       }
     } catch (error) {
@@ -83,12 +86,22 @@ const RecentlyVisited = () => {
     }
   };
 
+  const navigate = useNavigate();
+  const navToNoteScreen = (noteId) => {
+    navigate(`/note/${noteId}`);
+  }
+
   return (
     <Grid container spacing={2}>
       {/* number of cards = number of notes of each logged in user */}
       {noteTitles.length > 0 ? (
         noteTitles.map((note, index) => (
           <Card
+            onClick={(e) => {
+              if (e.target.tagName != "BUTTON") {
+                navToNoteScreen(noteIds[index]);
+              }
+            }}
             key={note}
             sx={{
               margin: "0.5em 1.5em",

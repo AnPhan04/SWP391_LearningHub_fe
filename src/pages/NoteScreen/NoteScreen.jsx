@@ -78,7 +78,7 @@ function NoteScreen() {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
             >
-                <ArrowBackIcon fontSize="large" sx={{
+                <ArrowBackIcon onClick={handleBack} fontSize="large" sx={{
                     '&:hover': {
                         cursor: 'pointer',
                         backgroundColor: '#F2F2F2',
