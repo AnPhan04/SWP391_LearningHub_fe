@@ -6,9 +6,10 @@ const LinkContent = styled(MuiLink)`
   text-decoration: none;
   font-size: 16px;
   font-family: inter, sans-serif;
-  display: block;
+  display: flex;
+  align-items: center;
   margin: 5px 0;
-
+  
   &:hover {
     color: ${(props) => props.hoverColor || "black"};
   }

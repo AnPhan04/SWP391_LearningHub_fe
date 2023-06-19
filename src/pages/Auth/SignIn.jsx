@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, useNavigate } from "react-router-dom";
 import Button from "../../components/MUIComponent/Button/Button";
 import TextField from "../../components/MUIComponent/TextField";
 import Link from "../../components/MUIComponent/Link";
@@ -28,6 +28,7 @@ const SignIn = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const passwordRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -64,9 +65,7 @@ const SignIn = () => {
 
   if (isAuthenticated) {
     return (
-      <Routes>
-        <Route path="/" element={<UserDashBoard />} />;
-      </Routes>
+      navigate("/dashboard")
     );
   }
 
@@ -128,7 +127,7 @@ const SignIn = () => {
               justifyContent="center"
             >
               <Grid item>
-                <TypoText variant="h5" style={{ textAlign: "center" }}>
+                <TypoText variant="h5" style={{ textAlign: "center", margin: 0 }}>
                   Don't have an account?
                 </TypoText>
               </Grid>

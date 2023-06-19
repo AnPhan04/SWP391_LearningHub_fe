@@ -67,7 +67,7 @@ function NoteScreen() {
 
 
     return (
-        <>
+        <div>
             <Box
                 sx={{
                     fontWeight: 'bold',
@@ -124,7 +124,6 @@ function NoteScreen() {
                 <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
                 <CountCard countCardKey={countCardKey}  />
                 <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
-
                 <Typography variant='h5' sx={{ fontWeight: 'bold', marginTop: 2 }} >
                     📊 Task tracker
                 </Typography>
@@ -150,7 +149,6 @@ function NoteScreen() {
                         Click the down arrow at the top of any stage to expand/collapse it.
                     </Typography>
                 </Box>
-
             </Container>
             <Box ref={kanbanRef}>
                 <Kanban countCardKey={countCardKey}/>

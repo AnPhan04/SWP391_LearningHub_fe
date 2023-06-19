@@ -118,7 +118,6 @@ const Kanban = ({countCardKey}) => {
       });
     }
   };
-  
 
   return (
     < >
