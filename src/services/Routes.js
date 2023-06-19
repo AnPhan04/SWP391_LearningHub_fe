@@ -69,7 +69,7 @@ const routes = createBrowserRouter([
         element: <TaskManagementDashBoard />
     },
     {
-        path: "/note",
+        path: "/note/:noteId",
         element: <NoteScreen />
     },
     {
