@@ -172,5 +172,4 @@ function NoteScreen() {
   );
 }
 
-
 export default NoteScreen;

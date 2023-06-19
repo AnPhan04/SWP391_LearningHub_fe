@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-// import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "../../components/MUIComponent/Button/Button";
 import TextField from "../../components/MUIComponent/TextField";
 import Grid from "@mui/material/Grid";
@@ -8,7 +8,13 @@ import TypoText from "../../components/MUIComponent/TypoText";
 
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  // const history = useNavigate();
+  const navigate = useNavigate();
+
+  const handleCancel = (event) => {
+    event.preventDefault();
+    navigate(-1);
+  };
+  
   const handleChangePassword = async (event) => {
     event.preventDefault();
     const form = document.getElementById("changePasswordForm");
@@ -35,7 +41,6 @@ const ChangePassword = () => {
         const responseData = await response.json();
         console.log(responseData);
         setErrorMessage("");
-        // history.push("/success");
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message);
@@ -44,6 +49,7 @@ const ChangePassword = () => {
       console.log("Error:", error.message);
     }
   };
+
 
   return (
     <form
@@ -102,7 +108,7 @@ const ChangePassword = () => {
         )}
         <Grid container spacing={2} justifyContent="right">
           <Grid item xs={6} textAlign="right">
-            <Button variant="cancel">Cancel</Button>
+            <Button variant="cancel" onClick={handleCancel}>Cancel</Button>
           </Grid>
           <Grid item xs={6} textAlign="left">
             <Button onClick={handleChangePassword}>Change</Button>

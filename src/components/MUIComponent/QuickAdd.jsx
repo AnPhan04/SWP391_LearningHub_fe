@@ -6,15 +6,20 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TypoText from "./TypoText";
 
 const QuickAdd = () => {
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [sessionUser, setSessionUser] = useState("");
 
-  const Current = async () => {
+  useEffect(() => {
+    getCurrentUserEmail();
+  }, []);
+
+  const getCurrentUserEmail = async () => {
     try {
       const response = await fetch(
         "http://localhost:8080/api/v1/user/current",
@@ -24,21 +29,19 @@ const QuickAdd = () => {
         }
       );
       const json = await response.json();
-      console.log(json);
-      return json;
+      console.log("getCurrentUserEmail: " + json.email);
+      setSessionUser(json.email);
     } catch (error) {
       console.log(error);
-      return null;
     }
   };
 
   const addNote = async () => {
     const requestBody = {
-      id: 20,
+      id: null,
       title: title,
       description: description,
-      // get from session
-      userId: "anpthe173136@fpt.edu.vn",
+      userId: sessionUser,
       createdDate: new Date().toISOString().split("T")[0],
     };
     try {
