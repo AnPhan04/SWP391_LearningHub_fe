@@ -67,7 +67,7 @@ function NoteScreen() {
 
 
     return (
-        <>
+        <div>
             <Box
                 sx={{
                     fontWeight: 'bold',
@@ -122,9 +122,77 @@ function NoteScreen() {
                     </Typography>
                 </Box>
                 <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
-                <CountCard countCardKey={countCardKey}  />
+                <Box
+                    sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'space-around',
+                        overflowX: 'auto',  // Thêm thuộc tính overflowX
+                        width: '100%',     // Định rõ chiều rộng của container cha
+                    }}
+                >
+                    <Box
+                        sx={{
+                            flex: '0 0 150px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <TypoText variant="h4" color="#666666" style={{ fontWeight: "bold" }}>
+                            Not started
+                        </TypoText>
+                        <TypoText variant="h3" color="black" style={{ fontWeight: "bold" }}>
+                            1 of 6
+                        </TypoText>
+                    </Box>
+                    <Box
+                        sx={{
+                            flex: '0 0 150px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <TypoText variant="h4" color="#8B6C1D" style={{ fontWeight: "bold" }}>
+                            On-track
+                        </TypoText>
+                        <TypoText variant="h3" color="black" style={{ fontWeight: "bold" }}>
+                            1 of 6
+                        </TypoText>
+                    </Box>
+                    <Box
+                        sx={{
+                            flex: '0 0 150px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <TypoText variant="h4" color="#C45B1C" style={{ fontWeight: "bold" }}>
+                            At risk
+                        </TypoText>
+                        <TypoText variant="h3" color="black" style={{ fontWeight: "bold" }}>
+                            1 of 6
+                        </TypoText>
+                    </Box>
+                    <Box
+                        sx={{
+                            flex: '0 0 150px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center'
+                        }}
+                    >
+                        <TypoText variant="h4" color="#187B34" style={{ fontWeight: "bold" }}>
+                            Completed
+                        </TypoText>
+                        <TypoText variant="h3" color="black" style={{ fontWeight: "bold" }}>
+                            1 of 6
+                        </TypoText>
+                    </Box>
+                </Box>
                 <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
-
                 <Typography variant='h5' sx={{ fontWeight: 'bold', marginTop: 2 }} >
                     📊 Task tracker
                 </Typography>
@@ -150,13 +218,9 @@ function NoteScreen() {
                         Click the down arrow at the top of any stage to expand/collapse it.
                     </Typography>
                 </Box>
-
+                <Kanban boardId={1} />
             </Container>
-            <Box ref={kanbanRef}>
-                <Kanban />
-            </Box>
-
-        </>
+        </div>
     );
 }
 
