@@ -78,7 +78,7 @@ function AddColumn() {
                     onClick={()=>setShow(false)}
                     />
                     <TypoText variant="h2" color="black" style={{ fontWeight: "bold", textAlign: "center" }}>
-                        Column
+                        New Column
                     </TypoText>
                     <TextField fullWidth label="Column Name" id="fullWidth" type="text"
                         sx={{
@@ -99,7 +99,7 @@ function AddColumn() {
                             justifyContent: 'center',
                             alignItems: 'center',
                             padding: '0 20px',
-                            background: '-webkit-linear-gradient(right,#00dbde,#fc00ff,#00dbde,#fc00ff)',
+                            background: '#D820FA',
                             border: 'none',
                             borderRadius: '25px',
                         }}

@@ -49,7 +49,7 @@ const init = {
     items: [],
   }
 }
-const Kanban = () => {
+const Kanban = ({countCardKey}) => {
   let [columns, setColumns] = useState(init);
 
   //https://mocki.io/v1/284745a5-3443-4340-a08d-112e88c970ae
@@ -67,7 +67,7 @@ const Kanban = () => {
         });
     };
     getData();
-  }, []);
+  }, [countCardKey]);
 
   //save data to database every time the board from front end changed
   useEffect(() => {
