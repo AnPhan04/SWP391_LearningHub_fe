@@ -45,11 +45,11 @@ justify-content: space-between;
 
 const init = {
   "0": {
-    title: "Null",
+    title: "To-do",
     items: [],
   }
 }
-const Kanban = (props) => {
+const Kanban = () => {
   let [columns, setColumns] = useState(init);
 
   //https://mocki.io/v1/284745a5-3443-4340-a08d-112e88c970ae
@@ -57,14 +57,14 @@ const Kanban = (props) => {
   //insert data
   useEffect(() => {
     const getData = async () => {
-      fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${props.boardId}`, {
+      fetch('http://localhost:8080/api/v1/note/kanban/data?boardId=1', {
         method: "GET"
       })
         .then(response => response.json())
         .then(json => {
           console.log(json);
           setColumns(json)
-        }).catch(setColumns(init));
+        });
     };
     getData();
   }, []);
@@ -72,7 +72,7 @@ const Kanban = (props) => {
   //save data to database every time the board from front end changed
   useEffect(() => {
     async function saveData() {
-      fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${props.boardId}`, {
+      fetch('http://localhost:8080/api/v1/note/kanban/data?boardId=1', {
         method: "Post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(columns)

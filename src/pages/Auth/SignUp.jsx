@@ -6,11 +6,9 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
 import A from "../../common/assets";
-import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [errorMessage, setErrorMessage] = useState("");
-  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -38,8 +36,7 @@ const SignUp = () => {
       const responseData = await response.json();
       if (response.ok) {
         console.log(responseData);
-        // setErrorMessage("Create new account successfully");
-        navigate("/login");
+        setErrorMessage("");
       } else {
         setErrorMessage(responseData.message);
       }
