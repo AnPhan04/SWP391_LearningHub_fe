@@ -7,10 +7,14 @@ import Box from "@mui/material/Box";
 import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CountCard from "./CountCard";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 function NoteScreen() {
   const [isHovered, setIsHovered] = useState(false);
+
+  const { noteId } = useParams();
+  console.log('h1:'+noteId);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -101,7 +105,7 @@ function NoteScreen() {
                 </Typography>}
             </Box>
             <Container fixed marginTop={15} style={{ paddingTop: 30 }}>
-                <EditableDiv param={1} />
+                <EditableDiv param={noteId} />
                 <Box
                     sx={{
                         display: 'flex',
@@ -124,7 +128,7 @@ function NoteScreen() {
                     </Typography>
                 </Box>
                 <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
-                <CountCard countCardKey={countCardKey}  />
+                <CountCard countCardKey={countCardKey} id={noteId} />
                 <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
                 <Typography variant='h5' sx={{ fontWeight: 'bold', marginTop: 2 }} >
                     📊 Task tracker
@@ -153,7 +157,7 @@ function NoteScreen() {
                 </Box>
             </Container>
             <Box ref={kanbanRef}>
-                <Kanban  countCardKey={countCardKey}/>
+                <Kanban  countCardKey={countCardKey} id={noteId}/>
             </Box>
         </div>
     );

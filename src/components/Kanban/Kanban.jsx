@@ -51,36 +51,37 @@ const init = {
     items: [],
   }
 }
-const Kanban = ({ countCardKey }) => {
+const Kanban = ({ countCardKey,id }) => {
   let [columns, setColumns] = useState(init);
   //https://mocki.io/v1/284745a5-3443-4340-a08d-112e88c970ae
   // http://localhost:8080/api/v1/note/kanban/data?boardId=1
   //insert data
   useEffect(() => {
-    const getData = async () => {
-      fetch('http://localhost:8080/api/v1/note/kanban/data?boardId=1', {
+    const getData = async (id) => {
+      console.log(id);
+      fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
         method: "GET"
       })
         .then(response => response.json())
         .then(json => {
           console.log(json);
           setColumns(json)
-        });
+        }).catch(err => console.log(err));
     };
-    getData();
+    getData(id);
   }, [countCardKey]);
 
   //save data to database every time the board from front end changed
   useEffect(() => {
-    async function saveData() {
-      fetch('http://localhost:8080/api/v1/note/kanban/data?boardId=1', {
+    async function saveData(id) {
+      fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
         method: "Post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(columns)
       }).then(response => response.json())
         .then(response => console.log(response)).catch(err => console.log(err));
     }
-    saveData();
+    saveData(id);
   }, [columns]) // will call when the columns (data) has been changed
 
   //handle the action when user drag item
