@@ -8,12 +8,15 @@ import AddColumn from './AddColumn';
 import ArchiveColumn from './ArchiveColumn';
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  // justify-content: space-around;
+  flex-wrap: wrap;
 `;
 
 const TaskList = styled.div`
   min-height: 100px;
   display: flex;
+  // flex-wrap: wrap;
+  flex:"auto";
   flex-direction: column;
   background: #f3f3f3;
   min-width: 341px;

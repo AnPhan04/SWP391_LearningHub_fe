@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TypoText from '../../components/MUIComponent/TypoText';
 
-function CountCard({countCardKey}) {
-    
+function CountCard({ countCardKey }) {
+
     const [parameter, setParameter] = useState(1);
     const [Count, setCount] = useState(0);
     const [Title, setTitle] = useState([]);
@@ -11,11 +11,11 @@ function CountCard({countCardKey}) {
         const letters = "0123456789ABCDEF";
         let color = "#";
         for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
+            color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
-      }
-      const randomColor = getRandomColor();      
+    }
+    const randomColor = getRandomColor();
 
     useEffect(() => {
         fetchData(parameter); // Gọi API khi giá trị tham số thay đổi
@@ -31,10 +31,10 @@ function CountCard({countCardKey}) {
                 totalCount += item.items.length;
             });
             const titles = Object.values(data).map(item =>
-                 ({
-                    title:item.title,
-                    length:item.items.length,
-                }));
+            ({
+                title: item.title,
+                length: item.items.length,
+            }));
 
             // console.log(titles)
             setTitle(titles)
@@ -50,7 +50,8 @@ function CountCard({countCardKey}) {
             sx={{
                 display: 'flex',
                 flexDirection: 'row',
-                justifyContent: 'space-around',
+                justifyContent: 'center',
+                alignItems: 'center',
                 overflowX: 'auto',  // Thêm thuộc tính overflowX
                 width: '100%',     // Định rõ chiều rộng của container cha
             }}
@@ -58,10 +59,12 @@ function CountCard({countCardKey}) {
             {Title && Title.length > 0 && Title.map((title, index) => (
                 <Box
                     sx={{
-                        flex: '0 0 150px',
                         display: 'flex',
+                        flexWrap:'wrap',
+                        flex: '10',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                         flexDirection: 'column',
-                        alignItems: 'center'
                     }}
                     key={index}
                 >
