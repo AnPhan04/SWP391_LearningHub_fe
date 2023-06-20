@@ -15,6 +15,8 @@ import ErrorPage from "../pages/ErrorPage";
 import NoteScreen from "../pages/NoteScreen/NoteScreen";
 import Landing from "../pages/Landing";
 import EditProfile from "../pages/User/EditProfile";
+import Labels from "../components/MUIComponent/Labels";
+import LabelsList from "../components/MUIComponent/LabelList";
 
 const routes = createBrowserRouter([
     {
@@ -79,6 +81,14 @@ const routes = createBrowserRouter([
     {
         path: "/profile",
         element: <EditProfile />
+    },
+    {
+        path: "/addlabel",
+        element: <Labels />
+    },
+    {
+        path: "/listLabels",
+        element: <LabelsList/>
     }
 ]);
 export default routes;
