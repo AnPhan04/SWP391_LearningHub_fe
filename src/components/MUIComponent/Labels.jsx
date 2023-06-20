@@ -2,7 +2,7 @@ import { colors } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState, useEffect } from 'react';
 import Button from './Button/Button';
-
+import Input from './Input';
 const Labels = () => {
   const [Labels, setLabels] = useState([]);
   const [newLabel, setNewLabel] = useState({boardId: 1, name: '', color: '' });
@@ -50,13 +50,13 @@ const Labels = () => {
  
 
   return (
-    <div style={{ border: '2px solid black', width: '300px', backgroundColor: 'lightgray'}}>
+    <div style={{ border: '2px solid black', width: '350px', backgroundColor: 'lightgray'}}>
       <h2>Labels</h2>
 
       <form onSubmit={createLabel}>
         <label>
           Name:
-          <input
+          <Input
             type="text"
             value={newLabel.name}
             onChange={(e) => setNewLabel({ ...newLabel, name: e.target.value })}
@@ -68,7 +68,7 @@ const Labels = () => {
         <br></br>
         <div>
           <label htmlFor="labelColor">Color:</label>
-          <input
+          <Input
             id="labelColor"
             type="color"
             value={newLabel.color}

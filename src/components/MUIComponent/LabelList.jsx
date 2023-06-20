@@ -2,12 +2,15 @@ import { Label } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Link, useNavigate } from 'react-router-dom';
 import Button from './Button/Button';
-
+import Input from './Input';
+import TypoText from './TypoText';
+import Labels from './Labels';
 const LabelsList = () => {
-  const [Labels, setLabels] = useState([]);
+  const [labelsList, setLabelsList] = useState([]);
   const navigate = useNavigate();
   const [boardId, setBoardId] = useState(Label.boardId);
   const [editLabel, setEditLabel] = useState(null);
+  const [showLabels, setShowLabels] = useState(false);
   useEffect(() => {
     fetchLabels();
   }, []);
@@ -17,7 +20,7 @@ const LabelsList = () => {
       const response = await fetch('http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=1');
       // const response = await fetch(`http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=${boardId}`);
       const data = await response.json();
-      setLabels(data);
+      setLabelsList(data);
     } catch (error) {
       console.log('Error fetching core labels:', error);
     }
@@ -73,15 +76,23 @@ const LabelsList = () => {
     setEditLabel(null);
   };
 
+  const handleShowLabels = () => {
+    setShowLabels(true);
+  };
+
+  const handleHideLabels = () => {
+    setShowLabels(false);
+  };
+
   return (
-    <div style={{ border: '2px solid black', width: '300px', backgroundColor: 'lightgray' }}>
+    <div style={{width: '350px'}}>
       <h1>Labels</h1>
-      {Labels.map((label) => (
+      {labelsList.map((label) => (
         <div key={label.id} >
           {editLabel && editLabel.id === label.id ? (
             <div>
               <h3>Edit Label</h3>
-              <input
+              <Input
                 type="text"
                 value={editLabel.name}
                 onChange={(e) =>
@@ -94,7 +105,7 @@ const LabelsList = () => {
               <br></br>
               <br></br>
               <label htmlFor="labelColor">Color:</label>
-          <input
+          <Input
             id="labelColor"
             type="color"
             value={editLabel.color}
@@ -110,15 +121,18 @@ const LabelsList = () => {
             </div>
           ) : (
             <>
-              <h3 style={{ backgroundColor: label.color, width: '200px', height: '60px', borderRadius: '15px' }}>{label.name}</h3>
-              <Button onClick={() => deleteLabel(label.boardId, label.id)}>Delete</Button>
+              <div style={{ display: 'flex', alignItems: 'center'}}>
+              <h3 style={{ backgroundColor: label.color,width: '200px', height: '60px'}}>{label.name}</h3>
+              <Button onClick={() => deleteLabel(label.boardId, label.id)} style={{ marginLeft: '10px' }}>Delete</Button>
               <Button onClick={() => handleEditLabel(label)} style={{ marginLeft: '10px' }}>Edit</Button>
-              <p>{label.description}</p>
+              </div>
             </>
           )}
         </div>
       ))}
-      <Button onClick={handleAddLabels}>Add Labels</Button>
+      {/* <Button onClick={handleAddLabels}>Add Labels</Button> */}
+      <Button onClick={handleShowLabels}>Add Labels</Button>
+      {showLabels && <Labels />}
       <div style={{height: '30px'}}></div>
     </div>
   );
