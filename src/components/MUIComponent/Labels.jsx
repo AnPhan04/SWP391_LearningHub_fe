@@ -1,34 +1,33 @@
 import { colors } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState, useEffect } from 'react';
+import Button from './Button/Button';
 
 const Labels = () => {
-  const [coreLabels, setCoreLabels] = useState([]);
-  const [newLabel, setNewLabel] = useState({ name: '', color: '' });
-
+  const [Labels, setLabels] = useState([]);
+  const [newLabel, setNewLabel] = useState({boardId: 1, name: '', color: '' });
+  const [boardId, setBoardId] = useState(0);
   useEffect(() => {
     fetchCoreLabels();
   }, []);
 
-  const fetchCoreLabels = async () => {
-    const response = await fetch('/api/v1/labels');
+  const fetchCoreLabels = async (boardId) => {
+    try {
+    //const response = await fetch(' http://localhost:8080/api/v1/labels');
+    const response = await fetch('http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=1');
     const data = await response.json();
-    setCoreLabels(data);
+    setLabels(data);
+  } catch (error) {
+    console.error(error);
+  }
   };
 
-  const deleteLabel = async (labelId) => {
-    const response = await fetch(`/api/v1/labels/${labelId}`, {
-      method: 'DELETE',
-    });
-    if (response.ok) {
-      // Label deleted successfully, update the UI
-      fetchCoreLabels();
-    }
-  };
 
   const createLabel = async () => {
-    const response = await fetch('/api/v1/labels', {
+    try{
+    const response = await fetch(` http://localhost:8080/api/v1/labels/createBL`, {
       method: 'POST',
+      credential:'include',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -39,35 +38,13 @@ const Labels = () => {
       fetchCoreLabels();
       // Reset the new label form
       setNewLabel({ name: '', color: '' });
+    } else {
+      // Handle error response
+      console.error('Failed to create label:', response.status, response.statusText);
     }
-  };
-
-  const handleDragStart = (e, labelId) => {
-    e.dataTransfer.setData('labelId', labelId);
-  };
-
-  const handleDrop = (e) => {
-    const labelId = e.dataTransfer.getData('labelId');
-    const cardId = // Get the card ID where the label is dropped
-    addLabelToCard(cardId, labelId);
-  };
-
-  const addLabelToCard = async (cardId, labelId) => {
-    const response = await fetch(`/api/v1/labels/cards/${cardId}/labels/${labelId}`, {
-      method: 'POST',
-    });
-    if (response.ok) {
-      // Label added to card successfully, update the UI
-    }
-  };
-
-  const removeLabelFromCard = async (cardId, labelId) => {
-    const response = await fetch(`/api/v1/labels/cards/${cardId}/labels/${labelId}`, {
-      method: 'DELETE',
-    });
-    if (response.ok) {
-      // Label removed from card successfully, update the UI
-    }
+  } catch (error) {
+    console.error('Failed to create label:', error);
+  }
   };
 
  
@@ -100,7 +77,7 @@ const Labels = () => {
           />
         </div>
         <br></br>
-        <button type="submit">Create Label</button>
+        <Button type="submit">Create Label</Button>
         <br></br>
         
       </form>
