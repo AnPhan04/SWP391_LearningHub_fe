@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TypoText from '../../components/MUIComponent/TypoText';
 
-function CountCard({ countCardKey,id }) {
+function CountCard({ countCardKey }) {
 
-    const [parameter, setParameter] = useState(id);
-    const [Count, setCount] = useState(0);
-    const [Title, setTitle] = useState([]);
+    const [parameter, setParameter] = useState(1);
+    const [count, setCount] = useState(0);
+    const [title, setTitle] = useState([]);
     function getRandomColor() {
         const letters = "0123456789ABCDEF";
         let color = "#";
@@ -18,15 +18,12 @@ function CountCard({ countCardKey,id }) {
     const randomColor = getRandomColor();
 
     useEffect(() => {
-        fetchData(parameter);
-        console.log("param"+parameter) // Gọi API khi giá trị tham số thay đổi
+        fetchData(parameter); // Gọi API khi giá trị tham số thay đổi
     }, [countCardKey]);
 
     async function fetchData(parameter) {
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${parameter}`, { 
-                credentials:"include",    
-            method: "GET" });
+            const response = await fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${parameter}`, { method: "GET" });
             const data = await response.json();
             // console.log(data); // Xử lý dữ liệu API ở đây
             let totalCount = 0;

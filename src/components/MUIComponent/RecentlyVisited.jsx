@@ -63,22 +63,21 @@ const RecentlyVisited = () => {
   const archiveNote = async (noteId) => {
     console.log("Archive note " + noteId);
     try {
-      const noteIndex = noteIds.indexOf(noteId);
-      if (noteIndex !== -1) {
-        const deletedNote = noteTitles[noteIndex];
-        const response = await fetch(
-          `http://localhost:8080/api/v1/note/notes?id=${noteId}`,
-          {
-            method: "DELETE",
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        console.log(data.message);
-        setNoteTitles((prevTitles) =>
-          prevTitles.filter((title) => title !== deletedNote)
-        );
-        setNoteIds((prevIds) => prevIds.filter((id) => id !== noteId));
+      const response = await fetch(
+        `http://localhost:8080/api/v1/note/notes?noteId=${noteId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const jsonData = await response.json();
+      console.log(jsonData.data);
+      if (response.ok) {
+        console.log(jsonData.message);
+        setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
       }
     } catch (error) {
       console.log("Archive note error: " + error);
@@ -87,7 +86,7 @@ const RecentlyVisited = () => {
 
   const navigate = useNavigate();
   const navToNoteScreen = (noteId) => {
-    navigate(`/note?id=${noteId}`);
+    navigate(`/note/${noteId}`);
   };
 
   return (
