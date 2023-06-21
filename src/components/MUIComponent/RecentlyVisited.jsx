@@ -86,7 +86,7 @@ const RecentlyVisited = () => {
 
   const navigate = useNavigate();
   const navToNoteScreen = (noteId) => {
-    navigate(`/note/${noteId}`);
+    navigate(`/note?id=${noteId}`);
   };
 
   return (
