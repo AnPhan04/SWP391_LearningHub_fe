@@ -2,20 +2,20 @@ import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import TypoText from '../../components/MUIComponent/TypoText';
 
-function CountCard({countCardKey}) {
-    
+function CountCard({ countCardKey }) {
+
     const [parameter, setParameter] = useState(1);
-    const [Count, setCount] = useState(0);
-    const [Title, setTitle] = useState([]);
+    const [count, setCount] = useState(0);
+    const [title, setTitle] = useState([]);
     function getRandomColor() {
         const letters = "0123456789ABCDEF";
         let color = "#";
         for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
+            color += letters[Math.floor(Math.random() * 16)];
         }
         return color;
-      }
-      const randomColor = getRandomColor();      
+    }
+    const randomColor = getRandomColor();
 
     useEffect(() => {
         fetchData(parameter); // Gọi API khi giá trị tham số thay đổi
@@ -31,10 +31,10 @@ function CountCard({countCardKey}) {
                 totalCount += item.items.length;
             });
             const titles = Object.values(data).map(item =>
-                 ({
-                    title:item.title,
-                    length:item.items.length,
-                }));
+            ({
+                title: item.title,
+                length: item.items.length,
+            }));
 
             // console.log(titles)
             setTitle(titles)
@@ -55,7 +55,7 @@ function CountCard({countCardKey}) {
                 width: '100%',     // Định rõ chiều rộng của container cha
             }}
         >
-            {Title && Title.length > 0 && Title.map((title, index) => (
+            {title && title.length > 0 && title.map((title, index) => (
                 <Box
                     sx={{
                         flex: '0 0 150px',
@@ -69,7 +69,7 @@ function CountCard({countCardKey}) {
                         {title.title}
                     </TypoText>
                     <TypoText variant="h3" color="black" style={{ fontWeight: "bold" }}>
-                        {title.length} of {Count}
+                        {title.length} of {count}
                     </TypoText>
                 </Box>
             ))}
