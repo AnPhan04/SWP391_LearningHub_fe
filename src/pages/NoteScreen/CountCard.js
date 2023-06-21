@@ -5,8 +5,8 @@ import TypoText from '../../components/MUIComponent/TypoText';
 function CountCard({ countCardKey }) {
 
     const [parameter, setParameter] = useState(1);
-    const [Count, setCount] = useState(0);
-    const [Title, setTitle] = useState([]);
+    const [count, setCount] = useState(0);
+    const [title, setTitle] = useState([]);
     function getRandomColor() {
         const letters = "0123456789ABCDEF";
         let color = "#";
@@ -56,7 +56,7 @@ function CountCard({ countCardKey }) {
                 width: '100%',     // Định rõ chiều rộng của container cha
             }}
         >
-            {Title && Title.length > 0 && Title.map((title, index) => (
+            {title && title.length > 0 && title.map((title, index) => (
                 <Box
                     sx={{
                         display: 'flex',
@@ -72,7 +72,7 @@ function CountCard({ countCardKey }) {
                         {title.title}
                     </TypoText>
                     <TypoText variant="h3" color="black" style={{ fontWeight: "bold" }}>
-                        {title.length} of {Count}
+                        {title.length} of {count}
                     </TypoText>
                 </Box>
             ))}
