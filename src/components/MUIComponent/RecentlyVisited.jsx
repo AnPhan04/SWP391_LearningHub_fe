@@ -26,8 +26,8 @@ const RecentlyVisited = () => {
   };
 
   /* fetch API to show all notes */
-  const [notes, setNotes] = useState([]);
-
+  const [noteTitles, setNoteTitles] = useState([]);
+  const [noteIds, setNoteIds] = useState([]);
   useEffect(() => {
     const getListNotes = async () => {
       try {
@@ -40,10 +40,14 @@ const RecentlyVisited = () => {
         );
         const jsonData = await response.json();
         if (jsonData.status === "Success" && jsonData.data) {
-          setNotes(jsonData.data);
+          const titles = jsonData.data.map((note) => note.title);
+          const ids = jsonData.data.map((note) => note.id);
+          setNoteTitles(titles);
+          setNoteIds(ids);
         }
       } catch (error) {
-        setNotes([]);
+        setNoteTitles([]);
+        setNoteIds([]);
       }
     };
 
@@ -60,8 +64,8 @@ const RecentlyVisited = () => {
     console.log("Edit Note:", note);
   };
 
-  const archiveNote = async (noteId) => {
-    console.log("Archive note " + noteId);
+  const deleteNote = async (noteId) => {
+    console.log("Delete note " + noteId);
     try {
       const response = await fetch(
         `http://localhost:8080/api/v1/note/notes?noteId=${noteId}`,
@@ -80,7 +84,7 @@ const RecentlyVisited = () => {
         setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
       }
     } catch (error) {
-      console.log("Archive note error: " + error);
+      console.log("Delete error: " + error);
     }
   };
 
@@ -91,55 +95,51 @@ const RecentlyVisited = () => {
 
   return (
     <Grid container spacing={2}>
-      {/* number of cards = number of notes */}
-      {notes.map((note) => {
-        const { id, title, active } = note;
-        if (active) {
-          return (
-            <Card
-              onClick={(e) => {
-                if (e.target.tagName !== "BUTTON") {
-                  navToNoteScreen(id);
-                }
-              }}
-              key={id}
-              sx={{
-                margin: "0.5em 1.5em",
-                width: 250,
-                height: 150,
-                cursor: "pointer",
-                borderRadius: "10px",
-              }}
-            >
-              <CardContent>
-                <Grid container spacing={2}>
-                  <Grid item xs={6}>
-                    <TypoText variant="h3">{title}</TypoText>
-                  </Grid>
-                  <Grid
-                    item
-                    xs={6}
-                    sx={{ display: "flex", justifyContent: "flex-end" }}
-                  >
-                    <MenuList
-                      onEdit={(e) => {
-                        e.stopPropagation();
-                        editNote(note);
-                      }}
-                      onDelete={(e) => {
-                        e.stopPropagation(); // Stop event propagation
-                        archiveNote(id);
-                      }}
-                    />
-                  </Grid>
+      {/* number of cards = number of notes of each logged in user */}
+      {noteTitles.length > 0 ? (
+        noteTitles.map((note, index) => (
+          <Card
+            onClick={(e) => {
+              if (e.target.tagName !== "BUTTON") {
+                navToNoteScreen(noteIds[index]);
+              }
+            }}
+            key={note}
+            sx={{
+              margin: "0.5em 1.5em",
+              width: 250,
+              height: 150,
+              cursor: "pointer",
+              borderRadius: "10px",
+            }}
+          >
+            <CardContent>
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <TypoText variant="h3">{note}</TypoText>
                 </Grid>
-              </CardContent>
-            </Card>
-          );
-        } else {
-          return null; // Don't render inactive notes
-        }
-      })}
+                <Grid
+                  item
+                  xs={6}
+                  sx={{ display: "flex", justifyContent: "flex-end" }}
+                >
+                  <MenuList
+                    onEdit={() => editNote(note)}
+                    onDelete={(e) => {
+                      e.stopPropagation(); // Stop event propagation
+                      deleteNote(noteIds[index]);
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </CardContent>
+          </Card>
+        ))
+      ) : (
+        <TypoText style={{ marginBottom: "20px", marginLeft: "1em" }}>
+          No notes available
+        </TypoText>
+      )}
       <QuickAdd />
     </Grid>
   );

@@ -56,7 +56,7 @@ function CountCard({ countCardKey }) {
                 width: '100%',     // Định rõ chiều rộng của container cha
             }}
         >
-            {title && title.length > 0 && title.map((title, index) => (
+            {Title && Title.length > 0 && Title.map((title, index) => (
                 <Box
                     sx={{
                         display: 'flex',
@@ -72,7 +72,7 @@ function CountCard({ countCardKey }) {
                         {title.title}
                     </TypoText>
                     <TypoText variant="h3" color="black" style={{ fontWeight: "bold" }}>
-                        {title.length} of {count}
+                        {title.length} of {Count}
                     </TypoText>
                 </Box>
             ))}
