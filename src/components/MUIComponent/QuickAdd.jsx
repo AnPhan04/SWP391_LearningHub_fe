@@ -38,7 +38,6 @@ const QuickAdd = () => {
 
   const addNote = async () => {
     const requestBody = {
-      id: null,
       title: title,
       description: description,
       userId: sessionUser,
@@ -75,6 +74,10 @@ const QuickAdd = () => {
   };
 
   const handleFormSubmit = async () => {
+    if (!title) {
+      alert("Please enter the note title!");
+      return;
+    }
     addNote();
     setTitle("");
     setDescription("");
@@ -103,7 +106,6 @@ const QuickAdd = () => {
       </Card>
       <Dialog
         open={open}
-        // onClose={handleClose}
         PaperProps={{
           style: {
             position: "absolute",
