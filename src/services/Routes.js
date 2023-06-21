@@ -71,7 +71,7 @@ const routes = createBrowserRouter([
         element: <TaskManagementDashBoard />
     },
     {
-        path: "/note/:noteId",
+        path: "/note",
         element: <NoteScreen />
     },
     {
