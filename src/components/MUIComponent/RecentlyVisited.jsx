@@ -72,7 +72,10 @@ const RecentlyVisited = () => {
         const deletedNote = noteTitles[noteIndex];
         const response = await fetch(
           `http://localhost:8080/api/v1/note/notes?id=${noteId}`,
-          { method: "DELETE" }
+          {
+            method: "DELETE",
+            credentials: "include",
+          }
         );
         const data = await response.json();
         console.log(data.message);
@@ -88,7 +91,7 @@ const RecentlyVisited = () => {
 
   const navigate = useNavigate();
   const navToNoteScreen = (noteId) => {
-    navigate(`/note/${noteId}`);
+    navigate(`/note?id=${noteId}`);
   };
 
   return (
