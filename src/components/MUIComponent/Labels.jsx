@@ -3,6 +3,7 @@ import { grey } from '@mui/material/colors';
 import React, { useState, useEffect } from 'react';
 import Button from './Button/Button';
 import Input from './Input';
+import CloudDoneIcon from '@mui/icons-material/CloudDone';
 const Labels = () => {
   const [Labels, setLabels] = useState([]);
   const [newLabel, setNewLabel] = useState({boardId: 1, name: '', color: '' });
@@ -56,7 +57,7 @@ const Labels = () => {
       <form onSubmit={createLabel}>
         <label>
           Name:
-          <Input
+          <input
             type="text"
             value={newLabel.name}
             onChange={(e) => setNewLabel({ ...newLabel, name: e.target.value })}
@@ -68,7 +69,7 @@ const Labels = () => {
         <br></br>
         <div>
           <label htmlFor="labelColor">Color:</label>
-          <Input
+          <input
             id="labelColor"
             type="color"
             value={newLabel.color}
@@ -77,7 +78,7 @@ const Labels = () => {
           />
         </div>
         <br></br>
-        <Button type="submit">Create Label</Button>
+        <Button type="submit"><CloudDoneIcon /></Button>
         <br></br>
         
       </form>

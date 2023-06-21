@@ -1,10 +1,17 @@
 import { Label } from '@mui/icons-material';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Link, useNavigate } from 'react-router-dom';
-import Button from './Button/Button';
+//import Button from './Button/Button';
 import Input from './Input';
 import TypoText from './TypoText';
 import Labels from './Labels';
+import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import AddIcon from '@mui/icons-material/Add';
+
 const LabelsList = () => {
   const [labelsList, setLabelsList] = useState([]);
   const navigate = useNavigate();
@@ -86,7 +93,7 @@ const LabelsList = () => {
 
   return (
     <div style={{width: '350px'}}>
-      <h1>Labels</h1>
+      <TypoText variant="h1" style={{color:"red"}}>Labels</TypoText>
       {labelsList.map((label) => (
         <div key={label.id} >
           {editLabel && editLabel.id === label.id ? (
@@ -105,7 +112,7 @@ const LabelsList = () => {
               <br></br>
               <br></br>
               <label htmlFor="labelColor">Color:</label>
-          <Input
+          <input
             id="labelColor"
             type="color"
             value={editLabel.color}
@@ -116,22 +123,22 @@ const LabelsList = () => {
           />
               {/* Add more input fields for other properties */}
               <br></br>
-              <Button onClick={handleSaveLabel}>Save</Button>
-              <Button onClick={handleCancelEdit} style={{ marginLeft: '10px' }}>Cancel</Button>
+              <Button onClick={handleSaveLabel}><DoneOutlineIcon /></Button>
+              <Button onClick={handleCancelEdit} style={{ marginLeft: '10px' }}><CancelIcon /></Button>
             </div>
           ) : (
             <>
               <div style={{ display: 'flex', alignItems: 'center'}}>
               <h3 style={{ backgroundColor: label.color,width: '200px', height: '60px'}}>{label.name}</h3>
-              <Button onClick={() => deleteLabel(label.boardId, label.id)} style={{ marginLeft: '10px' }}>Delete</Button>
-              <Button onClick={() => handleEditLabel(label)} style={{ marginLeft: '10px' }}>Edit</Button>
+              <Button onClick={() => deleteLabel(label.boardId, label.id)} style={{ marginLeft: '10px' }}>< DeleteIcon /></Button>
+              <Button onClick={() => handleEditLabel(label)} style={{ marginLeft: '10px' }}><EditIcon /></Button>
               </div>
             </>
           )}
         </div>
       ))}
       {/* <Button onClick={handleAddLabels}>Add Labels</Button> */}
-      <Button onClick={handleShowLabels}>Add Labels</Button>
+      <Button onClick={handleShowLabels}><AddIcon /></Button>
       {showLabels && <Labels />}
       <div style={{height: '30px'}}></div>
     </div>
