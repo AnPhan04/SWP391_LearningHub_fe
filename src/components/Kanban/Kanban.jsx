@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import DeleteIcon from '@mui/icons-material/Delete';
 import TaskCard from './TaskCard';
 import AddTask from './AddTask';
 import AddColumn from './AddColumn';
@@ -63,6 +62,7 @@ const Kanban = ({ countCardKey,id }) => {
     const getData = async (id) => {
       console.log(id);
       fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
+        credentials:"include",
         method: "GET"
       })
         .then(response => response.json())
@@ -78,6 +78,7 @@ const Kanban = ({ countCardKey,id }) => {
   useEffect(() => {
     async function saveData(id) {
       fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
+        credentials:"include",
         method: "Post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(columns)
@@ -155,7 +156,7 @@ const Kanban = ({ countCardKey,id }) => {
                   </Droppable>
                 );
               })}
-              <AddColumn />
+              <AddColumn boardId={id}/>
             </>
           </TaskColumnStyles>
         </Container>
