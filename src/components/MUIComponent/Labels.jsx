@@ -2,7 +2,8 @@ import { colors } from '@mui/material';
 import { grey } from '@mui/material/colors';
 import React, { useState, useEffect } from 'react';
 import Button from './Button/Button';
-
+import Input from './Input';
+import CloudDoneIcon from '@mui/icons-material/CloudDone';
 const Labels = () => {
   const [Labels, setLabels] = useState([]);
   const [newLabel, setNewLabel] = useState({boardId: 1, name: '', color: '' });
@@ -50,7 +51,7 @@ const Labels = () => {
  
 
   return (
-    <div style={{ border: '2px solid black', width: '300px', backgroundColor: 'lightgray'}}>
+    <div style={{ border: '2px solid black', width: '350px', backgroundColor: 'lightgray'}}>
       <h2>Labels</h2>
 
       <form onSubmit={createLabel}>
@@ -77,7 +78,7 @@ const Labels = () => {
           />
         </div>
         <br></br>
-        <Button type="submit">Create Label</Button>
+        <Button type="submit"><CloudDoneIcon /></Button>
         <br></br>
         
       </form>
