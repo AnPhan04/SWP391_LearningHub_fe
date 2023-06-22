@@ -18,6 +18,7 @@ const RecentlyVisited = () => {
         }
       );
       const json = await response.json();
+      console.log("current " +json);
       return json;
     } catch (error) {
       console.log(error);
@@ -27,7 +28,7 @@ const RecentlyVisited = () => {
 
   /* fetch API to show all notes */
   const [notes, setNotes] = useState([]);
-
+//fetch data for the first time
   useEffect(() => {
     const getListNotes = async () => {
       try {
@@ -41,8 +42,10 @@ const RecentlyVisited = () => {
         const jsonData = await response.json();
         if (jsonData.status === "Success" && jsonData.data) {
           setNotes(jsonData.data);
+          console.log("success "+notes);
         }
       } catch (error) {
+        console.log(error);
         setNotes([]);
       }
     };

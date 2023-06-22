@@ -42,6 +42,7 @@ const QuickAdd = () => {
       description: description,
       userId: sessionUser,
       createdDate: new Date().toISOString().split("T")[0],
+      active: true
     };
     try {
       const response = await fetch("http://localhost:8080/api/v1/note/notes", {
