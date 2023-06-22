@@ -38,11 +38,11 @@ const QuickAdd = () => {
 
   const addNote = async () => {
     const requestBody = {
-      id: null,
       title: title,
       description: description,
       userId: sessionUser,
       createdDate: new Date().toISOString().split("T")[0],
+      active: true
     };
     try {
       const response = await fetch("http://localhost:8080/api/v1/note/notes", {
@@ -75,6 +75,10 @@ const QuickAdd = () => {
   };
 
   const handleFormSubmit = async () => {
+    if (!title) {
+      alert("Please enter the note title!");
+      return;
+    }
     addNote();
     setTitle("");
     setDescription("");
@@ -103,7 +107,6 @@ const QuickAdd = () => {
       </Card>
       <Dialog
         open={open}
-        // onClose={handleClose}
         PaperProps={{
           style: {
             position: "absolute",

@@ -7,14 +7,14 @@ import Box from "@mui/material/Box";
 import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CountCard from "./CountCard";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
 function NoteScreen() {
   const [isHovered, setIsHovered] = useState(false);
-
-  const { noteId } = useParams();
-  console.log('h1:'+noteId);
+  const [id, setId] = useSearchParams();
+  const noteId =id.get("id"); 
+  console.log('h1:' + noteId);
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -72,95 +72,94 @@ function NoteScreen() {
   const handleBack = () => {
     navigate(-1);
   };
-    return (
-        <div>
-            <Box
-                sx={{
-                    fontWeight: 'bold',
-                    marginLeft: 3
-                }}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-            >
-                <ArrowBackIcon onClick={handleBack} fontSize="large" sx={{
-                    '&:hover': {
-                        cursor: 'pointer',
-                        backgroundColor: '#F2F2F2',
-                        borderRadius: '7px',
-                    }
-                }} />
-                {isHovered && <Typography variant='subtitle1'
-                    sx={{
-                        fontWeight: 'bold',
-                        color: 'white',
-                        width: '75px', height: '30px',
-                        backgroundColor: '#767676',
-                        p: 0.4, borderRadius: '7px',
-                        position: 'fixed',
-                        top: '35px',
-                        left: '10px',
-                    }}
-                >
-                    Go back
-                </Typography>}
-            </Box>
-            <Container fixed marginTop={15} style={{ paddingTop: 30 }}>
-                <EditableDiv param={noteId} />
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        p: 2, border: '2px solid #E1E1E1',
-                        borderRadius: '10px',
-                        marginTop: 2,
-                        backgroundColor: '#FAFAFA',
-                        '&:hover': {
-                            border: '2px solid #1981C1',
-                            cursor: 'pointer',
-                        },
-                    }}
-                >
-                    <InfoIcon color="primary" sx={{ marginRight: 1 }} />
-                    <Typography variant='subtitle1' >
-                        A single page to help you and your team team stay on top of all the moving parts.
-                        Take a look around, then clear the sample tasks, projects, updates, and team members
-                        so you can get started with a fresh template.
-                    </Typography>
-                </Box>
-                <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
-                <CountCard countCardKey={countCardKey} id={noteId} />
-                <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
-                <Typography variant='h5' sx={{ fontWeight: 'bold', marginTop: 2 }} >
-                    📊 Task tracker
-                </Typography>
-                <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        p: 2, border: '2px solid #E1E1E1',
-                        borderRadius: '10px',
-                        marginTop: 2,
-                        backgroundColor: '#FAFAFA',
-                        '&:hover': {
-                            border: '2px solid #1981C1',
-                            cursor: 'pointer',
-                        },
-                    }}
-                >
-                    <InfoIcon color="primary" sx={{ marginRight: 1 }} />
-                    <Typography variant='subtitle1' >
-                        Click on any card to view and update details.
-                        Click <strong>+ New card</strong> to add tasks. Drag and
-                        drop cards to move tasks through the stages.
-                        Click the down arrow at the top of any stage to expand/collapse it.
-                    </Typography>
-                </Box>
-            </Container>
-            <Box ref={kanbanRef}>
-                <Kanban  countCardKey={countCardKey} id={noteId}/>
-            </Box>
-        </div>
-    );
+  return (
+    <div>
+      <Box
+        sx={{
+          fontWeight: 'bold',
+          marginLeft: 3
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <ArrowBackIcon onClick={handleBack} fontSize="large" sx={{
+          '&:hover': {
+            cursor: 'pointer',
+            backgroundColor: '#F2F2F2',
+            borderRadius: '7px',
+          }
+        }} />
+        {isHovered && <Typography variant='subtitle1'
+          sx={{
+            fontWeight: 'bold',
+            color: 'white',
+            width: '75px', height: '30px',
+            backgroundColor: '#767676',
+            p: 0.4, borderRadius: '7px',
+            position: 'fixed',
+            top: '35px',
+            left: '10px',
+          }}
+        >
+          Go back
+        </Typography>}
+      </Box>
+      <Container fixed marginTop={15} style={{ paddingTop: 30 }}>
+        <EditableDiv param={noteId} />
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            p: 2, border: '2px solid #E1E1E1',
+            borderRadius: '10px',
+            marginTop: 2,
+            backgroundColor: '#FAFAFA',
+            '&:hover': {
+              border: '2px solid #1981C1',
+              cursor: 'pointer',
+            },
+          }}
+        >
+          <InfoIcon color="primary" sx={{ marginRight: 1 }} />
+          <Typography variant='subtitle1' >
+            A single page to help you and your team team stay on top of all the moving parts.
+            Take a look around, then clear the sample tasks, projects, updates, and team members
+            so you can get started with a fresh template.
+          </Typography>
+        </Box>
+        <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
+        <CountCard countCardKey={countCardKey} id={noteId} />
+        <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
+        <Typography variant='h5' sx={{ fontWeight: 'bold', marginTop: 2 }} >
+          📊 Task tracker
+        </Typography>
+        <Box
+          sx={{
+            display: 'flex',
+            flexDirection: 'row',
+            p: 2, border: '2px solid #E1E1E1',
+            borderRadius: '10px',
+            marginTop: 2,
+            backgroundColor: '#FAFAFA',
+            '&:hover': {
+              border: '2px solid #1981C1',
+              cursor: 'pointer',
+            },
+          }}
+        >
+          <InfoIcon color="primary" sx={{ marginRight: 1 }} />
+          <Typography variant='subtitle1' >
+            Click on any card to view and update details.
+            Click <strong>+ New card</strong> to add tasks. Drag and
+            drop cards to move tasks through the stages.
+          </Typography>
+        </Box>
+      </Container>
+      <Box ref={kanbanRef}>
+        <Kanban countCardKey={countCardKey} id={noteId} />
+      </Box>
+    </div>
+  );
 }
 
 export default NoteScreen;

@@ -19,14 +19,14 @@ font-size: 20px;
 padding: 5px 10px;
 border: none;
 `;
-function AddColumn() {
+function AddColumn({boardId}) {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
     console.log(name)
     const handleOnClick = () => {
         const Data = {
             // Đối tượng bạn muốn truyền trong phần body
-            boardId: 1,
+            boardId: boardId,
             name: name,
             active: true,
         };
@@ -103,7 +103,7 @@ function AddColumn() {
                             border: 'none',
                             borderRadius: '25px',
                         }}
-                        onClick={handleOnClick}                        
+                        onClick={handleOnClick}
                         >
                             save
                         </button>
