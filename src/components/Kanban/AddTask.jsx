@@ -23,6 +23,20 @@ const AddButton = styled.button`
   }
 `;
 
+const AddTaskPopup = styled(Grid)`
+  background: white;
+  width: calc(100% - 40px);
+  max-width: 1000px;
+  min-width: 300px;
+  box-shadow: 0 0 10px #888888;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  padding: 68px 68px;
+`;
+
 export default function AddTask() {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -69,7 +83,7 @@ export default function AddTask() {
     <>
       <AddButton onClick={handleAdd}>+</AddButton>
       {showAddScreen && (
-        <Grid
+        <AddTaskPopup
           container
           spacing={0.5}
           alignItems="center"
@@ -211,7 +225,7 @@ export default function AddTask() {
               Add
             </Button>
           </Grid>
-        </Grid>
+        </AddTaskPopup>
       )}
     </>
   );
