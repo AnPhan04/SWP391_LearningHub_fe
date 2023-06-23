@@ -16,8 +16,8 @@ const InputField = styled.input`
     font-family: inter, sans-serif;
 `;
 
-const Input = ({placeholder}) => {
-  return <InputField type="text" placeholder={placeholder}/>;
+const Input = ({placeholder, value}) => {
+  return <InputField type="text" placeholder={placeholder} value={value}/>;
 };
 
 Input.defaultProps = {

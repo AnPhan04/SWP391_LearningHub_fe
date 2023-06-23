@@ -8,7 +8,7 @@ const TextField = ({ ...props }) => {
         style: {
           width: "100%",
           border: "none",
-          borderRadius: "25px",
+          borderRadius: "15px",
           backgroundColor: "#F6F6F6",
           fontSize: "16px",
           color: "#333333",
