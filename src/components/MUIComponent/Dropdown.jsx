@@ -32,7 +32,7 @@ export default function MultipleSelect() {
   
   useEffect(() => {
     const getBoardId = async () => {
-      fetch(`http://localhost:8080/api/v1/note/board?noteId=${noteId}`, {
+      await fetch(`http://localhost:8080/api/v1/note/board?noteId=${noteId}`, {
         credentials: "include",
         method: "GET",
       })
@@ -42,7 +42,7 @@ export default function MultipleSelect() {
         });
     };
     const getLabelsList = async () => {
-      fetch(
+      await fetch(
         `http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=${boardId}`,
         {
           credentials: "include",
