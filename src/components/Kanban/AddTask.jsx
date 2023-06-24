@@ -82,7 +82,7 @@ export default function AddTask() {
     // <AddButton onClick={test}>+</AddButton>
     <>
       <AddButton onClick={handleAdd}>+</AddButton>
-      <Dialog open={showAddScreen} onClick={handleClose}>
+      <Dialog open={showAddScreen}>
         <>
           <AddTaskPopup
             container
