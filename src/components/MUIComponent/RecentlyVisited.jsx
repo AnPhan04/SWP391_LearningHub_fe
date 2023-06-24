@@ -139,6 +139,7 @@ const RecentlyVisited = () => {
       const jsonData = await response.json();
       if (response.ok) {
         console.log(jsonData.message);
+        setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
       }
     } catch (error) {
       console.log("Archive note error: " + error);
