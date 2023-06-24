@@ -25,7 +25,6 @@ const Select = styled(MUISelect)(() => ({
 export default function MultipleSelect() {
   const [id, setId] = useSearchParams();
   const noteId = id.get("id");
-  console.log("Dropdown:" + noteId);
 
   const [personName, setPersonName] = useState([]);
   const [labelName, setLabelName] = useState([]);
@@ -39,8 +38,6 @@ export default function MultipleSelect() {
       })
         .then((response) => response.json())
         .then((jsonData) => {
-          console.log(jsonData);
-          console.log(jsonData.data.id);
           setBoardId(jsonData.data.id);
         });
     };
@@ -56,7 +53,6 @@ export default function MultipleSelect() {
         .then((jsonData) => {
           if (Array.isArray(jsonData)) { // Check if jsonData is an array
             const labelNames = jsonData.map((item) => item.name);
-            console.log("label names", labelNames);
             setLabelName(labelNames);
           } else {
             console.error("Invalid JSON data:", jsonData);}
