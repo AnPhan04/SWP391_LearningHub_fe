@@ -5,12 +5,13 @@ import FormControl from "@mui/material/FormControl";
 import { Select as MUISelect } from "@mui/material";
 import { useEffect } from "react";
 import styled from "@emotion/styled";
+import { useSearchParams } from "react-router-dom";
 
-const Select = styled(MUISelect) (()=>({
+const Select = styled(MUISelect)(() => ({
   borderRadius: "15px",
   // boxShadow: "0 0 10px #888888",
-  background: "white"
-}))
+  background: "white",
+}));
 
 /* function getStyles(name, personName, theme) {
   return {
@@ -22,30 +23,30 @@ const Select = styled(MUISelect) (()=>({
 } */
 
 export default function MultipleSelect() {
+  const [id, setId] = useSearchParams();
+  const noteId = id.get("id");
+  console.log("Dropdown:" + noteId);
+
   const [personName, setPersonName] = useState([]);
-  /* const Current = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/user/current",
-        {
-          method: "GET",
-          credentials: "include",
-        }
-      );
-      const json = await response.json();
-      console.log("current " + json);
-      return json;
-    } catch (error) {
-      console.log(error);
-      return null;
-    }
-  }; */
-  // TODO get boardId
   const [labelName, setLabelName] = useState([]);
+  const [boardId, setBoardId] = useState("");
+  
   useEffect(() => {
+    const getBoardId = async () => {
+      fetch(`http://localhost:8080/api/v1/note/board?noteId=${noteId}`, {
+        credentials: "include",
+        method: "GET",
+      })
+        .then((response) => response.json())
+        .then((jsonData) => {
+          console.log(jsonData);
+          console.log(jsonData.data.id);
+          setBoardId(jsonData.data.id);
+        });
+    };
     const getLabelsList = async () => {
       fetch(
-        "http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=1",
+        `http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=${boardId}`,
         {
           credentials: "include",
           method: "GET",
@@ -53,14 +54,17 @@ export default function MultipleSelect() {
       )
         .then((response) => response.json())
         .then((jsonData) => {
-          console.log(jsonData);
-          const labelNames = jsonData.map((item) => item.name); 
-          console.log(labelNames);
-          setLabelName(labelNames);
+          if (Array.isArray(jsonData)) { // Check if jsonData is an array
+            const labelNames = jsonData.map((item) => item.name);
+            console.log("label names", labelNames);
+            setLabelName(labelNames);
+          } else {
+            console.error("Invalid JSON data:", jsonData);}
         });
     };
+      getBoardId();
     getLabelsList();
-  }, []);
+  }, [noteId, boardId]);
 
   const handleChange = (event) => {
     const {
@@ -74,7 +78,7 @@ export default function MultipleSelect() {
 
   return (
     <div>
-      <FormControl sx={{ width: "100%",  padding: "0 5px" }}>
+      <FormControl sx={{ width: "100%", padding: "0 5px" }}>
         {/* <InputLabel id="demo-multiple-name-label">Label</InputLabel> */}
         <Select
           labelId="demo-multiple-name-label"
