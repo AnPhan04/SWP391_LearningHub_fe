@@ -10,24 +10,34 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import CancelIcon from '@mui/icons-material/Cancel';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import AddIcon from '@mui/icons-material/Add';
 
-const LabelsList = () => {
+
+const LabelsList = ({ boardID,onchangedata1}) => {
   const [labelsList, setLabelsList] = useState([]);
   const navigate = useNavigate();
   const [boardId, setBoardId] = useState(Label.boardId);
   const [editLabel, setEditLabel] = useState(null);
   const [showLabels, setShowLabels] = useState(false);
+  const [data1, setData1] = useState(0);
+  const [count, setCount] = useState(0);
+
+  console.log("data:"+data1)
+  const handleDataChangeFather = (newData) => {
+    setData1(newData);
+  };
+
   useEffect(() => {
-    fetchLabels();
-  }, []);
+    console.log("data_1:"+data1)
+    fetchLabels(boardID);
+
+  }, [data1]);
 
   const fetchLabels = async (boardId) => {
     try {
-      const response = await fetch('http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=1');
-      // const response = await fetch(`http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=${boardId}`);
+      const response = await fetch(`http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=${boardId}`);
       const data = await response.json();
       setLabelsList(data);
+      console.log('oke:'+JSON.stringify(data))
     } catch (error) {
       console.log('Error fetching core labels:', error);
     }
@@ -39,17 +49,17 @@ const LabelsList = () => {
 
   const deleteLabel = async (boardId, labelId) => {
     try {
-    const response = await fetch(` http://localhost:8080/api/v1/labels/deleBL?boardId=${boardId}&labelId=${labelId}`, {
-      method: 'DELETE',
-    });
-    if (response.status === 204) {
-      fetchLabels();
-    } else {
-      console.error('Failed to delete label.');
+      const response = await fetch(` http://localhost:8080/api/v1/labels/deleBL?boardId=${boardId}&labelId=${labelId}`, {
+        method: 'DELETE',
+      });
+      if (response.status === 204) {
+        fetchLabels(boardID);
+      } else {
+        console.error('Failed to delete label.');
+      }
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
-  }
   };
 
   const handleEditLabel = (label) => {
@@ -69,7 +79,9 @@ const LabelsList = () => {
         }
       );
       if (response.status === 200) {
-        fetchLabels();
+        fetchLabels(boardID);
+        onchangedata1(count);
+        setCount(prev=>prev+1)
         setEditLabel(null);
       } else {
         console.error('Failed to update label.');
@@ -92,14 +104,14 @@ const LabelsList = () => {
   };
 
   return (
-    <div style={{width: '350px'}}>
-      <TypoText variant="h1" style={{color:"red"}}>Labels</TypoText>
+    <div style={{ width: '350px' }}>
+      <TypoText variant="h1" style={{ color: "red" }}>Labels</TypoText>
       {labelsList.map((label) => (
         <div key={label.id} >
           {editLabel && editLabel.id === label.id ? (
             <div>
               <h3>Edit Label</h3>
-              <Input
+              <input
                 type="text"
                 value={editLabel.name}
                 onChange={(e) =>
@@ -112,35 +124,33 @@ const LabelsList = () => {
               <br></br>
               <br></br>
               <label htmlFor="labelColor">Color:</label>
-          <input
-            id="labelColor"
-            type="color"
-            value={editLabel.color}
-            onChange={(e) => setEditLabel((prevLabel) => ({
-              ...prevLabel, color: e.target.value,
-            }))}
-            required
-          />
-              {/* Add more input fields for other properties */}
+              <input
+                id="labelColor"
+                type="color"
+                value={editLabel.color}
+                onChange={(e) => setEditLabel((prevLabel) => ({
+                  ...prevLabel, color: e.target.value,
+                }))}
+                required
+              />
+
               <br></br>
               <Button onClick={handleSaveLabel}><DoneOutlineIcon /></Button>
               <Button onClick={handleCancelEdit} style={{ marginLeft: '10px' }}><CancelIcon /></Button>
             </div>
           ) : (
             <>
-              <div style={{ display: 'flex', alignItems: 'center'}}>
-              <h3 style={{ backgroundColor: label.color,width: '200px', height: '60px'}}>{label.name}</h3>
-              <Button onClick={() => deleteLabel(label.boardId, label.id)} style={{ marginLeft: '10px' }}>< DeleteIcon /></Button>
-              <Button onClick={() => handleEditLabel(label)} style={{ marginLeft: '10px' }}><EditIcon /></Button>
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <h3 style={{ backgroundColor: label.color, width: '200px', height: '60px' }}>{label.name}</h3>
+                <Button onClick={() => deleteLabel(label.boardId, label.id)} style={{ marginLeft: '10px' }}>< DeleteIcon /></Button>
+                <Button onClick={() => handleEditLabel(label)} style={{ marginLeft: '10px' }}><EditIcon /></Button>
               </div>
             </>
           )}
         </div>
       ))}
-      {/* <Button onClick={handleAddLabels}>Add Labels</Button> */}
-      <Button onClick={handleShowLabels}><AddIcon /></Button>
-      {showLabels && <Labels />}
-      <div style={{height: '30px'}}></div>
+
+      <Labels boardID={boardID} onDataChangechild={handleDataChangeFather} />
     </div>
   );
 };

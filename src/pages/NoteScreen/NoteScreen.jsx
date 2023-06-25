@@ -8,14 +8,25 @@ import InfoIcon from "@mui/icons-material/Info";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CountCard from "./CountCard";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { useParams } from "react-router-dom";
+import LabelsList from "../../components/MUIComponent/LabelList";
+
 
 function NoteScreen() {
   const [isHovered, setIsHovered] = useState(false);
   const [id, setId] = useSearchParams();
-  const noteId =id.get("id"); 
+  const noteId = id.get("id");
   console.log('h1:' + noteId);
 
+  const [countCardKey, setCountCardKey] = useState(0);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const kanbanRef = useRef(null);
+  const updateTimeoutRef = useRef(null); // Thêm một ref để lưu trữ timeout ID
+
+  const handleOnChange1 = (newData) => {
+    const countKey = `${newData}`
+    console.log("c:" + countKey)
+    setCountCardKey(countKey);
+  };
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -24,10 +35,6 @@ function NoteScreen() {
     setIsHovered(false);
   };
 
-  const [countCardKey, setCountCardKey] = useState(0);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const kanbanRef = useRef(null);
-  const updateTimeoutRef = useRef(null); // Thêm một ref để lưu trữ timeout ID
 
   useEffect(() => {
     console.log("render");
@@ -158,6 +165,9 @@ function NoteScreen() {
       <Box ref={kanbanRef}>
         <Kanban countCardKey={countCardKey} id={noteId} />
       </Box>
+      <Container fixed >
+        <LabelsList boardID={noteId} onchangedata1={handleOnChange1} />
+      </Container>
     </div>
   );
 }
