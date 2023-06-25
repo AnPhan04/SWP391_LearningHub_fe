@@ -8,8 +8,8 @@ const TextField = ({ ...props }) => {
         style: {
           width: "100%",
           border: "none",
-          borderRadius: "25px",
-          backgroundColor: "#F6F6F6",
+          borderRadius: "15px",
+          backgroundColor: "#f5f5f5",
           fontSize: "16px",
           color: "#333333",
           boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",

@@ -14,7 +14,7 @@ const ChangePassword = () => {
     event.preventDefault();
     navigate(-1);
   };
-  
+
   const handleChangePassword = async (event) => {
     event.preventDefault();
     const form = document.getElementById("changePasswordForm");
@@ -24,12 +24,14 @@ const ChangePassword = () => {
       newpass: data.get("newpass"),
       verpass: data.get("verpass"),
     };
+    console.log(requestBody);
 
     try {
       const response = await fetch(
         "http://127.0.0.1:8080/api/v1/user/password",
         {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -63,6 +65,7 @@ const ChangePassword = () => {
         background: "#eaeaea",
         padding: "35px",
       }}
+      onSubmit={handleChangePassword}
     >
       <TypoText variant="h1" style={{ margin: "0" }}>
         Change password
