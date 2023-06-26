@@ -1,32 +1,42 @@
-import AddIcon from '@mui/icons-material/Add';
+import { colors } from '@mui/material';
+import { grey } from '@mui/material/colors';
 import React, { useState, useEffect } from 'react';
 import Button from './Button/Button';
+import Input from './Input';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
-const Labels = ({boardID,onDataChangechild}) => {
-  const [show, setShow] = useState(false);
+const Labels = () => {
+  const [Labels, setLabels] = useState([]);
   const [newLabel, setNewLabel] = useState({boardId: 1, name: '', color: '' });
-  const [count, setCount] = useState(1);
+  const [boardId, setBoardId] = useState(0);
+  useEffect(() => {
+    fetchCoreLabels();
+  }, []);
 
-  const handleOnClick=()=>{
-     createLabel();
-     setShow(false);
-    }
-    
-    
-    const createLabel = async () => {
-      try{
-        const response = await fetch(` http://localhost:8080/api/v1/labels/createBL`, {
-          method: 'POST',
-          credential:'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(newLabel),
-        });
-        if (response.ok) {
-          console.log('add suceess')
-          onDataChangechild(count);
-          setCount(prev=>prev+1);
+  const fetchCoreLabels = async (boardId) => {
+    try {
+    //const response = await fetch(' http://localhost:8080/api/v1/labels');
+    const response = await fetch('http://localhost:8080/api/v1/labels/getLabelsByBoardId?boardId=1');
+    const data = await response.json();
+    setLabels(data);
+  } catch (error) {
+    console.error(error);
+  }
+  };
+
+
+  const createLabel = async () => {
+    try{
+    const response = await fetch(` http://localhost:8080/api/v1/labels/createBL`, {
+      method: 'POST',
+      credential:'include',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newLabel),
+    });
+    if (response.ok) {
+      // Refresh the core labels list
+      fetchCoreLabels();
       // Reset the new label form
       setNewLabel({ name: '', color: '' });
     } else {
@@ -41,12 +51,10 @@ const Labels = ({boardID,onDataChangechild}) => {
  
 
   return (
-    <>
-    <Button onClick={()=>setShow(!show)}><AddIcon /></Button> 
-    {show&&<div style={{ border: '2px solid black', width: '350px', backgroundColor: 'lightgray'}}>
+    <div style={{ border: '2px solid black', width: '350px', backgroundColor: 'lightgray'}}>
       <h2>Labels</h2>
 
-      <div >
+      <form onSubmit={createLabel}>
         <label>
           Name:
           <input
@@ -70,13 +78,12 @@ const Labels = ({boardID,onDataChangechild}) => {
           />
         </div>
         <br></br>
-        <Button onClick={handleOnClick}><CloudDoneIcon /></Button>
+        <Button type="submit"><CloudDoneIcon /></Button>
         <br></br>
         
-      </div>
+      </form>
       <br></br>
-    </div>}
-    </>
+    </div>
   );
 };
 
