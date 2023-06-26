@@ -150,7 +150,7 @@ const Kanban = ({ countCardKey,id }) => {
                           <TaskCard key={item.id} item={item} index={index} />
                         ))}
                         {provided.placeholder}
-                        <AddTask key={columnId} />
+                        <AddTask key={columnId} colId={columnId} />
                       </TaskList>
                     )}
                   </Droppable>

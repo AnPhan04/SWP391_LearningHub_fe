@@ -22,13 +22,14 @@ const Select = styled(MUISelect)(() => ({
   };
 } */
 
-export default function MultipleSelect() {
+export default function MultipleSelect({onChange}) {
   const [id, setId] = useSearchParams();
   const noteId = id.get("id");
 
   const [personName, setPersonName] = useState([]);
   const [labelName, setLabelName] = useState([]);
-  const [boardId, setBoardId] = useState("");
+  const [boardId, setBoardId] = useState(id.get("id"));
+  const [selectedLabels, setSelectedLabels] = useState([]);
   
   useEffect(() => {
     const getBoardId = async () => {
@@ -52,7 +53,7 @@ export default function MultipleSelect() {
         .then((response) => response.json())
         .then((jsonData) => {
           if (Array.isArray(jsonData)) { // Check if jsonData is an array
-            const labelNames = jsonData.map((item) => item.name);
+            const labelNames = jsonData.map((item) => item.id);
             setLabelName(labelNames);
           } else {
             console.error("Invalid JSON data:", jsonData);}
@@ -63,13 +64,9 @@ export default function MultipleSelect() {
   }, [noteId, boardId]);
 
   const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
-    );
+    const { value } = event.target;
+    setSelectedLabels(value);
+    onChange(value);
   };
 
   return (
@@ -77,14 +74,11 @@ export default function MultipleSelect() {
       <FormControl sx={{ width: "100%", padding: "0 5px" }}>
         {/* <InputLabel id="demo-multiple-name-label">Label</InputLabel> */}
         <Select
-          labelId="demo-multiple-name-label"
-          id="demo-multiple-name"
-          multiple
-          value={personName}
-          onChange={handleChange}
-          input={<OutlinedInput label="Label" />}
-          // MenuProps={MenuProps}
-        >
+      multiple
+      value={selectedLabels}
+      onChange={handleChange}
+      renderValue={(selected) => selected.join(", ")}
+    >
           {labelName.map((name) => (
             <MenuItem
               key={name}

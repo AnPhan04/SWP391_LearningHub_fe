@@ -36,11 +36,14 @@ const AddTaskPopup = styled(Grid)`
   padding: 68px 68px;
 `;
 
-export default function AddTask() {
+export default function AddTask(props) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [duration, setDuration] = useState(0);
   const [showAddScreen, setShowAddScreen] = useState(false);
+  const [name, setName] = useState("");
+  const [label, setLabel] = useState([""]);
+  const [description, setDescription] = useState("");
 
   const handleEndDateChange = (newValue) => {
     if (startDate && newValue < startDate) {
@@ -50,7 +53,6 @@ export default function AddTask() {
     } else {
       setEndDate(newValue);
       calculateDuration(startDate, newValue);
-      console.log(calculateDuration(startDate, newValue));
     }
   };
 
@@ -76,6 +78,43 @@ export default function AddTask() {
 
   const handleClose = () => {
     setShowAddScreen(false);
+  };
+
+  const handleSubmit = async () => {
+    const requestBody = {
+      card: {
+        id:null,
+        columnId: props.colId,
+        name: name,
+        description: description,
+        dateStart: startDate.toISOString().split("T")[0],
+        dateEnd: endDate.toISOString().split("T")[0],
+        isActive: true,
+        createdDate: new Date().toISOString().split("T")[0],
+      },
+      labels:label
+    };
+    // Add further logic or API call to submit the data
+    try {
+      console.log(console.log(typeof(label)));
+      console.log(console.log(label));
+      const response = await fetch("http://localhost:8080/api/v1/note/card", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+      if (response.ok) {
+        const jsonData = response.json();
+        console.log("AddTask: ", jsonData);
+        window.location.reload(false);
+      }
+    } catch (error) {
+      console.log("Lỗi:", error);
+    }
+    handleClose();
   };
 
   return (
@@ -114,8 +153,8 @@ export default function AddTask() {
                 required
                 fullWidth
                 id="name"
-                // label="Name"
-                name="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
                 sx={{ borderRadius: "8px", padding: "0 5px" }}
               />
             </Grid>
@@ -131,7 +170,7 @@ export default function AddTask() {
               >
                 LABEL
               </TypoText>
-              <MultipleSelect />
+              <MultipleSelect onChange={(selectedLabels) => setLabel(selectedLabels)} />
             </Grid>
             <Grid item xs={12}>
               <TypoText
@@ -148,7 +187,8 @@ export default function AddTask() {
               <TextField
                 multiline
                 rows={2}
-                // label="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
                 sx={{ width: "100%", padding: "0 5px" }}
               />
             </Grid>
@@ -221,7 +261,7 @@ export default function AddTask() {
               </Button>
             </Grid>
             <Grid item xs={1}>
-              <Button variant="contained" size="large" onClick={handleClose}>
+              <Button variant="contained" size="large" onClick={handleSubmit}>
                 Add
               </Button>
             </Grid>
