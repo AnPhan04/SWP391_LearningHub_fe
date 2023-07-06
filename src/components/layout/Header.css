@@ -52,6 +52,7 @@
     top: 8vh;
     right: 0;
     display: flex;
+    z-index: 99999;
     flex-direction: column;
     background-color: #ae81ff;
     padding: 8px;

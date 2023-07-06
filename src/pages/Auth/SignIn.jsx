@@ -15,21 +15,22 @@ const CustomLink = React.forwardRef((props, ref) => {
   return <DomLink to={href} ref={ref} {...other} />;
 });
 
-const Current = async () => {
-  fetch("http://localhost:8080/api/v1/user/current", {
-    method: "GET",
-    credentials: "include",
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json))
-    .catch((error) => console.log(error));
-};
+
 const SignIn = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [role, setRole] = useState("");
   const passwordRef = useRef(null);
   const navigate = useNavigate();
-
+  // const Current = async () => {
+  //   fetch("http://localhost:8080/api/v1/user/current", {
+  //     method: "GET",
+  //     credentials: "include",
+  //   })
+  //     .then((response) => response.json())
+  //     .then((json) => setRole(json.roleId))
+  //     .catch((error) => console.log(error));
+  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -49,9 +50,8 @@ const SignIn = () => {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
+        setRole(responseData.data[0].roleId);
         setErrorMessage("");
-        Current();
         setIsAuthenticated(true);
       } else {
         const errorData = await response.json();
@@ -62,11 +62,16 @@ const SignIn = () => {
       console.log("Error:", error.message);
     }
   };
-
   if (isAuthenticated) {
-    return (
-      navigate("/dashboard")
-    );
+    console.log("role",role);
+    if (role === "ADMIN") {
+      return (navigate("/admin"));
+    } else {
+      return (
+        navigate("/dashboard")
+      );
+    }
+
   }
 
   return (

@@ -5,6 +5,7 @@ import ButtonLink from "../MUIComponent/ButtonLink";
 import A from "../../common/assets";
 
 async function logout() {
+  localStorage.clear();
   await fetch("http://localhost:8080/api/v1/user/logout", {
     method: "POST",
     credentials: "include",
@@ -53,13 +54,6 @@ const Header = () => {
                 color={A.colors.white}
                 style={{ marginRight: "15px" }}
               >
-                Product
-              </Link>
-              <Link
-                href="/aboutus"
-                color={A.colors.white}
-                style={{ marginRight: "15px" }}
-              >
                 About us
               </Link>
               <Link
@@ -95,14 +89,6 @@ const Header = () => {
                 {"Hi " + username}
                 {isProfileOpen && (
                   <div className="profile-dropdown">
-                    {/* <button>Account Setting</button>
-                    <button onClick={handleLogout}>Logout</button> */}
-                    <Link href="/profile">
-                      <button color={A.colors.white} style={{ "width": "100%" }}>
-                        User Profile
-                      </button>
-                    </Link>
-
                     <Link href="/accountsetting">
                       <button variant="cancel" style={{ "width": "100%" }} >
                         Account Setting

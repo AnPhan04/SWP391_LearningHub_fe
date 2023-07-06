@@ -17,6 +17,8 @@ import Landing from "../pages/Landing";
 import EditProfile from "../pages/User/EditProfile";
 import Labels from "../components/MUIComponent/Labels";
 import LabelsList from "../components/MUIComponent/LabelList";
+import UpdateCoreLabel from "../pages/Admin/UpdateCoreLabel";
+import AdminMain from "../pages/Admin/AdminMain";
 
 const routes = createBrowserRouter([
     {
@@ -89,6 +91,14 @@ const routes = createBrowserRouter([
     {
         path: "/listLabels",
         element: <LabelsList/>
+    },
+    {
+        path: "/updateCoreLabel",
+        element: <UpdateCoreLabel />
+    },
+    {
+        path: "/admin",
+        element: <AdminMain />
     }
 ]);
 export default routes;
