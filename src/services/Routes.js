@@ -19,6 +19,7 @@ import Labels from "../components/MUIComponent/Labels";
 import LabelsList from "../components/MUIComponent/LabelList";
 import UpdateCoreLabel from "../pages/Admin/UpdateCoreLabel";
 import AdminMain from "../pages/Admin/AdminMain";
+import Deactive from "../pages/Auth/Deactive";
 
 const routes = createBrowserRouter([
     {
@@ -33,11 +34,13 @@ const routes = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <SignIn />
+        element: <SignIn />,
+        errorElement: <ErrorPage />
     },
     {
         path: "/signup",
         element: <SignUp />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/flashcard",
@@ -55,18 +58,22 @@ const routes = createBrowserRouter([
     {
         path: "/forgotpassword",
         element: <ResetPassword />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/changepw",
         element: <ChangePassword />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/featurelist",
         element: <FeatureList />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/accountsetting",
         element: <AccountSetting />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/taskmanagement",
@@ -83,6 +90,7 @@ const routes = createBrowserRouter([
     {
         path: "/profile",
         element: <EditProfile />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/addlabel",
@@ -90,15 +98,27 @@ const routes = createBrowserRouter([
     },
     {
         path: "/listLabels",
-        element: <LabelsList/>
+        element: <LabelsList />
     },
     {
         path: "/updateCoreLabel",
         element: <UpdateCoreLabel />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/admin",
         element: <AdminMain />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/deactive",
+        element: <Deactive />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/error",
+        element: <ErrorPage />,
+        errorElement: <ErrorPage />
     }
 ]);
 export default routes;

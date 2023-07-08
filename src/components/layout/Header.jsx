@@ -20,6 +20,7 @@ const Header = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [logged, setLogged] = useState(false);
   const [username, setUsername] = useState("Guest");
+  const [role, setRole] = useState("");
   useEffect(() => {
     fetch("http://localhost:8080/api/v1/user/current", {
       method: "GET",
@@ -31,6 +32,7 @@ const Header = () => {
         setLogged(json.active);
         console.log(logged);
         setUsername(json.email.substring(0, json.email.indexOf('@')));
+        setRole(json.role);
         console.log(username)
       })
       .catch((error) => setLogged(false));
@@ -95,11 +97,18 @@ const Header = () => {
                       </button>
                     </Link>
 
-                    <Link href="/dashboard">
-                      <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
-                        Dashboard
-                      </button>
-                    </Link>
+                    {role === "ADMIN" ?
+                      <Link Link href="/dashboard">
+                        <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
+                          Dashboard
+                        </button>
+                      </Link>
+                      : <Link Link href="/admin">
+                        <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
+                          Dashboard
+                        </button>
+                      </Link>
+                    }
 
                     <Link href="/landing">
                       <button variant="cancel" onClick={() => { logout(); setLogged(false) }} style={{ "width": "100%" }} >
@@ -112,7 +121,7 @@ const Header = () => {
             </>
           )}
         </div>
-      </div>
+      </div >
 
     </>
   );

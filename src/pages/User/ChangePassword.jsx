@@ -5,9 +5,14 @@ import TextField from "../../components/MUIComponent/TextField";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
+import Alert from '@mui/material/Alert';
 
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [oldPassword,setOldPassword] = useState();
+  const [newPassword,setnewPassword] = useState();
+  const [reNewPassword,setReNewPassword] = useState();
   const navigate = useNavigate();
 
   const handleCancel = (event) => {
@@ -15,47 +20,49 @@ const ChangePassword = () => {
     navigate(-1);
   };
 
-  const handleChangePassword = async (event) => {
-    event.preventDefault();
-    const form = document.getElementById("changePasswordForm");
-    const data = new FormData(form);
-    const requestBody = {
-      oldpass: data.get("oldpass"),
-      newpass: data.get("newpass"),
-      verpass: data.get("verpass"),
-    };
-    console.log(requestBody);
-
+  const handleOldp =(e)=>{
+    setOldPassword(e.target.value);
+  }
+  const handleNewp =(e)=>{
+    setnewPassword(e.target.value);
+  }
+  const handleRep =(e)=>{
+    setReNewPassword(e.target.value);
+  }
+  const Data = {
+    oldpass: oldPassword,
+    verpass: reNewPassword,
+    newpass: newPassword,
+  }
+  const handleOnChange = async () => {
     try {
+      console.log(JSON.stringify(Data));
       const response = await fetch(
-        "http://127.0.0.1:8080/api/v1/user/password",
+        "http://localhost:8080/api/v1/user/password",
         {
-          method: "PUT",
           credentials: "include",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(requestBody),
+          body: JSON.stringify(Data)
         }
       );
-
       if (response.ok) {
-        const responseData = await response.json();
-        console.log(responseData);
+        const res = await response.json();
         setErrorMessage("");
+        setSuccessMessage(res.message)
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message);
       }
     } catch (error) {
-      console.log("Error:", error.message);
+      console.log(error);
     }
   };
 
-
   return (
-    <form
-      id="changePasswordForm"
+    <div
       style={{
         width: "25rem",
         position: "absolute",
@@ -65,60 +72,55 @@ const ChangePassword = () => {
         background: "#eaeaea",
         padding: "35px",
       }}
-      onSubmit={handleChangePassword}
     >
       <TypoText variant="h1" style={{ margin: "0" }}>
-        Change password
+        Change password🔑
       </TypoText>
       <TypoText variant="h5">
         Change your current password to a more secure one
       </TypoText>
       <Box
-        component="form"
-        // onSubmit={handleSubmit}
         noValidate
         sx={{ mt: 1, margin: "0 22px" }}
       >
         <TextField
-          // required
+          required
           fullWidth
-          name="password"
           label="Current password"
           type="password"
-          id="oldpass"
+          onChange={handleOldp}
         />
         <TextField
           required
           fullWidth
-          name="password"
           label="New password"
           type="password"
-          id="newpass"
+          onChange={handleNewp}
         />
         <TextField
           required
           fullWidth
-          name="password"
           label="Confirm new password"
           type="password"
-          id="verpass"
-          style={{ marginBottom: "2em" }}
+          style={{ marginBottom: "1em" }}
+          onChange={handleRep}
         />
         {errorMessage && (
-          <TypoText variant="h4" style={{ color: "red" }}>
-            {errorMessage}
-          </TypoText>
+          <Alert severity="warning" style={{ marginBottom: "1em" }}>{errorMessage}</Alert>
+        )}
+        {successMessage && (
+          <Alert severity="success" style={{ marginBottom: "1em" }}>{successMessage}</Alert>
         )}
         <Grid container spacing={2} justifyContent="right">
           <Grid item xs={6} textAlign="right">
             <Button variant="cancel" onClick={handleCancel}>Cancel</Button>
           </Grid>
           <Grid item xs={6} textAlign="left">
-            <Button onClick={handleChangePassword}>Change</Button>
+            <Button onClick={handleOnChange}>Change</Button>
           </Grid>
         </Grid>
       </Box>
-    </form>
+    </div>
   );
 };
 

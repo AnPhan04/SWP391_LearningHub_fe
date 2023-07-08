@@ -6,6 +6,7 @@ import ProfileButton from "../../components/MUIComponent/ProfileButton";
 import { Avatar } from "@mui/material";
 
 const AccountSetting = () => {
+  const role = localStorage.getItem("role");
   return (
     <>
       <Box
@@ -29,21 +30,23 @@ const AccountSetting = () => {
           "height": "45%",
           "margin": " 0 auto"
         }} />
-        <ProfileButton style={{ marginBlock: "2em 0" }}>
-          <Link href="/profile" hoverColor="white" color={A.colors.black}>
-            Edit Profile
-          </Link>
-        </ProfileButton>
-        <ProfileButton>
-          <Link href="/changepw" hoverColor="white" color={A.colors.black}>
+        <Link href="/profile" hoverColor="white" color={A.colors.black} style={{ width: "auto" }}>
+          <ProfileButton style={{ marginBlock: "2em 0" }}>
+            My Profile
+          </ProfileButton>
+        </Link>
+        <Link href="/changepw" hoverColor="white" color={A.colors.black} style={{ width: "auto" }}>
+          <ProfileButton>
             Change Password
+          </ProfileButton>
+        </Link>
+        {role !== "ADMIN" &&
+          <Link href="/deactive" hoverColor="white" color={A.colors.black}  style={{ width: "auto" }}>
+            <ProfileButton >
+              Deactive
+            </ProfileButton>
           </Link>
-        </ProfileButton>
-        <ProfileButton style={{ marginBlockEnd: "2em" }}>
-          <Link href="/deactive" hoverColor="white" color={A.colors.black}>
-            Deactive
-          </Link>
-        </ProfileButton>
+        }
       </Box>
     </>
   );

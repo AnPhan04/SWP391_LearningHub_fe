@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import "./UserDashboard.css";
 import "../Dashboard.css";
 import Header from "../../components/layout/Header";
@@ -9,8 +9,32 @@ import FlashcardDashboard from "../Flashcard/FlashcardDashBoard";
 import TaskManagementDashBoard from "../Task/TaskManagementDashboard";
 import FeatureList from "./FeatureList";
 import UpdateCoreLabel from "./UpdateCoreLabel";
+import { useNavigate } from "react-router-dom";
 
 const AdminMain = () => {
+    const navigate = useNavigate();
+    //authorize
+    const isAuth = async () => {
+        try {
+            const res = await fetch("http://localhost:8080/api/v1/user/current", {
+                method: "GET",
+                credentials: "include",
+            });
+            if (res.ok) {
+                const json = await res.json();
+                if (json.roleId !== "ADMIN") {
+                    navigate("/error")
+                }
+            }
+            else {
+                navigate("/error");
+            }
+        } catch (err) {
+            console.log("Can not get the user data");
+        }
+    }
+    useEffect(()=>{isAuth()},[]);
+
     const [destination, setDestination] = useState("featurelist");
     let path = localStorage.getItem('path');
     if (path !== null && path !== destination) {
@@ -32,11 +56,10 @@ const AdminMain = () => {
         }
     }
 
-    const handleOnClick = (value) =>{
+    const handleOnClick = (value) => {
         localStorage.setItem('path', value);
         setDestination(value);
     }
-
     return (
         // <BrowserRouter>
         <div>

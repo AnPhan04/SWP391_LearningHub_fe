@@ -1,9 +1,10 @@
 import React from "react";
-import { TextField as MuiTextField} from "@mui/material";
+import { TextField as MuiTextField } from "@mui/material";
 
 const TextField = ({ ...props }) => {
   return (
     <MuiTextField
+      defaultValue={props.defaultValue}
       InputProps={{
         style: {
           width: "100%",

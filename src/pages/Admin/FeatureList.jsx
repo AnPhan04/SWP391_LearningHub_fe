@@ -9,11 +9,33 @@ import Paper from '@mui/material/Paper';
 import TypoText from "../../components/MUIComponent/TypoText";
 import { green, pink } from '@mui/material/colors';
 import Checkbox from '@mui/material/Checkbox';
+import { useNavigate } from "react-router-dom";
 
 
 export default function FeatureList() {
   const [feature, setFeature] = useState([]);
   const [readOnly, setReadOnly] = useState(false);
+  const navigate = useNavigate();
+  const isAuth = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/v1/user/current", {
+        method: "GET",
+        credentials: "include",
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.roleId !== "ADMIN") {
+          navigate("/error")
+        }
+      }
+      else {
+        navigate("/error");
+      }
+    } catch (err) {
+      console.log("Can not get the user data");
+    }
+  }
+  useEffect(() => { isAuth() }, []);
   useEffect(() => {
     const getList = async () => {
       try {
@@ -80,7 +102,7 @@ export default function FeatureList() {
                       readOnly={readOnly}
                       onInput={() => {
                         let mess = prompt("Update the description");
-                        if(mess !== null){
+                        if (mess !== null) {
                           setActive(item.id, mess);
                         }
                       }} value={item.id} />

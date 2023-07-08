@@ -22,15 +22,6 @@ const SignIn = () => {
   const [role, setRole] = useState("");
   const passwordRef = useRef(null);
   const navigate = useNavigate();
-  // const Current = async () => {
-  //   fetch("http://localhost:8080/api/v1/user/current", {
-  //     method: "GET",
-  //     credentials: "include",
-  //   })
-  //     .then((response) => response.json())
-  //     .then((json) => setRole(json.roleId))
-  //     .catch((error) => console.log(error));
-  // };
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -55,16 +46,16 @@ const SignIn = () => {
         setIsAuthenticated(true);
       } else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message);
+        setErrorMessage(errorData.data);
         passwordRef.current.value = "";
       }
     } catch (error) {
-      console.log("Error:", error.message);
+      console.log("Error:", error.data);
     }
   };
   if (isAuthenticated) {
-    console.log("role",role);
     if (role === "ADMIN") {
+      localStorage.setItem("role", role);
       return (navigate("/admin"));
     } else {
       return (
@@ -90,6 +81,9 @@ const SignIn = () => {
           padding: "35px",
         }}
       >
+        <Link href="/" color={A.colors.black}>
+          <i class="fa-solid fa-arrow-left fa-xl"></i>
+        </Link>
         <TypoText variant="h1" style={{ margin: "0" }}>
           Welcome Back
         </TypoText>

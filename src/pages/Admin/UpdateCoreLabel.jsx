@@ -10,7 +10,7 @@ import Paper from '@mui/material/Paper';
 import TypoText from "../../components/MUIComponent/TypoText";
 import EditableField from "../../components/editableField";
 import Box from '@mui/material/Box';
-
+import { useNavigate } from "react-router-dom";
 import AddCoreLabel from "./AddCoreLabel";
 import DeleteCoreLabel from "./DeleteCoreLable";
 
@@ -35,6 +35,27 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 export default function UpdateCoreLabel() {
     const [labels, setLabels] = useState([]);
+    const navigate = useNavigate();
+    const isAuth = async () => {
+        try {
+            const res = await fetch("http://localhost:8080/api/v1/user/current", {
+                method: "GET",
+                credentials: "include",
+            });
+            if (res.ok) {
+                const json = await res.json();
+                if (json.roleId !== "ADMIN") {
+                    navigate("/error")
+                }
+            }
+            else {
+                navigate("/error");
+            }
+        } catch (err) {
+            console.log("Can not get the user data");
+        }
+    }
+    useEffect(()=>{isAuth()},[]);
     const renderUpdated = (e, id) => {
         const value = e.target.value;
         const updated = labels.map(label => {

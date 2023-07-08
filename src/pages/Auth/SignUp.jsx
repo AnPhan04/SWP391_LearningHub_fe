@@ -61,8 +61,11 @@ const SignUp = () => {
           padding: "35px",
         }}
       >
+        <Link href="/" color={A.colors.black}>
+          <i class="fa-solid fa-arrow-left fa-xl"></i>
+        </Link>
         <TypoText variant="h1" style={{ margin: "0" }}>
-          Welcome Back
+          Welcome to Learning Hub❤️
         </TypoText>
         <TypoText variant="h5">
           Make a new doc to bring your words, data, and much more. For free.
@@ -135,9 +138,6 @@ const SignUp = () => {
           </Grid>
         </Grid>
       </Box>
-      // <Routes>
-      //   <Route path="/login" component={SignIn}></Route>
-      // </Routes>
   );
 };
 export default SignUp;
