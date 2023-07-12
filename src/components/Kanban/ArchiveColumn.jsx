@@ -6,10 +6,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Alert from '@mui/material/Alert/Alert';
 import { Box } from '@mui/material';
 
 export default function ArchiveColumn(props) {
     const [open, setOpen] = useState(false);
+    const [err, setErr] = useState("");
     const styled = {
         "cursor": "pointer"
     }
@@ -29,8 +31,13 @@ export default function ArchiveColumn(props) {
                     credentials: "include",
                 }
             );
+            const json = await response.json();
             if (response.ok) {
-                window.location.reload(false);
+                if (json.status === "Success") {
+                    window.location.reload(false);
+                }
+            } else {
+                setErr(json.message);
             }
         } catch (error) {
             console.log(error);
@@ -59,12 +66,12 @@ export default function ArchiveColumn(props) {
                     <DialogActions>
                         <Button onClick={handleClose}>Disagree</Button>
                         <Button onClick={() => {
-                            handleClose();
                             archive(props.target);
                         }} autoFocus>
                             Agree
                         </Button>
                     </DialogActions>
+                    {err !== "" ? <Alert severity="error" >{err}</Alert> : ""}
                 </Box>
             </Dialog>
             <Button variant="outlined" onClick={handleClickOpen}>

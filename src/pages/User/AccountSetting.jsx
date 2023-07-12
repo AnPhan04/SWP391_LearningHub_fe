@@ -4,6 +4,7 @@ import Link from "../../components/MUIComponent/Link";
 import A from "../../common/assets";
 import ProfileButton from "../../components/MUIComponent/ProfileButton";
 import { Avatar } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const AccountSetting = () => {
   const role = localStorage.getItem("role");
@@ -22,7 +23,7 @@ const AccountSetting = () => {
           padding: "35px",
         }}
       >
-        <Link href="/dashboard" color={A.colors.black}>
+        <Link href={`${role==="ADMIN"?"/admin":"/dashboard"}`} color={A.colors.black}>
           <i class="fa-solid fa-arrow-left fa-xl"></i>
         </Link>
         <Avatar alt="User default avatar" src="/img/avatar.png" style={{

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 const Deactive = () => {
     const [pass, setPass] = useState("");
     const [err, setErr] = useState("");
+    const [role, setRole] = useState("");
     const nav = useNavigate();
     const handleOnChange = (e) => {
         setPass(e.target.value);
@@ -55,6 +56,7 @@ const Deactive = () => {
                 }
             );
             const json = await response.json();
+
             deactivateUser(json.email,pass);
             logout();
             nav("/login");
@@ -78,7 +80,7 @@ const Deactive = () => {
                     padding: "35px",
                 }}
             >
-                <Link href="/dashboard" color={A.colors.black}>
+                <Link href="/accountsetting" color={A.colors.black}>
                     <i class="fa-solid fa-arrow-left fa-xl"></i>
                 </Link>
                 <TypoText variant="h1">We sorry to see you go🥹 </TypoText>

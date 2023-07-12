@@ -42,7 +42,7 @@ export default function AddTask(props) {
   const [duration, setDuration] = useState(0);
   const [showAddScreen, setShowAddScreen] = useState(false);
   const [name, setName] = useState("");
-  const [label, setLabel] = useState([""]);
+  const [label, setLabel] = useState([]);
   const [description, setDescription] = useState("");
 
   const handleEndDateChange = (newValue) => {
@@ -92,7 +92,7 @@ export default function AddTask(props) {
         isActive: true,
         createdDate: new Date().toISOString().split("T")[0],
       },
-      labels:label
+      labels:label.size === 0? []:label
     };
     // Add further logic or API call to submit the data
     try {

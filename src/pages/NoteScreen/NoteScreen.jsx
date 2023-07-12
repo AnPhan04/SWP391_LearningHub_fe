@@ -129,9 +129,9 @@ function NoteScreen() {
         >
           <InfoIcon color="primary" sx={{ marginRight: 1 }} />
           <Typography variant='subtitle1' >
-            A single page to help you and your team team stay on top of all the moving parts.
-            Take a look around, then clear the sample tasks, projects, updates, and team members
-            so you can get started with a fresh template.
+            A single page to help you stay on top of all the moving parts.
+            This note is currently includes 
+            task tracker board and label list for you so you customize it on your own!
           </Typography>
         </Box>
         <hr style={{ backgroundColor: '#E0E0E0', height: '2px' }} />
