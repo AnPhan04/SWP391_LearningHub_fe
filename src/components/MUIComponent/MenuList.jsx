@@ -80,7 +80,7 @@ export default function MenuListComposition({onEdit, onDelete}) {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
-                    <MenuItem onClick={onEdit}>Edit</MenuItem>
+                    
                     <MenuItem onClick={onDelete}>Delete</MenuItem>
                   </MenuList>
                 </ClickAwayListener>

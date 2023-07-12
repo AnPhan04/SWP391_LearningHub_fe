@@ -36,7 +36,7 @@ const AddTaskPopup = styled(Grid)`
   padding: 68px 68px;
 `;
 
-export default function AddTask(props) {
+export default function UpdateCard(props) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [duration, setDuration] = useState(0);
@@ -109,17 +109,18 @@ export default function AddTask(props) {
   
       if (response.ok) {
         const jsonData = response.json();
-        console.log("AddTask: ", jsonData);
+        console.log("UpdateCard: ", jsonData);
       } else {
-        console.log("AddTask: Error in response");
+        console.log("UpdateCard: Error in response");
       }
     } catch (error) {
-      console.log("AddTask: ", error);
+      console.log("UpdateCard: ", error);
     }
   
     handleClose();
     window.location.reload(false);
   };
+  
 
   return (
     // <AddButton onClick={test}>+</AddButton>
