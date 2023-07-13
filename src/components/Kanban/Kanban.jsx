@@ -175,7 +175,7 @@ const Kanban = ({ countCardKey, id }) => {
     }
     setSelectedTask(task);
   };
-
+  
   return (
     <>
       <DragDropContext
