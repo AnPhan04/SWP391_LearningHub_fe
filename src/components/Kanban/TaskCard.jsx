@@ -47,10 +47,14 @@ const TaskHeading = styled.div`
   overflow: hidden;
 `;
 
-const TaskCard = ({ item, index, onDelete }) => {
-
-  const handleDelete = () => {
+const TaskCard = ({ item, index, onDelete, onClick }) => {
+  const handleDelete = (e) => {
+    e.stopPropagation();
     onDelete(item.id);
+  };
+
+  const handleCardClick = () => {
+    onClick(item.id);
   };
 
   return (
@@ -60,6 +64,7 @@ const TaskCard = ({ item, index, onDelete }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          onClick={handleCardClick}
         >
           <TaskInformation>
             <TaskHeading>
@@ -83,7 +88,6 @@ const TaskCard = ({ item, index, onDelete }) => {
           </TaskInformation>
         </div>
       )}
-
     </Draggable>
   );
 };

@@ -5,6 +5,8 @@ import AddColumn from "./AddColumn";
 import AddTask from "./AddTask";
 import ArchiveColumn from "./ArchiveColumn";
 import TaskCard from "./TaskCard";
+import UpdateCard from "./UpdateCard";
+import { Dialog } from "@mui/material";
 const Container = styled.div`
   display: flex;
   // justify-content: space-around;
@@ -56,7 +58,7 @@ const init = {
 
 const Kanban = ({ countCardKey, id }) => {
   let [columns, setColumns] = useState(init);
-  
+
   useEffect(() => {
     const getData = async (id) => {
       console.log(id);
@@ -130,21 +132,26 @@ const Kanban = ({ countCardKey, id }) => {
   const handleDeleteTask = async (taskId) => {
     console.log("Delete task: " + taskId);
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/note/card?id=${taskId}`, {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/v1/note/card?id=${taskId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       const jsonData = await response.json();
-      if(response.ok) {
+      if (response.ok) {
         console.log("Delete task: " + jsonData.message);
         setColumns((prevColumns) => {
           const updatedColumns = { ...prevColumns };
           for (const columnId in updatedColumns) {
             const column = updatedColumns[columnId];
-            const updatedItems = column.items.filter((item) => item.id !== taskId);
+            const updatedItems = column.items.filter(
+              (item) => item.id !== taskId
+            );
             column.items = updatedItems;
           }
           return updatedColumns;
@@ -153,6 +160,20 @@ const Kanban = ({ countCardKey, id }) => {
     } catch (error) {
       console.log("Delete task error: " + error);
     }
+  };
+
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleCardClick = (taskId) => {
+    let task;
+    for (const columnId in columns) {
+      const column = columns[columnId];
+      task = column.items.find((item) => item.id === taskId);
+      if (task) {
+        break;
+      }
+    }
+    setSelectedTask(task);
   };
 
   return (
@@ -187,6 +208,7 @@ const Kanban = ({ countCardKey, id }) => {
                             item={item}
                             index={index}
                             onDelete={handleDeleteTask}
+                            onClick={handleCardClick}
                           />
                         ))}
                         {provided.placeholder}
@@ -201,6 +223,19 @@ const Kanban = ({ countCardKey, id }) => {
           </TaskColumnStyles>
         </Container>
       </DragDropContext>
+
+      <Dialog
+        open={selectedTask !== null}
+        onClose={() => setSelectedTask(null)}
+      >
+        {selectedTask && (
+          <UpdateCard
+            task={selectedTask}
+            onClose={() => setSelectedTask(null)}
+          />
+        )}
+        {console.log(selectedTask)}
+      </Dialog>
     </>
   );
 };
