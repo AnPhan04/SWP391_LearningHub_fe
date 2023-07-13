@@ -4,7 +4,7 @@ import Button from './Button/Button';
 import CloudDoneIcon from '@mui/icons-material/CloudDone';
 const Labels = ({boardID,onDataChangechild}) => {
   const [show, setShow] = useState(false);
-  const [newLabel, setNewLabel] = useState({boardId: 1, name: '', color: '' });
+  const [newLabel, setNewLabel] = useState({boardId: boardID, name: '', color: '' });
   const [count, setCount] = useState(1);
 
   const handleOnClick=()=>{
