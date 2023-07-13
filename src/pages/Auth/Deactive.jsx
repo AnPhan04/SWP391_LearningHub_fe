@@ -33,7 +33,7 @@ const Deactive = () => {
                 `http://localhost:8080/api/v1/user/?email=${email}&password=${pass}`,
                 {
                     method: "DELETE",
-                    credentials: "include",
+                    credentials:"include"
                 }
             );
             const json = await response.json();

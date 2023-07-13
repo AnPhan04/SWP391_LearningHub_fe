@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TypoText from "../../components/MUIComponent/TypoText";
-import EditableField from "../../components/editableField";
+import EditableField from "../../components/EditableField";
 import Box from '@mui/material/Box';
 import { useNavigate } from "react-router-dom";
 import AddCoreLabel from "./AddCoreLabel";

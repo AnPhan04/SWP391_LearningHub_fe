@@ -98,12 +98,12 @@ const Header = () => {
                     </Link>
 
                     {role === "ADMIN" ?
-                      <Link Link href="/dashboard">
+                      <Link Link href="/admin">
                         <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
                           Dashboard
                         </button>
                       </Link>
-                      : <Link Link href="/admin">
+                      : <Link Link href="/dashboard">
                         <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
                           Dashboard
                         </button>
