@@ -9,6 +9,7 @@ import TypoText from "../../components/MUIComponent/TypoText";
 import A from "../../common/assets";
 import { Link as DomLink } from "react-router-dom";
 import UserDashBoard from "../User/UserDashboard";
+import { Alert } from "@mui/material";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
@@ -18,8 +19,10 @@ const CustomLink = React.forwardRef((props, ref) => {
 
 const SignIn = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState();
   const [errorMessage, setErrorMessage] = useState("");
   const [role, setRole] = useState("");
+  const [errStat, setErrStat] = useState("");
   const passwordRef = useRef(null);
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -44,9 +47,12 @@ const SignIn = () => {
         setRole(responseData.data[0].roleId);
         setErrorMessage("");
         setIsAuthenticated(true);
-      } else {
+      }
+      else {
         const errorData = await response.json();
         setErrorMessage(errorData.data);
+        setErrStat(response.status);
+        setEmail(data.get("email"));
         passwordRef.current.value = "";
       }
     } catch (error) {
@@ -67,6 +73,7 @@ const SignIn = () => {
 
   return (
     <>
+
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -112,9 +119,11 @@ const SignIn = () => {
 
         <Button style={{ width: "100%" }}>Sign In</Button>
         {errorMessage && (
-          <TypoText variant="h4" style={{ color: "red" }}>
-            {errorMessage}
-          </TypoText>
+          <Alert severity="error" style={{ "marginTop": "1rem" }}>{errorMessage}
+            {
+              errStat === 401 ? (<Link href={"/reactive?email="+email}>Want to reactive account?</Link>) : ""
+            }
+          </Alert>
         )}
 
         <Grid container justifyContent="center">
