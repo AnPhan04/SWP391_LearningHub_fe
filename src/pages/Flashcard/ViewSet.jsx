@@ -18,16 +18,16 @@ const flashcards = [
     definition: "It's me, hi!",
   },
 ];
-const FlipCard = () => {
+const ViewSet = () => {
   //   study again state
   return (
     <div>
       <div className="set-title">
         <Grid container spacing={2}>
-          <Grid item xs={6}>
+          <Grid item xs={6} sx={{ textAlign: "center" }}>
             <TypoText variant="h1">Set 1</TypoText>
           </Grid>
-          <Grid item xs={6} sx={{ margin: "auto" }}>
+          <Grid item xs={6} sx={{ margin: "auto", textAlign: "center" }}>
             <Button>Study Again</Button>
           </Grid>
         </Grid>
@@ -36,14 +36,9 @@ const FlipCard = () => {
       <div className="card-flip">
         <Set flashcards={flashcards} />
       </div>
-      <div
-        className="progress-bar"
-        style={{ display: "flex", justifyContent: "center" }}
-      >
-        <ProgressBar flashcards={flashcards} style={{ margin: "auto" }} />
-      </div>
+      <ProgressBar flashcards={flashcards} />
     </div>
   );
 };
 
-export default FlipCard;
+export default ViewSet;

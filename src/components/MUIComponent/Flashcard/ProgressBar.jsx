@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import LinearProgress from '@mui/material/LinearProgress';
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
-const ProgressBar = ({flashcards}) => {
+const ProgressBar = ({ flashcards }) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
@@ -9,9 +10,8 @@ const ProgressBar = ({flashcards}) => {
       setProgress((prevProgress) => {
         if (prevProgress === 100) {
           return 0;
-        }
-        else {
-          // progress = 
+        } else {
+          // progress =
           return 50;
         }
       });
@@ -23,7 +23,24 @@ const ProgressBar = ({flashcards}) => {
   }, [progress]);
 
   return (
-    <LinearProgress color="secondary" variant="determinate" value={progress} style={{width: '50em', height:'10px'}}></LinearProgress>
+    // <LinearProgress color="secondary" variant="determinate" value={progress} style={{width: '70%', height:'10px'}}></LinearProgress>
+
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
+      }}
+    >
+      <Box sx={{ width: "40%" }}>
+        <LinearProgress
+          color="secondary"
+          variant="determinate"
+          value={progress}
+        />
+      </Box>
+    </div>
   );
 };
 

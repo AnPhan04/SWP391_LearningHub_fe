@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import UserDashBoard from "../pages/User/UserDashboard";
-import FlipCard from "../pages/Flashcard/FlipCard";
+import ViewSet from "../pages/Flashcard/ViewSet";
 import CardList from "../pages/Flashcard/CardList";
 import FlashcardDashBoard from "../pages/Flashcard/FlashcardDashBoard";
 import ChangePassword from "../pages/User/ChangePassword";
@@ -44,7 +44,7 @@ const routes = createBrowserRouter([
     },
     {
         path: "/flashcard",
-        element: <FlipCard />
+        element: <ViewSet />
     },
     {
         path: "/cardList",
