@@ -157,7 +157,7 @@ function NoteScreen() {
           <InfoIcon color="primary" sx={{ marginRight: 1 }} />
           <Typography variant='subtitle1' >
             Click on any card to view and update details.
-            Click <strong>+ New card</strong> to add tasks. Drag and
+            Click <strong>+</strong> to add tasks. Drag and
             drop cards to move tasks through the stages.
           </Typography>
         </Box>

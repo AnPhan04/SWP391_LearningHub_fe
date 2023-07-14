@@ -64,7 +64,6 @@ export default function MultipleSelect({onChange}) {
       getBoardId();
     getLabelsList();
   }, [noteId, boardId]);
-  console.log("label name: " + labelName);
 
   const handleChange = (event) => {
     const { value } = event.target;

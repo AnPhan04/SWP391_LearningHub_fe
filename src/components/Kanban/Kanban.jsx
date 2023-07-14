@@ -173,9 +173,36 @@ const Kanban = ({ countCardKey, id }) => {
         break;
       }
     }
-    setSelectedTask(task);
+    console.log("kanban taskId: " + taskId);
+    setSelectedTask(task ? task.id : null);
+    setTaskData(null);
   };
-  
+
+  const [taskData, setTaskData] = useState(null);
+  useEffect(() => {
+    // Fetch task data from the API
+    async function fetchData(cardId) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/v1/note/cardDetails?cardId=${cardId}`,
+          {
+            credentials: "include",
+            method: "GET",
+          }
+        );
+        const jsonData = await response.json();
+        setTaskData(jsonData); // Store the task data in state
+        console.log(jsonData);
+      } catch (error) {
+        console.log("Fetch task data error: " + error);
+      }
+    }
+
+    if (selectedTask !== null) {
+      fetchData(selectedTask); // Call the fetchData function when selectedTask changes
+    }
+  }, [selectedTask]);
+
   return (
     <>
       <DragDropContext
@@ -228,13 +255,9 @@ const Kanban = ({ countCardKey, id }) => {
         open={selectedTask !== null}
         onClose={() => setSelectedTask(null)}
       >
-        {selectedTask && (
-          <UpdateCard
-            task={selectedTask}
-            onClose={() => setSelectedTask(null)}
-          />
+        {taskData && ( // Only render the UpdateCard component when taskData is available
+          <UpdateCard task={taskData} onClose={() => setSelectedTask(null)} />
         )}
-        {console.log(selectedTask)}
       </Dialog>
     </>
   );

@@ -9,19 +9,6 @@ import TypoText from "../MUIComponent/TypoText";
 import dayjs from "dayjs";
 import { Button, Dialog } from "@mui/material";
 
-const AddButton = styled.button`
-  &&& {
-    background-color: #e3e3e3;
-    color: white;
-    margin-top: 15px;
-    // padding: 15px 20px;
-    font-weight: 600;
-    font-size: 20px;
-    padding: 5px 0;
-    border: none;
-  }
-`;
-
 const AddTaskPopup = styled(Grid)`
   background: white;
   width: calc(100% - 40px);
@@ -37,24 +24,22 @@ const AddTaskPopup = styled(Grid)`
 `;
 
 export default function UpdateCard({ task, onClose }) {
-  // const [startDate, setStartDate] = useState(null);
-  // const [endDate, setEndDate] = useState(null);
-  // const [duration, setDuration] = useState(0);
   const [showAddScreen, setShowAddScreen] = useState(false);
-  // const [name, setName] = useState("");
-  // const [label, setLabel] = useState([""]);
-  // const [description, setDescription] = useState("");
 
-  const [name, setName] = useState(task.cardTitle);
-  const [label, setLabel] = useState(task.labels);
-  console.log(task.labels);
-  const [description, setDescription] = useState(task.description);
-  const [startDate, setStartDate] = useState(new Date(task.dateStart));
-  const [endDate, setEndDate] = useState(new Date(task.dateEnd));
+  console.log("updatecard task name: "+task.data.card.name);
+  const [name, setName] = useState(task.data.card.name);
+  const [label, setLabel] = useState(task.data.labels);
+  const [description, setDescription] = useState(task.data.card.description);
+  const [startDate, setStartDate] = useState(
+    dayjs(task.data.card.dateStart, "YYYY-MM-DD")
+  );
+  const [endDate, setEndDate] = useState(
+    dayjs(task.data.card.dateEnd, "YYYY-MM-DD")
+  );
   const [duration, setDuration] = useState("");
 
   const handleEndDateChange = (newValue) => {
-    if (startDate && newValue < startDate) {
+    if (startDate && newValue.isBefore(startDate)) {
       setEndDate("");
       setDuration(0);
       console.log("End date must be greater than start date");
@@ -66,15 +51,12 @@ export default function UpdateCard({ task, onClose }) {
 
   const calculateDuration = (start, end) => {
     if (start && end) {
-      /* pass the measurement "day" as the second arg
-        or else the default will count in ms */
-      const diff = dayjs(end).diff(dayjs(start), "day");
+      const diff = end.diff(start, "day");
       if (diff > 1) {
         setDuration(diff + " days");
       } else {
         setDuration(diff + " day");
       }
-      console.log(diff);
     } else {
       setDuration(0);
     }
@@ -86,20 +68,23 @@ export default function UpdateCard({ task, onClose }) {
 
   const handleClose = () => {
     setShowAddScreen(false);
+    onClose();
   };
 
   const handleUpdateChange = async () => {
+
     const requestBody = {
       card: {
-        id: 1,
-        columnId: 3,
+        id: task.data.card.id,
+        columnId: task.data.card.columnId,
         name: name,
         description: description,
-        dateStart: startDate.toISOString().split("T")[0],
-        dateEnd: endDate.toISOString().split("T")[0],
+        dateStart: dayjs(startDate, "MM-DD-YYYY").format("YYYY-MM-DD"),
+        dateEnd: dayjs(endDate, "MM-DD-YYYY").format("YYYY-MM-DD"),
         isActive: true,
         createdDate: new Date().toISOString().split("T")[0],
       },
+      labels: label,
     };
 
     try {
