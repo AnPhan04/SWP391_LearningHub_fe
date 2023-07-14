@@ -9,19 +9,6 @@ import TypoText from "../MUIComponent/TypoText";
 import dayjs from "dayjs";
 import { Button, Dialog } from "@mui/material";
 
-const AddButton = styled.button`
-  &&& {
-    background-color: #e3e3e3;
-    color: white;
-    margin-top: 15px;
-    // padding: 15px 20px;
-    font-weight: 600;
-    font-size: 20px;
-    padding: 5px 0;
-    border: none;
-  }
-`;
-
 const AddTaskPopup = styled(Grid)`
   background: white;
   width: calc(100% - 40px);
@@ -36,17 +23,23 @@ const AddTaskPopup = styled(Grid)`
   padding: 68px 68px;
 `;
 
-export default function UpdateCard(props) {
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [duration, setDuration] = useState(0);
+export default function UpdateCard({ task, onClose }) {
   const [showAddScreen, setShowAddScreen] = useState(false);
-  const [name, setName] = useState("");
-  const [label, setLabel] = useState([""]);
-  const [description, setDescription] = useState("");
+
+  console.log("updatecard task name: "+task.data.card.name);
+  const [name, setName] = useState(task.data.card.name);
+  const [label, setLabel] = useState(task.data.labels);
+  const [description, setDescription] = useState(task.data.card.description);
+  const [startDate, setStartDate] = useState(
+    dayjs(task.data.card.dateStart, "YYYY-MM-DD")
+  );
+  const [endDate, setEndDate] = useState(
+    dayjs(task.data.card.dateEnd, "YYYY-MM-DD")
+  );
+  const [duration, setDuration] = useState("");
 
   const handleEndDateChange = (newValue) => {
-    if (startDate && newValue < startDate) {
+    if (startDate && newValue.isBefore(startDate)) {
       setEndDate("");
       setDuration(0);
       console.log("End date must be greater than start date");
@@ -58,15 +51,12 @@ export default function UpdateCard(props) {
 
   const calculateDuration = (start, end) => {
     if (start && end) {
-      /* pass the measurement "day" as the second arg
-        or else the default will count in ms */
-      const diff = dayjs(end).diff(dayjs(start), "day");
+      const diff = end.diff(start, "day");
       if (diff > 1) {
         setDuration(diff + " days");
       } else {
         setDuration(diff + " day");
       }
-      console.log(diff);
     } else {
       setDuration(0);
     }
@@ -78,35 +68,37 @@ export default function UpdateCard(props) {
 
   const handleClose = () => {
     setShowAddScreen(false);
+    onClose();
   };
 
-  const handleSubmit = async () => {
+  const handleUpdateChange = async () => {
+
     const requestBody = {
       card: {
-        id: null,
-        columnId: props.colId,
+        id: task.data.card.id,
+        columnId: task.data.card.columnId,
         name: name,
         description: description,
-        dateStart: startDate.toISOString().split("T")[0],
-        dateEnd: endDate.toISOString().split("T")[0],
+        dateStart: dayjs(startDate, "MM-DD-YYYY").format("YYYY-MM-DD"),
+        dateEnd: dayjs(endDate, "MM-DD-YYYY").format("YYYY-MM-DD"),
         isActive: true,
         createdDate: new Date().toISOString().split("T")[0],
       },
       labels: label,
     };
-    
+
     try {
       console.log(console.log(typeof label));
       console.log(console.log(label));
       const response = await fetch("http://localhost:8080/api/v1/note/card", {
-        method: "POST",
+        method: "PUT",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(requestBody),
       });
-  
+
       if (response.ok) {
         const jsonData = response.json();
         console.log("UpdateCard: ", jsonData);
@@ -116,165 +108,160 @@ export default function UpdateCard(props) {
     } catch (error) {
       console.log("UpdateCard: ", error);
     }
-  
+
     handleClose();
     window.location.reload(false);
   };
-  
 
   return (
-    // <AddButton onClick={test}>+</AddButton>
     <>
-      <AddButton onClick={handleAdd}>+</AddButton>
-      <Dialog open={showAddScreen}>
-        <>
-          <AddTaskPopup
-            container
-            spacing={0.5}
-            alignItems="center"
-            sx={{
-              background: "white",
-              width: "calc(100%-40px)",
-              maxWidth: "1000px",
-              minWidth: "300px",
-              boxShadow: "0 0 10px #888888",
-              borderRadius: "5px",
-              padding: "68px 68px",
+      <AddTaskPopup
+        container
+        spacing={0.5}
+        alignItems="center"
+        sx={{
+          background: "white",
+          width: "calc(100%-40px)",
+          maxWidth: "1000px",
+          minWidth: "300px",
+          boxShadow: "0 0 10px #888888",
+          borderRadius: "5px",
+          padding: "68px 68px",
+        }}
+      >
+        <Grid item xs={8}>
+          <TypoText
+            variant="h5"
+            style={{
+              color: "#a1a1a1",
+              fontWeight: "bold",
+              padding: "0 5px",
+              marginBottom: 0,
             }}
           >
-            <Grid item xs={8}>
-              <TypoText
-                variant="h5"
-                style={{
-                  color: "#a1a1a1",
-                  fontWeight: "bold",
-                  padding: "0 5px",
-                  marginBottom: 0,
-                }}
-              >
-                NAME
-              </TypoText>
-              <TextField
-                required
-                fullWidth
-                id="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                sx={{ borderRadius: "8px", padding: "0 5px" }}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TypoText
-                variant="h5"
-                style={{
-                  color: "#a1a1a1",
-                  fontWeight: "bold",
-                  padding: "0 5px",
-                  marginBottom: 0,
-                }}
-              >
-                LABEL
-              </TypoText>
-              <MultipleSelect
-                onChange={(selectedLabels) => setLabel(selectedLabels)}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TypoText
-                variant="h5"
-                style={{
-                  color: "#a1a1a1",
-                  fontWeight: "bold",
-                  padding: "0 5px",
-                  marginBottom: 0,
-                }}
-              >
-                DESCRIPTION
-              </TypoText>
-              <TextField
-                multiline
-                rows={2}
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                sx={{ width: "100%", padding: "0 5px" }}
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <TypoText
-                variant="h5"
-                style={{
-                  color: "#a1a1a1",
-                  fontWeight: "bold",
-                  padding: "0 5px",
-                  marginBottom: 0,
-                }}
-              >
-                START DATE
-              </TypoText>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  sx={{ width: "100%", borderRadius: "15px", padding: "0 5px" }}
-                  value={startDate}
-                  onChange={(newValue) => setStartDate(newValue)}
-                />
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={4}>
-              <TypoText
-                variant="h5"
-                style={{
-                  color: "#a1a1a1",
-                  fontWeight: "bold",
-                  padding: "0 5px",
-                  marginBottom: 0,
-                }}
-              >
-                END DATE
-              </TypoText>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker
-                  sx={{ width: "100%", borderRadius: "15px", padding: "0 5px" }}
-                  value={endDate}
-                  onChange={handleEndDateChange}
-                />
-              </LocalizationProvider>
-            </Grid>
-            <Grid item xs={4}>
-              <TypoText
-                variant="h5"
-                style={{
-                  color: "#a1a1a1",
-                  fontWeight: "bold",
-                  padding: "0 5px",
-                  marginBottom: 0,
-                }}
-              >
-                DURATION
-              </TypoText>
-              <TextField
-                disabled
-                value={duration}
-                sx={{ width: "100%", padding: "0 5px" }}
-              />
-            </Grid>
-            <Grid item xs={11} sx={{ textAlign: "right" }}>
-              <Button
-                variant="outlined"
-                sx={{ margin: "1.5rem 10px" }}
-                size="large"
-                onClick={handleClose}
-              >
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item xs={1}>
-              <Button variant="contained" size="large" onClick={handleSubmit}>
-                Add
-              </Button>
-            </Grid>
-          </AddTaskPopup>
-        </>
-      </Dialog>
+            NAME
+          </TypoText>
+          <TextField
+            required
+            fullWidth
+            id="name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            sx={{ borderRadius: "8px", padding: "0 5px" }}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TypoText
+            variant="h5"
+            style={{
+              color: "#a1a1a1",
+              fontWeight: "bold",
+              padding: "0 5px",
+              marginBottom: 0,
+            }}
+          >
+            LABEL
+          </TypoText>
+          <MultipleSelect
+            value={label}
+            options={label}
+            onChange={(selectedLabels) => setLabel(selectedLabels)}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <TypoText
+            variant="h5"
+            style={{
+              color: "#a1a1a1",
+              fontWeight: "bold",
+              padding: "0 5px",
+              marginBottom: 0,
+            }}
+          >
+            DESCRIPTION
+          </TypoText>
+          <TextField
+            multiline
+            rows={2}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            sx={{ width: "100%", padding: "0 5px" }}
+          />
+        </Grid>
+        <Grid item xs={4}>
+          <TypoText
+            variant="h5"
+            style={{
+              color: "#a1a1a1",
+              fontWeight: "bold",
+              padding: "0 5px",
+              marginBottom: 0,
+            }}
+          >
+            START DATE
+          </TypoText>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              sx={{ width: "100%", borderRadius: "15px", padding: "0 5px" }}
+              value={startDate}
+              onChange={(newValue) => setStartDate(newValue)}
+            />
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={4}>
+          <TypoText
+            variant="h5"
+            style={{
+              color: "#a1a1a1",
+              fontWeight: "bold",
+              padding: "0 5px",
+              marginBottom: 0,
+            }}
+          >
+            END DATE
+          </TypoText>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              sx={{ width: "100%", borderRadius: "15px", padding: "0 5px" }}
+              value={endDate}
+              onChange={handleEndDateChange}
+            />
+          </LocalizationProvider>
+        </Grid>
+        <Grid item xs={4}>
+          <TypoText
+            variant="h5"
+            style={{
+              color: "#a1a1a1",
+              fontWeight: "bold",
+              padding: "0 5px",
+              marginBottom: 0,
+            }}
+          >
+            DURATION
+          </TypoText>
+          <TextField
+            disabled
+            value={duration}
+            sx={{ width: "100%", padding: "0 5px" }}
+          />
+        </Grid>
+        <Grid item xs={11} sx={{ textAlign: "right" }}>
+          <Button
+            variant="outlined"
+            sx={{ margin: "1.5rem 10px" }}
+            size="large"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+        </Grid>
+        <Grid item xs={1}>
+          <Button variant="contained" size="large" onClick={handleUpdateChange}>
+            Update
+          </Button>
+        </Grid>
+      </AddTaskPopup>
     </>
   );
 }

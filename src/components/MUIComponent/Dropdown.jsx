@@ -54,7 +54,7 @@ export default function MultipleSelect({onChange}) {
         .then((response) => response.json())
         .then((jsonData) => {
           if (Array.isArray(jsonData)) { // Check if jsonData is an array
-            const labelNames = jsonData.map((item) => item.id);
+            const labelNames = jsonData.map((item) => item.name);
             setLabel(jsonData);
             setLabelName(labelNames);
           } else {
@@ -79,7 +79,12 @@ export default function MultipleSelect({onChange}) {
       multiple
       value={selectedLabels}
       onChange={handleChange}
-      renderValue={(selected) => selected.join(", ")}
+      renderValue={(selected) =>
+        label
+          .filter((l) => selected.includes(l.id))
+          .map((l) => l.name)
+          .join(", ")
+      }
     >
           {label.map((l) => (
             <MenuItem
