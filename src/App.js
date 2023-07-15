@@ -11,16 +11,12 @@ import NavBar from './components/layout/NavBar';
 import Kanban from './components/Kanban/Kanban';
 import Flashcard from './components/MUIComponent/Flashcard/Flashcard';
 import Set from './components/MUIComponent/Flashcard/Set';
-/* const flashcard = [{
-  term: "flashcard 1",
-  definition: "1"
-}, {
-  term: "flashcard 2",
-  definition: "2"
-}]; */
+
+
 const App = () => {
+
+
   return (
-    
     <TaskManagementDashBoard />
   );
 };

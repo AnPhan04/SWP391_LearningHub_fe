@@ -258,6 +258,7 @@ const Kanban = ({ countCardKey, id }) => {
         {taskData && ( // Only render the UpdateCard component when taskData is available
           <UpdateCard task={taskData} onClose={() => setSelectedTask(null)} />
         )}
+        {console.log("taskData",taskData)}
       </Dialog>
     </>
   );
