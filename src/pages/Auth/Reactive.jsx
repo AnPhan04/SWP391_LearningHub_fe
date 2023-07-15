@@ -42,7 +42,7 @@ const Reactive = () => {
             );
             if(response.ok){
                 setErr("");
-                nav("/");
+                nav("/login");
             }
             const json = await response.json();
             if (response.status !== 200) {
