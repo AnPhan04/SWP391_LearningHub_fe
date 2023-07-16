@@ -1,33 +1,45 @@
-import * as React from "react";
-import { createTheme} from "@mui/material/styles";
-import "./CardList.css";
-import { ThemeProvider } from "@emotion/react";
+import React, { useState } from "react";
 import TypoText from "../../components/MUIComponent/TypoText";
 import CardInSet from "./CardInSet";
-const theme = createTheme({
-  typography: {
-    fontFamily: "inter, sans-serif",
-  },
-});
 
-export default function CardList({ counter, term, definition }) {
+const CardList = ({ counter, handleTermChange, handleDefinitionChange }) => {
+  const [term, setTerm] = useState("");
+  const [definition, setDefinition] = useState("");
+
+  const handleTermInputChange = (event) => {
+    const termValue = event.target.value;
+    setTerm(termValue);
+    handleTermChange(termValue, counter);
+  };
+
+  const handleDefinitionInputChange = (event) => {
+    const definitionValue = event.target.value;
+    setDefinition(definitionValue);
+    handleDefinitionChange(definitionValue, counter);
+  };
+
   return (
-    <ThemeProvider theme={theme}>
-      <div className="card-row">
-        <div className="card-header">
-          <TypoText style={{ margin: 0 }} variant="h4">
-            1
-          </TypoText>
-          <div className="card-icons">
-            <i class="fa-solid fa-pen-to-square"></i>
-            <i class="card-icon fa-solid fa-trash"></i>
-          </div>
-        </div>
-
-        <div className="card-body">
-          <CardInSet />
+    <div className="card-row" style={{ marginTop: "2em" }}>
+      <div className="card-header">
+        <TypoText style={{ margin: 0 }} variant="h4">
+          {counter}
+        </TypoText>
+        <div className="card-icons">
+          <i className="fa-solid fa-pen-to-square"></i>
+          <i className="card-icon fa-solid fa-trash"></i>
         </div>
       </div>
-    </ThemeProvider>
+
+      <div className="card-body">
+        <CardInSet
+          term={term}
+          definition={definition}
+          handleTermInputChange={handleTermInputChange}
+          handleDefinitionInputChange={handleDefinitionInputChange}
+        />
+      </div>
+    </div>
   );
-}
+};
+
+export default CardList;

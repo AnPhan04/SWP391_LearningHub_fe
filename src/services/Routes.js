@@ -23,6 +23,7 @@ import Deactive from "../pages/Auth/Deactive";
 import Reactive from "../pages/Auth/Reactive";
 import AboutUs from "../pages/AboutUs";
 import EmailForm from "../components/EmailForm";
+import CreateSet from "../pages/Flashcard/CreateSet";
 
 const routes = createBrowserRouter([
     {
@@ -135,6 +136,11 @@ const routes = createBrowserRouter([
     {
         path: "/error",
         element: <ErrorPage />,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: "/create-set",
+        element: <CreateSet />,
         errorElement: <ErrorPage />
     }
 ]);

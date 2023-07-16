@@ -1,6 +1,6 @@
 .card-row {
-    width: 50em;
-    margin: auto;
+    width: 80em;
+    margin-top: 3em;
     /* border: 1px solid black; */
     display: inline-block;
     overflow: hidden;
@@ -11,6 +11,7 @@
 .card-header {
     padding: 10px 20px;
     border-bottom: 1px solid black;
+    margin-top: 2px;
 }
 
 .card-header {
