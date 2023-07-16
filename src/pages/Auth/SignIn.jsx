@@ -9,27 +9,22 @@ import TypoText from "../../components/MUIComponent/TypoText";
 import A from "../../common/assets";
 import { Link as DomLink } from "react-router-dom";
 import UserDashBoard from "../User/UserDashboard";
+import { Alert } from "@mui/material";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
   return <DomLink to={href} ref={ref} {...other} />;
 });
 
-const Current = async () => {
-  fetch("http://localhost:8080/api/v1/user/current", {
-    method: "GET",
-    credentials: "include",
-  })
-    .then((response) => response.json())
-    .then((json) => console.log(json))
-    .catch((error) => console.log(error));
-};
+
 const SignIn = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState();
   const [errorMessage, setErrorMessage] = useState("");
+  const [role, setRole] = useState("");
+  const [errStat, setErrStat] = useState("");
   const passwordRef = useRef(null);
   const navigate = useNavigate();
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -49,28 +44,36 @@ const SignIn = () => {
 
       if (response.ok) {
         const responseData = await response.json();
-        console.log(responseData);
+        setRole(responseData.data[0].roleId);
         setErrorMessage("");
-        Current();
         setIsAuthenticated(true);
-      } else {
+      }
+      else {
         const errorData = await response.json();
-        setErrorMessage(errorData.message);
+        setErrorMessage(errorData.data);
+        setErrStat(response.status);
+        setEmail(data.get("email"));
         passwordRef.current.value = "";
       }
     } catch (error) {
-      console.log("Error:", error.message);
+      console.log("Error:", error.data);
     }
   };
-
   if (isAuthenticated) {
-    return (
-      navigate("/dashboard")
-    );
+    if (role === "ADMIN") {
+      localStorage.setItem("role", role);
+      return (navigate("/admin"));
+    } else {
+      return (
+        navigate("/dashboard")
+      );
+    }
+
   }
 
   return (
     <>
+
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -85,6 +88,9 @@ const SignIn = () => {
           padding: "35px",
         }}
       >
+        <Link href="/" color={A.colors.black}>
+          <i class="fa-solid fa-arrow-left fa-xl"></i>
+        </Link>
         <TypoText variant="h1" style={{ margin: "0" }}>
           Welcome Back
         </TypoText>
@@ -113,9 +119,11 @@ const SignIn = () => {
 
         <Button style={{ width: "100%" }}>Sign In</Button>
         {errorMessage && (
-          <TypoText variant="h4" style={{ color: "red" }}>
-            {errorMessage}
-          </TypoText>
+          <Alert severity="error" style={{ "marginTop": "1rem" }}>{errorMessage}
+            {
+              errStat === 401 ? (<Link href={"/reactive?email="+email}>Want to reactive account?</Link>) : ""
+            }
+          </Alert>
         )}
 
         <Grid container justifyContent="center">

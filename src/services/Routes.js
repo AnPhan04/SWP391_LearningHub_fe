@@ -1,7 +1,7 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import UserDashBoard from "../pages/User/UserDashboard";
-import FlipCard from "../pages/Flashcard/FlipCard";
+import ViewSet from "../pages/Flashcard/ViewSet";
 import CardList from "../pages/Flashcard/CardList";
 import FlashcardDashBoard from "../pages/Flashcard/FlashcardDashBoard";
 import ChangePassword from "../pages/User/ChangePassword";
@@ -18,6 +18,12 @@ import EditProfile from "../pages/User/EditProfile";
 import Labels from "../components/MUIComponent/Labels";
 import LabelsList from "../components/MUIComponent/LabelList";
 import CheckList from "../pages/NoteScreen/CheckList";
+import UpdateCoreLabel from "../pages/Admin/UpdateCoreLabel";
+import AdminMain from "../pages/Admin/AdminMain";
+import Deactive from "../pages/Auth/Deactive";
+import Reactive from "../pages/Auth/Reactive";
+import AboutUs from "../pages/AboutUs";
+import EmailForm from "../components/EmailForm";
 
 const routes = createBrowserRouter([
     {
@@ -32,19 +38,25 @@ const routes = createBrowserRouter([
     },
     {
         path: "/login",
-        element: <SignIn />
+        element: <SignIn />,
+        errorElement: <ErrorPage />
     },
     {
         path: "/signup",
         element: <SignUp />
+        , errorElement: <ErrorPage />
     },
     {
-        path: "/flashcard",
-        element: <FlipCard />
+        path: "/set",
+        element: <ViewSet />
     },
     {
         path: "/cardList",
         element: <CardList />
+    },
+    {
+        path: "/contact",
+        element: <EmailForm />
     },
     {
         path: "/flashcardDash",
@@ -54,18 +66,22 @@ const routes = createBrowserRouter([
     {
         path: "/forgotpassword",
         element: <ResetPassword />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/changepw",
         element: <ChangePassword />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/featurelist",
         element: <FeatureList />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/accountsetting",
         element: <AccountSetting />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/taskmanagement",
@@ -82,6 +98,12 @@ const routes = createBrowserRouter([
     {
         path: "/profile",
         element: <EditProfile />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/about",
+        element: <AboutUs />
+        , errorElement: <ErrorPage />
     },
     {
         path: "/addlabel",
@@ -89,11 +111,32 @@ const routes = createBrowserRouter([
     },
     {
         path: "/listLabels",
-        element: <LabelsList/>
+        element: <LabelsList />
     },
     {
-        path: "/checklist",
-        element: <CheckList/>
+        path: "/updateCoreLabel",
+        element: <UpdateCoreLabel />
+        , errorElement: <ErrorPage />
     },
+    {
+        path: "/admin",
+        element: <AdminMain />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/deactive",
+        element: <Deactive />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/reactive",
+        element: <Reactive />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/error",
+        element: <ErrorPage />,
+        errorElement: <ErrorPage />
+    }
 ]);
 export default routes;

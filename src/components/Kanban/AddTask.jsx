@@ -42,7 +42,7 @@ export default function AddTask(props) {
   const [duration, setDuration] = useState(0);
   const [showAddScreen, setShowAddScreen] = useState(false);
   const [name, setName] = useState("");
-  const [label, setLabel] = useState([""]);
+  const [label, setLabel] = useState([]);
   const [description, setDescription] = useState("");
 
   const handleEndDateChange = (newValue) => {
@@ -83,7 +83,7 @@ export default function AddTask(props) {
   const handleSubmit = async () => {
     const requestBody = {
       card: {
-        id:null,
+        id: null,
         columnId: props.colId,
         name: name,
         description: description,
@@ -92,11 +92,11 @@ export default function AddTask(props) {
         isActive: true,
         createdDate: new Date().toISOString().split("T")[0],
       },
-      labels:label
+      labels:label.size === 0? []:label 
     };
-    // Add further logic or API call to submit the data
+    
     try {
-      console.log(console.log(typeof(label)));
+      console.log(console.log(typeof label));
       console.log(console.log(label));
       const response = await fetch("http://localhost:8080/api/v1/note/card", {
         method: "POST",
@@ -106,15 +106,19 @@ export default function AddTask(props) {
         },
         body: JSON.stringify(requestBody),
       });
+  
       if (response.ok) {
         const jsonData = response.json();
         console.log("AddTask: ", jsonData);
-        window.location.reload(false);
+      } else {
+        console.log("AddTask: Error in response");
       }
     } catch (error) {
-      console.log("Lỗi:", error);
+      console.log("AddTask: ", error);
     }
+  
     handleClose();
+    window.location.reload(false);
   };
 
   return (
@@ -170,7 +174,9 @@ export default function AddTask(props) {
               >
                 LABEL
               </TypoText>
-              <MultipleSelect onChange={(selectedLabels) => setLabel(selectedLabels)} />
+              <MultipleSelect
+                onChange={(selectedLabels) => setLabel(selectedLabels)}
+              />
             </Grid>
             <Grid item xs={12}>
               <TypoText

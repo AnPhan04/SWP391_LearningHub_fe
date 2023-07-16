@@ -24,7 +24,7 @@ const Button = (props) => {
   return (
     <button
       className={buttonStyles}
-      onClick={onClick}
+      onClick={props.onClick}
       style={{ ...inlineStyles }}
     >
       {children}

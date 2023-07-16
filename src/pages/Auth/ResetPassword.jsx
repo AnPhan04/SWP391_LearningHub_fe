@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
 import A from "../../common/assets";
 import { CircularProgress } from "@mui/material";
+import Alert from '@mui/material/Alert';
 import { red } from "@mui/material/colors";
 
 const loadingStyle = {
@@ -67,6 +68,9 @@ const ResetPassword = () => {
         padding: "35px",
       }}
     >
+      <Link href="/login" color={A.colors.black}>
+          <i class="fa-solid fa-arrow-left fa-xl"></i>
+        </Link>
       <TypoText variant="h1" style={{ margin: "1vh 0" }}>
         Reset password
       </TypoText>
@@ -86,9 +90,7 @@ const ResetPassword = () => {
       {!isLoading && <Button style={{ width: "100%" }}>Reset Password</Button>}
       {isLoading && <div style={loadingStyle}><CircularProgress /></div>}
       {errorMessage && (
-        <TypoText variant="h4" color={A.colors.red}>
-          {errorMessage}
-        </TypoText>
+        <Alert severity="info">{errorMessage}</Alert>
       )}
       <Grid container justifyContent="center">
         <Grid item>

@@ -1,108 +1,118 @@
-// import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import "./FeatureList.css";
-// import Header from "../components/layout/Header";
-// import Footer from "../components/layout/Footer";
+import React, { useState, useEffect } from "react";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import TypoText from "../../components/MUIComponent/TypoText";
+import { green, pink } from '@mui/material/colors';
+import Checkbox from '@mui/material/Checkbox';
+import { useNavigate } from "react-router-dom";
 
-// const FeatureList = () => {
-//   const [activeTab, setActiveTab] = useState("userManagement");
-//   const [searchKeyword, setSearchKeyword] = useState("");
-//   const [userData, setUserData] = useState([]);
-//   const [featureData, setFeatureData] = useState([]);
 
-//   const handleTabChange = (tab) => {
-//     setActiveTab(tab);
-//   };
+export default function FeatureList() {
+  const [feature, setFeature] = useState([]);
+  const [readOnly, setReadOnly] = useState(false);
+  const navigate = useNavigate();
+  const isAuth = async () => {
+    try {
+      const res = await fetch("http://localhost:8080/api/v1/user/current", {
+        method: "GET",
+        credentials: "include",
+      });
+      if (res.ok) {
+        const json = await res.json();
+        if (json.roleId !== "ADMIN") {
+          navigate("/error")
+        }
+      }
+      else {
+        navigate("/error");
+      }
+    } catch (err) {
+      console.log("Can not get the user data");
+    }
+  }
+  useEffect(() => { isAuth() }, []);
+  useEffect(() => {
+    const getList = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/v1/feature", {
+          method: "GET",
+          credentials: "include"
+        });
+        const json = await res.json();
+        setFeature(json.data);
+        console.log(feature.data);
+      } catch (err) {
+        console.log(err);
+        setFeature([]);
+      }
+    }
+    getList();
+  }, []);
+  const setActive = async (id, mess) => {
+    try {
+      await fetch(`http://localhost:8080/api/v1/feature/active?id=${id}&mess=${mess}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
 
-//   const handleSearch = async (event) => {
-//     /* try {
-//       const response = await axios.get("http://127.0.0.1:8080/api/v1/user");
-//       const data = response.data;
-  
-//       if (activeTab === 'userManagement') {
-//         setUserData(data.data);
-//       } else if (activeTab === 'featureManagement') {
-//         setFeatureData(data.data);
-//       }
-//     } catch (error) {
-//       console.error('Lỗi khi tìm kiếm:', error);
-//     } */
-//     try {
-//       const response = await fetch("http://localhost:8080/api/v1/feature");
-//     } catch (error) {}
-//   };
-
-//   const renderFeatureManagement = () => {
-//     return (
-//       <div className="management-wrapper">
-//         <h2>Feature Management</h2>
-//         <div className="search-bar">
-//           <input
-//             type="text"
-//             value={searchKeyword}
-//             onChange={(e) => setSearchKeyword(e.target.value)}
-//           />
-//           <button onClick={handleSearch}>Search</button>
-//         </div>
-//         <table>
-//           <thead>
-//             <tr>
-//               <th>STT</th>
-//               <th>Name</th>
-//               <th>Description</th>
-//               <th>Status</th>
-//             </tr>
-//           </thead>
-//           <tbody>
-//             {featureData.map((feature, index) => (
-//               <tr key={index}>
-//                 <td>{index + 1}</td>
-//                 <td>{feature.name}</td>
-//                 <td>{feature.description}</td>
-//                 <td>
-//                   <span
-//                     className={`status-dot ${
-//                       feature.status ? "active" : "inactive"
-//                     }`}
-//                   ></span>
-//                 </td>
-//               </tr>
-//             ))}
-//           </tbody>
-//         </table>
-//       </div>
-//     );
-//   };
-
-//   return (
-//     <div>
-//       <Header></Header>
-//       <div className="user-list-container">
-//         <div className="left-column">
-//           <h1>Learning Hub</h1>
-//           {/* <button
-//           className={`management-button ${activeTab === 'userManagement' ? 'active' : ''}`}
-//           onClick={() => handleTabChange('userManagement')}
-//         >
-//           User Management
-//         </button> */}
-//           <button
-//             className={`management-button ${
-//               activeTab === "featureManagement" ? "active" : ""
-//             }`}
-//             onClick={() => handleTabChange("featureManagement")}
-//           >
-//             Feature Management
-//           </button>
-//         </div>
-//         <div className="right-column">
-//           {/* {activeTab === 'userManagement' && renderUserManagement()} */}
-//           {activeTab === "featureManagement" && renderFeatureManagement()}
-//         </div>
-//       </div>
-//       <Footer></Footer>
-//     </div>
-//   );
-// };
-
-// export default FeatureList;
+        },
+      });
+      window.location.reload(false);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  return (
+    <>
+      <TypoText
+        variant="h1"
+        style={{ fontWeight: "bold", margin: "30px" }}
+      >
+        Application Feature
+      </TypoText>
+      <div>
+        <TableContainer component={Paper}>
+          <Table sx={{}} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Id</TableCell>
+                <TableCell align="center">Name</TableCell>
+                <TableCell align="center">Description</TableCell>
+                <TableCell align="center">Status</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {feature.map((item) => (
+                <TableRow
+                  key={item.id}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {item.id}
+                  </TableCell>
+                  <TableCell align="center">{item.name}</TableCell>
+                  <TableCell align="center">{item.description}</TableCell>
+                  <TableCell align="center">
+                    <Checkbox checked={item.active} sx={{ color: pink[800], '&.Mui-checked': { color: green[600], }, }}
+                      readOnly={readOnly}
+                      onInput={() => {
+                        let mess = prompt("Update the description");
+                        if (mess !== null) {
+                          setActive(item.id, mess);
+                        }
+                      }} value={item.id} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </>
+  )
+}

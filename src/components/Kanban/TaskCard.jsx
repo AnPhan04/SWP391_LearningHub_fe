@@ -1,7 +1,8 @@
-import React from 'react';
-import { Draggable } from 'react-beautiful-dnd';
-import styled from '@emotion/styled';
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
+import React, { useState } from "react";
+import { Draggable } from "react-beautiful-dnd";
+import styled from "@emotion/styled";
+import DeleteIcon from "@mui/icons-material/Delete";
+import UpdateCard from "./UpdateCard";
 
 const Tag = styled.span`
   background-color: #10957d;
@@ -9,9 +10,9 @@ const Tag = styled.span`
   color: white;
   border-radius: 8px;
   margin: 0px 0.25rem;
-  font-weight:600;
-  font-family: roboto, sans-serif
-`
+  font-weight: 600;
+  font-family: roboto, sans-serif;
+`;
 const TaskInformation = styled.div`
   display: flex;
   flex-direction: column;
@@ -43,14 +44,19 @@ const TaskHeading = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  overflow:hidden;
+  overflow: hidden;
 `;
 
+const TaskCard = ({ item, index, onDelete, onClick }) => {
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    onDelete(item.id);
+  };
 
-function testButton() {
-  alert("test");
-}
-const TaskCard = ({ item, index }) => {
+  const handleCardClick = () => {
+    onClick(item.id);
+  };
+
   return (
     <Draggable draggableId={item.id.toString()} index={index}>
       {(provided) => (
@@ -58,16 +64,24 @@ const TaskCard = ({ item, index }) => {
           ref={provided.innerRef}
           {...provided.draggableProps}
           {...provided.dragHandleProps}
+          onClick={handleCardClick}
         >
-          <TaskInformation >
+          <TaskInformation>
             <TaskHeading>
               <p>{item.cardTitle}</p>
-              <MoreHorizIcon onClick={testButton} />
+              <DeleteIcon onClick={handleDelete} />
             </TaskHeading>
             <div className="secondary-details">
               <p>
-                {item.labels?.map(element => {
-                  return (<Tag key={item.labels.name} style={{ backgroundColor: element.color }}>{element.name}</Tag>)
+                {item.labels?.map((element) => {
+                  return (
+                    <Tag
+                      key={item.labels.name}
+                      style={{ backgroundColor: element.color }}
+                    >
+                      {element.name}
+                    </Tag>
+                  );
                 })}
               </p>
             </div>

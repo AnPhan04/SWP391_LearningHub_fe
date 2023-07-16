@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import styled from '@emotion/styled';
-import { DragDropContext, Droppable } from 'react-beautiful-dnd';
-import TaskCard from './TaskCard';
-import AddTask from './AddTask';
-import AddColumn from './AddColumn';
-import ArchiveColumn from './ArchiveColumn';
+import styled from "@emotion/styled";
+import React, { useEffect, useState } from "react";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import AddColumn from "./AddColumn";
+import AddTask from "./AddTask";
+import ArchiveColumn from "./ArchiveColumn";
+import TaskCard from "./TaskCard";
+import UpdateCard from "./UpdateCard";
+import { Dialog } from "@mui/material";
 const Container = styled.div`
   display: flex;
   // justify-content: space-around;
@@ -15,7 +17,7 @@ const TaskList = styled.div`
   min-height: 100px;
   display: flex;
   // flex-wrap: wrap;
-  flex:"auto";
+  flex: "auto";
   flex-direction: column;
   background: #f3f3f3;
   min-width: 341px;
@@ -43,33 +45,33 @@ const Title = styled.span`
 `;
 
 const ColumnHeading = styled.div`
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 `;
 
 const init = {
-  "0": {
+  0: {
     title: "To-do",
     items: [],
-  }
-}
-const Kanban = ({ countCardKey,id }) => {
+  },
+};
+
+const Kanban = ({ countCardKey, id }) => {
   let [columns, setColumns] = useState(init);
-  //https://mocki.io/v1/284745a5-3443-4340-a08d-112e88c970ae
-  // http://localhost:8080/api/v1/note/kanban/data?boardId=1
-  //insert data
+
   useEffect(() => {
     const getData = async (id) => {
       console.log(id);
       fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
-        credentials:"include",
-        method: "GET"
+        credentials: "include",
+        method: "GET",
       })
-        .then(response => response.json())
-        .then(json => {
+        .then((response) => response.json())
+        .then((json) => {
           console.log(json);
-          setColumns(json)
-        }).catch(err => console.log(err));
+          setColumns(json);
+        })
+        .catch((err) => console.log(err));
     };
     getData(id);
   }, [countCardKey]);
@@ -78,15 +80,17 @@ const Kanban = ({ countCardKey,id }) => {
   useEffect(() => {
     async function saveData(id) {
       fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
-        credentials:"include",
+        credentials: "include",
         method: "Post",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(columns)
-      }).then(response => response.json())
-        .then(response => console.log(response)).catch(err => console.log(err));
+        body: JSON.stringify(columns),
+      })
+        .then((response) => response.json())
+        .then((response) => console.log(response))
+        .catch((err) => console.log(err));
     }
     saveData(id);
-  }, [columns]) // will call when the columns (data) has been changed
+  }, [columns]); // will call when the columns (data) has been changed
 
   //handle the action when user drag item
   const onDragEnd = (result, columns, setColumns) => {
@@ -125,17 +129,96 @@ const Kanban = ({ countCardKey,id }) => {
     }
   };
 
+  const handleDeleteTask = async (taskId) => {
+    console.log("Delete task: " + taskId);
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/note/card?id=${taskId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const jsonData = await response.json();
+      if (response.ok) {
+        console.log("Delete task: " + jsonData.message);
+        setColumns((prevColumns) => {
+          const updatedColumns = { ...prevColumns };
+          for (const columnId in updatedColumns) {
+            const column = updatedColumns[columnId];
+            const updatedItems = column.items.filter(
+              (item) => item.id !== taskId
+            );
+            column.items = updatedItems;
+          }
+          return updatedColumns;
+        });
+      }
+    } catch (error) {
+      console.log("Delete task error: " + error);
+    }
+  };
+
+  const [selectedTask, setSelectedTask] = useState(null);
+
+  const handleCardClick = (taskId) => {
+    let task;
+    for (const columnId in columns) {
+      const column = columns[columnId];
+      task = column.items.find((item) => item.id === taskId);
+      if (task) {
+        break;
+      }
+    }
+    console.log("kanban taskId: " + taskId);
+    setSelectedTask(task ? task.id : null);
+    setTaskData(null);
+  };
+
+  const [taskData, setTaskData] = useState(null);
+  useEffect(() => {
+    // Fetch task data from the API
+    async function fetchData(cardId) {
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/v1/note/cardDetails?cardId=${cardId}`,
+          {
+            credentials: "include",
+            method: "GET",
+          }
+        );
+        const jsonData = await response.json();
+        setTaskData(jsonData); // Store the task data in state
+        console.log(jsonData);
+      } catch (error) {
+        console.log("Fetch task data error: " + error);
+      }
+    }
+
+    if (selectedTask !== null) {
+      fetchData(selectedTask); // Call the fetchData function when selectedTask changes
+    }
+  }, [selectedTask]);
+
   return (
-    < >
+    <>
       <DragDropContext
-        onDragEnd={(result) => onDragEnd(result, columns, setColumns)} key={Math.random}
+        onDragEnd={(result) => onDragEnd(result, columns, setColumns)}
+        key={Math.random}
       >
-        <Container >
+        <Container>
           <TaskColumnStyles>
             <>
               {Object.entries(columns).map(([columnId, column], index) => {
                 return (
-                  <Droppable key={columnId} droppableId={columnId} index={index}>
+                  <Droppable
+                    key={columnId}
+                    droppableId={columnId}
+                    index={index}
+                  >
                     {(provided) => (
                       <TaskList
                         ref={provided.innerRef}
@@ -147,7 +230,13 @@ const Kanban = ({ countCardKey,id }) => {
                           <ArchiveColumn target={columnId} />
                         </ColumnHeading>
                         {column.items.map((item, index) => (
-                          <TaskCard key={item.id} item={item} index={index} />
+                          <TaskCard
+                            key={item.id}
+                            item={item}
+                            index={index}
+                            onDelete={handleDeleteTask}
+                            onClick={handleCardClick}
+                          />
                         ))}
                         {provided.placeholder}
                         <AddTask key={columnId} colId={columnId} />
@@ -156,11 +245,21 @@ const Kanban = ({ countCardKey,id }) => {
                   </Droppable>
                 );
               })}
-              <AddColumn boardId={id}/>
+              <AddColumn boardId={id} />
             </>
           </TaskColumnStyles>
         </Container>
       </DragDropContext>
+
+      <Dialog
+        open={selectedTask !== null}
+        onClose={() => setSelectedTask(null)}
+      >
+        {taskData && ( // Only render the UpdateCard component when taskData is available
+          <UpdateCard task={taskData} onClose={() => setSelectedTask(null)} />
+        )}
+        {console.log("taskData",taskData)}
+      </Dialog>
     </>
   );
 };

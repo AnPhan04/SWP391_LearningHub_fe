@@ -28,6 +28,7 @@ export default function MultipleSelect({onChange}) {
 
   const [personName, setPersonName] = useState([]);
   const [labelName, setLabelName] = useState([]);
+  const [label, setLabel] = useState([]);
   const [boardId, setBoardId] = useState(id.get("id"));
   const [selectedLabels, setSelectedLabels] = useState([]);
   
@@ -53,7 +54,8 @@ export default function MultipleSelect({onChange}) {
         .then((response) => response.json())
         .then((jsonData) => {
           if (Array.isArray(jsonData)) { // Check if jsonData is an array
-            const labelNames = jsonData.map((item) => item.id);
+            const labelNames = jsonData.map((item) => item.name);
+            setLabel(jsonData);
             setLabelName(labelNames);
           } else {
             console.error("Invalid JSON data:", jsonData);}
@@ -69,6 +71,7 @@ export default function MultipleSelect({onChange}) {
     onChange(value);
   };
 
+  console.log("mul Label",label);
   return (
     <div>
       <FormControl sx={{ width: "100%", padding: "0 5px" }}>
@@ -77,15 +80,23 @@ export default function MultipleSelect({onChange}) {
       multiple
       value={selectedLabels}
       onChange={handleChange}
-      renderValue={(selected) => selected.join(", ")}
+      renderValue={(selected) =>
+        label
+          .filter((l) => selected.includes(l.id))
+          .map((l) => l.name)
+          .join(", ")
+      }
     >
-          {labelName.map((name) => (
+          {label.map((l) => (
             <MenuItem
-              key={name}
-              value={name}
-              // style={getStyles(name, personName, theme)}
+              key={l.id}
+              value={l.id}
+              backgroundColor={l.color}
+              style={{
+                "backgroundColor" : `${l.color}50`,
+              }}
             >
-              {name}
+              {l.name}
             </MenuItem>
           ))}
         </Select>
