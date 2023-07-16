@@ -21,6 +21,7 @@ import UpdateCoreLabel from "../pages/Admin/UpdateCoreLabel";
 import AdminMain from "../pages/Admin/AdminMain";
 import Deactive from "../pages/Auth/Deactive";
 import Reactive from "../pages/Auth/Reactive";
+import AboutUs from "../pages/AboutUs";
 
 const routes = createBrowserRouter([
     {
@@ -91,6 +92,11 @@ const routes = createBrowserRouter([
     {
         path: "/profile",
         element: <EditProfile />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/about",
+        element: <AboutUs />
         , errorElement: <ErrorPage />
     },
     {

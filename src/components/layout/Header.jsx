@@ -52,7 +52,7 @@ const Header = () => {
           {!logged && (
             <>
               <Link
-                href="/aboutus"
+                href="/about"
                 color={A.colors.white}
                 style={{ marginRight: "15px" }}
               >
