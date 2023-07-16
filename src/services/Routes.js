@@ -23,6 +23,7 @@ import Deactive from "../pages/Auth/Deactive";
 import Reactive from "../pages/Auth/Reactive";
 import AboutUs from "../pages/AboutUs";
 import EmailForm from "../components/EmailForm";
+import CardAttachmentComponent from "../components/CardAttachmentComponent";
 
 const routes = createBrowserRouter([
     {
@@ -76,6 +77,11 @@ const routes = createBrowserRouter([
         path: "/featurelist",
         element: <FeatureList />
         , errorElement: <ErrorPage />
+    },
+    {
+        path: "/attachment",
+        element: <CardAttachmentComponent />,
+        errorElement: <ErrorPage />
     },
     {
         path: "/accountsetting",
