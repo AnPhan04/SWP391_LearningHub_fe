@@ -27,7 +27,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     );
 }
 
-function CheckList() {
+function CheckList({id}) {
     const [progress, setProgress] = useState(0);
     const [add, setAdd] = useState(false);
     const [lists, setLists] = useState([]);
@@ -44,7 +44,7 @@ function CheckList() {
     const editRefs = useRef([]);
     const [checked, setChecked] = useState([]);
     const [countChecked, setCountChecked] = useState(0);
-    const [cardid, setCardid] = useState(2);
+    const [cardid, setCardid] = useState(id);
 
 
 
@@ -328,7 +328,7 @@ function CheckList() {
 
 
     return (
-        <Box sx={{ width: '40%', marginLeft: 10, backgroundColor: "#F1F2F4", padding: '10px', }}>
+        <Box sx={{width:'100%', marginTop: 2,padding: '10px', }}>
             <Box sx={{ display: "flex", justifyContent: "space-between", marginBottom: 3 }} >
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                     <CheckBoxOutlinedIcon sx={{ marginRight: 1 }} />
