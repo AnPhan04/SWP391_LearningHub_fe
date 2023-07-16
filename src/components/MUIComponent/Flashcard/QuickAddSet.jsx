@@ -7,7 +7,7 @@ import {
     Button,
   } from "@mui/material";
   import React, { useEffect, useState } from "react";
-  import TypoText from "./TypoText";
+  import TypoText from "../TypoText";
   
   const QuickAddSet = () => {
     const [open, setOpen] = useState(false);

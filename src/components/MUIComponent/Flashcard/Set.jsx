@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Flashcard from "./Flashcard";
 import TypoText from "../TypoText";
 import "./Set.css";
+import ProgressBar from "./ProgressBar";
+import { Grid } from "@mui/material";
 const Set = ({ flashcards }) => {
   const [counter, setCounter] = useState(1);
   const [disabledRight, setDisabledRight] = useState(false);
@@ -28,6 +30,13 @@ const Set = ({ flashcards }) => {
 
   return (
     <div className="set">
+      <div className="set-title">
+        <Grid container spacing={2}>
+          <Grid item xs={6} sx={{ textAlign: "center" }}>
+            <TypoText variant="h1">Set 1</TypoText>
+          </Grid>
+        </Grid>
+      </div>
       <div className="flashcard-container">
         <Flashcard
           term={flashcards[currentCardIndex].term}
@@ -44,6 +53,9 @@ const Set = ({ flashcards }) => {
         <button onClick={handleNextCard} disabled={disabledRight}>
           <i className="fa-solid fa-arrow-right fa-2xl"></i>
         </button>
+      </div>
+      <div>
+        <ProgressBar flashcards={flashcards} counter={counter}/>
       </div>
     </div>
   );

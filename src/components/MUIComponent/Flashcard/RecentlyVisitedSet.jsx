@@ -33,12 +33,12 @@ const RecentlyVisitedSet = () => {
     }
   };
 
-  /* fetch API to show all notes */
-  const [notes, setNotes] = useState([]);
+  /* fetch API to show all sets */
+  const [sets, setFlashcardSets] = useState([]);
   const [sessionUser, setSessionUser] = useState("");
 
   useEffect(() => {
-    const getListNotes = async () => {
+    const getAllSets = async () => {
       try {
         const response = await fetch(
           "http://localhost:8080/api/v1/flashcard/set",
@@ -49,23 +49,22 @@ const RecentlyVisitedSet = () => {
         );
         const jsonData = await response.json();
         if (jsonData.status === "Success" && jsonData.data) {
-          setNotes(jsonData.data);
+          setFlashcardSets(jsonData.data);
         }
         console.log(jsonData);
       } catch (error) {
         console.log(error);
-        setNotes([]);
+        setFlashcardSets([]);
       }
     };
 
     const fetchNotes = async () => {
       const sessionUser = await Current();
       if (sessionUser != null) {
-        await getListNotes();
+        await getAllSets();
       }
     };
     fetchNotes();
-
     getCurrentUserEmail();
   }, []);
 
@@ -90,7 +89,7 @@ const RecentlyVisitedSet = () => {
     console.log("Archive note " + noteId);
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/note/notes?noteId=${noteId}`,
+        `http://localhost:8080/api/v1/note/sets?noteId=${noteId}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -102,7 +101,7 @@ const RecentlyVisitedSet = () => {
       const jsonData = await response.json();
       if (response.ok) {
         console.log(jsonData.message);
-        setNotes((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
+        setFlashcardSets((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
       }
     } catch (error) {
       console.log("Archive note error: " + error);
@@ -133,54 +132,51 @@ const RecentlyVisitedSet = () => {
   return (
     <>
       <Grid container spacing={2}>
-        {/* number of cards = number of notes */}
-        {notes.map((note) => {
-          const { id, title, description, active } = note;
-          if (active) {
-            return (
-              <Card
-                onClick={(e) => {
-                  if (e.target.tagName !== "BUTTON") {
-                    navToNoteScreen(id);
-                  }
-                }}
-                key={id}
-                sx={{
-                  margin: "0.5em 1.5em",
-                  width: 250,
-                  height: 150,
-                  cursor: "pointer",
-                  borderRadius: "10px",
-                }}
-              >
-                <CardContent>
-                  <Grid container spacing={2}>
-                    <Grid item xs={6}>
-                      <TypoText variant="h3">{title}</TypoText>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      sx={{ display: "flex", justifyContent: "flex-end" }}
-                    >
-                      <MenuListComposition
-                        onEdit={(e) => {
-                          e.stopPropagation();
-                          handleOpenDialog(id, title, description);
-                        }}
-                        onDelete={(e) => {
-                          e.stopPropagation(); // Stop event propagation
-                          archiveNote(id);
-                        }}
-                      />
-                    </Grid>
+        {/* number of cards = number of sets */}
+        
+
+        {sets.map((set)=>{
+          return (
+            <Card
+              onClick={(e) => {
+                if (e.target.tagName !== "BUTTON") {
+                  // navToNoteScreen(id);
+                }
+              }}
+              // key={id}
+              sx={{
+                margin: "0.5em 1.5em",
+                width: 250,
+                height: 150,
+                cursor: "pointer",
+                borderRadius: "10px",
+              }}
+            >
+              <CardContent>
+                <Grid container spacing={2}>
+                  <Grid item xs={6}>
+                    <TypoText variant="h3">{set.id}</TypoText>
                   </Grid>
-                </CardContent>
-              </Card>
-            );
-          } else {
-            return null; // Don't render inactive notes
-          }
+                  <Grid
+                    item
+                    xs={6}
+                    sx={{ display: "flex", justifyContent: "flex-end" }}
+                  >
+                    <MenuListComposition
+                      onEdit={(e) => {
+                        e.stopPropagation();
+                        // handleOpenDialog(id, title, description);
+                      }}
+                      onDelete={(e) => {
+                        e.stopPropagation(); // Stop event propagation
+                        // archiveNote(id);
+                      }}
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+          );
         })}
         <QuickAddSet />
       </Grid>
