@@ -17,6 +17,7 @@ import Landing from "../pages/Landing";
 import EditProfile from "../pages/User/EditProfile";
 import Labels from "../components/MUIComponent/Labels";
 import LabelsList from "../components/MUIComponent/LabelList";
+import CheckList from "../pages/NoteScreen/CheckList";
 
 const routes = createBrowserRouter([
     {
@@ -89,6 +90,10 @@ const routes = createBrowserRouter([
     {
         path: "/listLabels",
         element: <LabelsList/>
-    }
+    },
+    {
+        path: "/checklist",
+        element: <CheckList/>
+    },
 ]);
 export default routes;
