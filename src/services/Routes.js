@@ -22,6 +22,7 @@ import AdminMain from "../pages/Admin/AdminMain";
 import Deactive from "../pages/Auth/Deactive";
 import Reactive from "../pages/Auth/Reactive";
 import AboutUs from "../pages/AboutUs";
+import EmailForm from "../components/EmailForm";
 
 const routes = createBrowserRouter([
     {
@@ -51,6 +52,10 @@ const routes = createBrowserRouter([
     {
         path: "/cardList",
         element: <CardList />
+    },
+    {
+        path: "/contact",
+        element: <EmailForm />
     },
     {
         path: "/flashcardDash",

@@ -31,8 +31,8 @@ const AuthorCard = (props) => {
                                 }
                             />
                         </div>
-                        <Typography variant="h5">{props.name}</Typography>
-                        <Typography variant="body2">
+                        <Typography variant="h5" sx={{ marginBottom: "1rem", fontFamily: "cursive",}}>{props.name}</Typography>
+                        <Typography variant="body2" sx={{ fontFamily: "cursive",}}>
                             {props.desc}
                         </Typography>
                     </CardContent>
@@ -42,7 +42,7 @@ const AuthorCard = (props) => {
 
                         }
                     }>
-                        <Button size="small" href={props.link}>More about me</Button>
+                        <Button size="small" href={props.link} sx={{ fontFamily: "cursive",}}>More about me</Button>
                     </CardActions>
                 </>
 
@@ -64,11 +64,11 @@ export default function AboutUs() {
                 }
             >
                 <Container sx={{ textAlign: "center" }}>
-                    <Typography variant="h1" sx={{ marginBottom: "1rem" }}>We are a small group with a big dream</Typography>
-                    <Typography variant="body">We are SE1722NJ_Group2. This is a temporally group for a SWP course (Application Software development). In this project, we are trying to bring some features that support the learner's self-learning and self-task management effectively. By researching some fantastic features from some successful companies, We hope to mimic their features in the simplest way possible for practice purposes.
+                    <Typography variant="h1" sx={{ marginBottom: "1rem", fontFamily: "cursive",}}>We are a small group with a big dream</Typography>
+                    <Typography variant="body" sx={{ marginBottom: "1rem", fontFamily: "cursive",}}>We are SE1722NJ_Group2. This is a temporally group for a SWP course (Application Software development). In this project, we are trying to bring some features that support the learner's self-learning and self-task management effectively. By researching some fantastic features from some successful companies, We hope to mimic their features in the simplest way possible for practice purposes.
                         We are hoping to make this application more fun and helpful for practical users!
                     </Typography>
-                    <Typography variant="h3" sx={{ margin: "2rem 0" }}
+                    <Typography variant="h3" sx={{ margin: "2rem 0", fontFamily: "cursive" }}
                     >Members</Typography>
                 </Container>
                 <Container>

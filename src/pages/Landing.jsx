@@ -70,32 +70,45 @@ const Landing = () => {
   return (
     <div>
       <Header />
-      <Container >
-        <H1>Welcome to Learning Hub❤️</H1>
-        <div className="dashboard-container" style={{ justifyContent: "center", width: "100%", }}>
-          <img src="/img/landing.jpg" alt="landing " style={{ margin: " 0" }} />
-        </div>
-      </Container>
-      <Container>
-        <Typography variant="h2">What we can do?</Typography>
-        <Container>
-
-          <Grid container spacing={1}>
-            <Grid item sx={2} md={6} >
-              <FeatureCard
-                name={"Flashcard"}
-                img={"/img/flash-card.png"}
-                desc={"Remember things effectively with cards!"}
-              />
+      <Container sx={{
+        margin: "2rem auto",
+        alignContent: "center"
+      }}>
+        <Container >
+          <H1>Welcome to Learning Hub❤️</H1>
+          <div className="dashboard-container" style={{ justifyContent: "center", width: "100%", }}>
+            <img src="/img/landing.jpg" alt="landing " style={{ margin: " 0" }} />
+          </div>
+        </Container>
+        <Container
+          sx={{
+            margin: "8vh 0"
+          }}
+        >
+          <Typography variant="h3" align="center" sx={{
+            fontFamily: "cursive",
+            letterSpacing: "20px"
+          }}>What we can do?</Typography>
+          <Container sx={
+            { marginTop: "2vh" }
+          }>
+            <Grid container spacing={1}>
+              <Grid item sx={2} md={6} >
+                <FeatureCard
+                  name={"Flashcard"}
+                  img={"/img/flash-card.png"}
+                  desc={"Remember things effectively with cards!"}
+                />
+              </Grid>
+              <Grid item sx={2} md={6} >
+                <FeatureCard
+                  name={"Task manager"}
+                  img={"/img/tasks.png"}
+                  desc={"Tracking progress of your own project with board and cards!"}
+                />
+              </Grid>
             </Grid>
-            <Grid item sx={2} md={6} >
-              <FeatureCard
-                name={"Task manager"}
-                img={"/img/tasks.png"}
-                desc={"Tracking progress of your own project with board and cards!"}
-              />
-            </Grid>
-          </Grid>
+          </Container>
         </Container>
       </Container>
       <Footer />
