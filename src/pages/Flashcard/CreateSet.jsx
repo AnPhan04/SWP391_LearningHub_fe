@@ -68,7 +68,7 @@ const CreateSet = () => {
       }}
     >
       <TypoText variant="h1" style={{ margin: "0" }}>
-        Create Set
+        Create FlashcardSet
       </TypoText>
       <TypoText variant="h5">
         Make a new doc to bring your words, data, and much more. For free.

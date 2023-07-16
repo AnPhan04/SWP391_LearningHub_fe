@@ -10,7 +10,7 @@ import TaskManagementDashBoard from './pages/Task/TaskManagementDashboard';
 import NavBar from './components/layout/NavBar';
 import Kanban from './components/Kanban/Kanban';
 import Flashcard from './components/MUIComponent/Flashcard/Flashcard';
-import Set from './components/MUIComponent/Flashcard/Set';
+import FlashcardSet from './components/MUIComponent/Flashcard/FlashcardSet';
 /* const flashcard = [{
   term: "flashcard 1",
   definition: "1"

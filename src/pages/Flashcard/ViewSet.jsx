@@ -1,27 +1,34 @@
-import React from "react";
-import Set from "../../components/MUIComponent/Flashcard/Set";
-import "../../components/MUIComponent/Flashcard/Set.css";
+import React, { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import FlashcardSet from "../../components/MUIComponent/Flashcard/FlashcardSet";
+import "../../components/MUIComponent/Flashcard/FlashcardSet.css";
 // get flashcards of set
-const flashcards = [
-  {
-    term: "Who is the dumbest guy in the world?",
-    definition: "Minh Pham",
-  },
-  {
-    term: "Only one in the world?",
-    definition: "Of course no, there's still Hom met",
-  },
-  {
-    term: "Who is the most intelligent girl in the world?",
-    definition: "It's me, hi!",
-  },
-];
+
 const ViewSet = () => {
-  
+  const [flashcards, setFlashcards] = useState([]);
+  const [id, setId] = useSearchParams();
+  const [title, setTitle] = useSearchParams();
+  const flashcardSetId = id.get("id");
+  const flashcardSetName = title.get("title");
+
+  useEffect(() => {
+    const getFlashcardsOfSet = async () => {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/flashcard/card?id=${flashcardSetId}`,
+        {
+          credentials: "include",
+        }
+      );
+      const jsonData = await response.json();
+      setFlashcards(jsonData.data);
+    };
+    getFlashcardsOfSet();
+  }, []);
+
   return (
     <div>
       <div className="card-flip">
-        <Set flashcards={flashcards} />
+        <FlashcardSet flashcards={flashcards} title={flashcardSetName}/>
       </div>
     </div>
   );

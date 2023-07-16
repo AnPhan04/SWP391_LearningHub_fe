@@ -101,7 +101,9 @@ const RecentlyVisitedSet = () => {
       const jsonData = await response.json();
       if (response.ok) {
         console.log(jsonData.message);
-        setFlashcardSets((prevNotes) => prevNotes.filter((note) => note.id !== noteId));
+        setFlashcardSets((prevNotes) =>
+          prevNotes.filter((note) => note.id !== noteId)
+        );
       }
     } catch (error) {
       console.log("Archive note error: " + error);
@@ -109,8 +111,8 @@ const RecentlyVisitedSet = () => {
   };
 
   const navigate = useNavigate();
-  const navToNoteScreen = (noteId) => {
-    navigate(`/note?id=${noteId}`);
+  const navToNoteScreen = (setId, title) => {
+    navigate(`/set?id=${setId}&title=${title}`);
   };
 
   const [open, setOpen] = useState(false);
@@ -132,15 +134,12 @@ const RecentlyVisitedSet = () => {
   return (
     <>
       <Grid container spacing={2}>
-        {/* number of cards = number of sets */}
-        
-
-        {sets.map((set)=>{
+        {sets.map((set) => {
           return (
             <Card
               onClick={(e) => {
                 if (e.target.tagName !== "BUTTON") {
-                  // navToNoteScreen(id);
+                  navToNoteScreen(set.id, set.title);
                 }
               }}
               // key={id}
@@ -155,7 +154,7 @@ const RecentlyVisitedSet = () => {
               <CardContent>
                 <Grid container spacing={2}>
                   <Grid item xs={6}>
-                    <TypoText variant="h3">{set.id}</TypoText>
+                    <TypoText variant="h3">{set.title}</TypoText>
                   </Grid>
                   <Grid
                     item
@@ -163,13 +162,9 @@ const RecentlyVisitedSet = () => {
                     sx={{ display: "flex", justifyContent: "flex-end" }}
                   >
                     <MenuListComposition
-                      onEdit={(e) => {
-                        e.stopPropagation();
-                        // handleOpenDialog(id, title, description);
-                      }}
                       onDelete={(e) => {
                         e.stopPropagation(); // Stop event propagation
-                        // archiveNote(id);
+                        archiveNote(set.id);
                       }}
                     />
                   </Grid>

@@ -10,17 +10,6 @@ const Flashcard = ({ term, definition }) => {
     setIsFlipped(!isFlipped);
   };
 
-  useEffect(() => {
-    const getFlashcardsOfSet = async () => {
-      const response = await fetch('http://localhost:8080/api/v1/flashcard/card?id=1', {
-        credentials: "include"
-      });
-      const jsonData = await response.json();
-      console.log(jsonData);
-    };
-    getFlashcardsOfSet();
-  }, []);
-
   return (
     <div className="flashcard" onClick={handleFlip}>
       <div className={`card ${isFlipped ? "isFlipped" : ""}`}>

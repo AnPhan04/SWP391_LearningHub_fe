@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Flashcard from "./Flashcard";
 import TypoText from "../TypoText";
-import "./Set.css";
+import "./FlashcardSet.css";
 import ProgressBar from "./ProgressBar";
 import { Grid } from "@mui/material";
-const Set = ({ flashcards }) => {
+const FlashcardSet = ({ flashcards, title }) => {
   const [counter, setCounter] = useState(1);
   const [disabledRight, setDisabledRight] = useState(false);
   const [disabledLeft, setDisabledLeft] = useState(true);
@@ -28,19 +28,31 @@ const Set = ({ flashcards }) => {
     }
   };
 
+  const [name, setName] = useState(null);
+
+  useEffect(() => {
+    const uniqueSetId = [...new Set(flashcards.map((f) => f.setId))];
+    const flSetName = flashcards.find((s) => s.setId === uniqueSetId);
+    console.log(flSetName);
+    setName();
+    console.log(flashcards.find((s) => s.setId === uniqueSetId));
+  }, [flashcards]);
+
+  console.log(name);
+
   return (
     <div className="set">
       <div className="set-title">
         <Grid container spacing={2}>
           <Grid item xs={6} sx={{ textAlign: "center" }}>
-            <TypoText variant="h1">Set 1</TypoText>
+            <TypoText variant="h1">{title}</TypoText>
           </Grid>
         </Grid>
       </div>
       <div className="flashcard-container">
         <Flashcard
-          term={flashcards[currentCardIndex].term}
-          definition={flashcards[currentCardIndex].definition}
+          term={flashcards[currentCardIndex]?.term}
+          definition={flashcards[currentCardIndex]?.definition}
         />
       </div>
       <div className="progress-arrow">
@@ -55,10 +67,10 @@ const Set = ({ flashcards }) => {
         </button>
       </div>
       <div>
-        <ProgressBar flashcards={flashcards} counter={counter}/>
+        <ProgressBar flashcards={flashcards} counter={counter} />
       </div>
     </div>
   );
 };
 
-export default Set;
+export default FlashcardSet;

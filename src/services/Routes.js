@@ -43,7 +43,7 @@ const routes = createBrowserRouter([
         , errorElement: <ErrorPage />
     },
     {
-        path: "/flashcard",
+        path: "/set",
         element: <ViewSet />
     },
     {
