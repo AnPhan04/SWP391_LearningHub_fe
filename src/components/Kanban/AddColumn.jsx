@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import styled from "styled-components";
 import TypoText from "../../components/MUIComponent/TypoText";
+import Alert from '@mui/material/Alert';
 export const Button = styled.button`
   background-color: white;
   color: white;
@@ -21,17 +22,23 @@ export const Button = styled.button`
 function AddColumn({ boardId }) {
   const [show, setShow] = useState(false);
   const [name, setName] = useState("");
+  const [error, setError] = useState(false);
 
   const handleOnClick = () => {
-    const Data = {
-      // Đối tượng bạn muốn truyền trong phần body
-      boardId: boardId,
-      name: name,
-      active: true,
-    };
-    fetchSaveData(Data);
-    setShow(false);
-    window.location.reload(false);
+    if (name.length > 0 && name.length < 50) {
+      const Data = {
+        // Đối tượng bạn muốn truyền trong phần body
+        boardId: boardId,
+        name: name,
+        active: true,
+      };
+      fetchSaveData(Data);
+      setShow(false);
+      setError(false);
+      window.location.reload(false);
+    } else {
+      setError(true);
+    }
   };
 
   async function fetchSaveData(Data) {
@@ -117,6 +124,13 @@ function AddColumn({ boardId }) {
                 Save
               </button>
             </Box>
+            {error && (
+              <Box sx={{ marginTop: 2 }}>
+                <Alert variant="outlined" severity="error">
+                  This is an error alert — check it out!
+                </Alert>
+              </Box>
+            )}
           </Box>
         </Dialog>
       }
