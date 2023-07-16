@@ -8,6 +8,7 @@ import TextField from "../MUIComponent/TextField";
 import TypoText from "../MUIComponent/TypoText";
 import dayjs from "dayjs";
 import { Button, Dialog } from "@mui/material";
+import CheckList from "../../pages/NoteScreen/CheckList";
 
 const AddTaskPopup = styled(Grid)`
   background: white;
@@ -254,6 +255,7 @@ export default function UpdateCard({ task, onClose }) {
             sx={{ width: "100%", padding: "0 5px" }}
           />
         </Grid>
+        <CheckList id={task.data.card.id}/>
         <Grid item xs={11} sx={{ textAlign: "right" }}>
           <Button
             variant="outlined"
