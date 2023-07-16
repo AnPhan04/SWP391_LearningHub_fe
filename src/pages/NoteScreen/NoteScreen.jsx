@@ -167,9 +167,9 @@ function NoteScreen() {
           </Typography>
         </Box>
       </Container>
-      <Box ref={kanbanRef}>
-        <Kanban countCardKey={countCardKey} id={noteId} />
-      </Box>
+        <Box ref={kanbanRef}>
+          <Kanban countCardKey={countCardKey} id={noteId} />
+        </Box>
       <Container fixed>
         <LabelsList boardID={noteId} onchangedata1={handleOnChange1} />
       </Container>

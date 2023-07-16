@@ -88,7 +88,7 @@ const Landing = () => {
           <Typography variant="h3" align="center" sx={{
             fontFamily: "cursive",
             letterSpacing: "20px"
-          }}>What we can do?</Typography>
+          }}>What we can do</Typography>
           <Container sx={
             { marginTop: "2vh" }
           }>
