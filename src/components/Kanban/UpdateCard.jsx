@@ -29,6 +29,7 @@ export default function UpdateCard({ task, onClose }) {
   console.log("updatecard task name: "+task.data.card.name);
   const [name, setName] = useState(task.data.card.name);
   const [label, setLabel] = useState(task.data.labels);
+  console.log("label",label);
   const [description, setDescription] = useState(task.data.card.description);
   const [startDate, setStartDate] = useState(
     dayjs(task.data.card.dateStart, "YYYY-MM-DD")

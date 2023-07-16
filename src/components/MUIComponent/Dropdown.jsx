@@ -71,6 +71,7 @@ export default function MultipleSelect({onChange}) {
     onChange(value);
   };
 
+  console.log("mul Label",label);
   return (
     <div>
       <FormControl sx={{ width: "100%", padding: "0 5px" }}>

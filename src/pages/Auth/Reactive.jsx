@@ -8,36 +8,44 @@ import TextField from "../../components/MUIComponent/TextField";
 import Button from '@mui/material/Button';
 import { Style } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-const Deactive = () => {
+import { useSearchParams } from "react-router-dom";
+const Reactive = () => {
     const [pass, setPass] = useState("");
     const [err, setErr] = useState("");
+    const [params, setParams] = useSearchParams();
     const [role, setRole] = useState("");
     const nav = useNavigate();
+    const email = params.get("email");
+
     const handleOnChange = (e) => {
         setPass(e.target.value);
     }
     async function logout() {
         localStorage.clear();
         await fetch("http://localhost:8080/api/v1/user/logout", {
-          method: "POST",
-          credentials: "include",
+            method: "POST",
+            credentials: "include",
         }).then(response => {
-          if (response.ok) {
-            return (<></>)
-          }
+            if (response.ok) {
+                return (<></>)
+            }
         }).catch(err => console.log(err));
-      }
-    const deactivateUser = async (email,pass) =>{
+    }
+    const reactiveUser = async (email, pass) => {
         try {
             const response = await fetch(
-                `http://localhost:8080/api/v1/user/?email=${email}&password=${pass}`,
+                `http://localhost:8080/api/v1/user/reactive?email=${email}&password=${pass}`,
                 {
-                    method: "DELETE",
-                    credentials:"include"
+                    method: "PUT",
+                    credentials: "include"
                 }
             );
+            if(response.ok){
+                setErr("");
+                nav("/login");
+            }
             const json = await response.json();
-            if(response.status === 500){
+            if (response.status !== 200) {
                 setErr(json.data);
             }
             console.log(json);
@@ -48,23 +56,10 @@ const Deactive = () => {
 
     const onSummitHandle = async () => {
         try {
-            const response = await fetch(
-                "http://localhost:8080/api/v1/user/current",
-                {
-                    method: "GET",
-                    credentials: "include",
-                }
-            );
-            const json = await response.json();
-
-            await deactivateUser(json.email,pass);
-            await logout();
-            nav("/login");
-            console.log(json);
+            await reactiveUser(email, pass);
         } catch (error) {
             console.log(error);
         }
-        console.log("ref", pass);
     }
     return (
         <>
@@ -80,11 +75,11 @@ const Deactive = () => {
                     padding: "35px",
                 }}
             >
-                <Link href="/accountsetting" color={A.colors.black}>
+                <Link href="/" color={A.colors.black}>
                     <i class="fa-solid fa-arrow-left fa-xl"></i>
                 </Link>
-                <TypoText variant="h1">We sorry to see you go🥹 </TypoText>
-                <TypoText variant="h5">This action is cannot be undone, please enter your password to confirm that you want to deactivate account</TypoText>
+                <TypoText variant="h1">Welcome back 😍 </TypoText>
+                <TypoText variant="h5">Please re-enter your password to re-active the account </TypoText>
                 <TextField
                     fullWidth
                     required
@@ -94,23 +89,23 @@ const Deactive = () => {
                     id="password"
                     onChange={handleOnChange}
                 />
-                {err !==""&&
+                {err !== "" &&
                     <Alert severity="error" style={{ width: "100%" }}>{err}</Alert>
                 }
                 <Button
                     size="large"
-                    color="error"
+                    color="success"
                     style={{ marginTop: "1rem" }}
                     variant="contained"
                     onClick={() => {
                         pass !== "" && onSummitHandle()
                     }}>
-                    Deactivate my account
+                    Re-activate my account
                 </Button>
-                
+
             </Box>
         </>
     );
 };
 
-export default Deactive;
+export default Reactive;

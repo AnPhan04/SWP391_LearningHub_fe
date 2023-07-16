@@ -20,6 +20,7 @@ import LabelsList from "../components/MUIComponent/LabelList";
 import UpdateCoreLabel from "../pages/Admin/UpdateCoreLabel";
 import AdminMain from "../pages/Admin/AdminMain";
 import Deactive from "../pages/Auth/Deactive";
+import Reactive from "../pages/Auth/Reactive";
 
 const routes = createBrowserRouter([
     {
@@ -113,6 +114,11 @@ const routes = createBrowserRouter([
     {
         path: "/deactive",
         element: <Deactive />
+        , errorElement: <ErrorPage />
+    },
+    {
+        path: "/reactive",
+        element: <Reactive />
         , errorElement: <ErrorPage />
     },
     {
