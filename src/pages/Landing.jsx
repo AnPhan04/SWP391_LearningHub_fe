@@ -6,7 +6,6 @@ import styled from "@emotion/styled";
 import { Avatar, Button, Card, CardActions, CardContent, Container, Grid, Typography } from "@mui/material";
 
 const H1 = styled.h1`
-  filter: blur(10px);
   position: absolute;
   transform: translate(-50%,-50%);
   left: 50%;
@@ -15,9 +14,7 @@ const H1 = styled.h1`
   letter-spacing: 20px;
   text-align: center;
   transition: 0.3s all;
-  &:hover {
-    filter: blur(0);
-  }
+  
 `
 
 const FeatureCard = (props) => {
