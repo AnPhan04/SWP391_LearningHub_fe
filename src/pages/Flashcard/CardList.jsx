@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import TypoText from "../../components/MUIComponent/TypoText";
 import CardInSet from "./CardInSet";
+import { IconButton } from "@mui/material";
+import { DeleteOutline, Edit } from "@mui/icons-material";
+import "./CardList.css"; // Import the CSS file for styling
 
-const CardList = ({ counter, handleTermChange, handleDefinitionChange }) => {
+const CardList = ({
+  counter,
+  handleTermChange,
+  handleDefinitionChange,
+  handleDeleteCard,
+}) => {
   const [term, setTerm] = useState("");
   const [definition, setDefinition] = useState("");
 
@@ -18,6 +26,10 @@ const CardList = ({ counter, handleTermChange, handleDefinitionChange }) => {
     handleDefinitionChange(definitionValue, counter);
   };
 
+  const handleDelete = () => {
+    handleDeleteCard(counter);
+  };
+
   return (
     <div className="card-row" style={{ marginTop: "2em" }}>
       <div className="card-header">
@@ -25,8 +37,9 @@ const CardList = ({ counter, handleTermChange, handleDefinitionChange }) => {
           {counter}
         </TypoText>
         <div className="card-icons">
-          <i className="fa-solid fa-pen-to-square"></i>
-          <i className="card-icon fa-solid fa-trash"></i>
+          <IconButton onClick={handleDelete}>
+            <DeleteOutline className="card-icon" />
+          </IconButton>
         </div>
       </div>
 

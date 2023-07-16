@@ -49,7 +49,7 @@ const CreateSet = () => {
       active: true,
       learned: false,
     };
-  
+
     try {
       const createSetResponse = await fetch(
         "http://localhost:8080/api/v1/flashcard/set",
@@ -62,7 +62,7 @@ const CreateSet = () => {
           body: JSON.stringify(setRequestBody),
         }
       );
-  
+
       if (createSetResponse.ok) {
         // Fetch the latest set ID
         const latestSetResponse = await fetch(
@@ -72,13 +72,13 @@ const CreateSet = () => {
             credentials: "include",
           }
         );
-  
+
         if (latestSetResponse.ok) {
           const latestSetData = await latestSetResponse.json();
           const setId = latestSetData.data.id;
           console.log(setId);
           setFlashcardSetId(setId);
-  
+
           // Create flashcards in the set
           for (let i = 1; i <= cardListCount; i++) {
             const cardListRequestBody = {
@@ -89,15 +89,14 @@ const CreateSet = () => {
             };
             await createFlashcard(cardListRequestBody);
           }
-  
-          // navigateToViewSet(); 
+
+          // navigateToViewSet();
         }
       }
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   const createFlashcard = async (requestBody) => {
     try {
@@ -162,6 +161,42 @@ const CreateSet = () => {
     });
   };
 
+  const handleDeleteCard = async (cardIndex) => {
+    // Get the flashcard ID based on the card index
+    const flashcardId = flashcardSetId - 1 + cardIndex;
+
+    try {
+      // Delete the flashcard via the API
+      const response = await fetch(
+        `http://localhost:8080/api/v1/flashcard/card/${flashcardId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.ok) {
+        console.log("Flashcard deleted successfully");
+
+        // Update the state variables
+        setCardListCount((prevCount) => prevCount - 1);
+        setTerms((prevTerms) =>
+          prevTerms.filter((_, index) => index !== cardIndex - 1)
+        );
+        setDefinitions((prevDefinitions) =>
+          prevDefinitions.filter((_, index) => index !== cardIndex - 1)
+        );
+      } else {
+        console.log("Failed to delete flashcard");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <div
       style={{
@@ -214,12 +249,14 @@ const CreateSet = () => {
           DESCRIPTION
         </FormHelperText>
       </FormControl>
-      {[...Array(cardListCount)].map((_, index) => (
+      {cardListCount > 0 &&
+      [...Array(cardListCount)].map((_, index) => (
         <CardList
           key={index}
           counter={index + 1}
           handleTermChange={handleTermChange}
           handleDefinitionChange={handleDefinitionChange}
+          handleDeleteCard={handleDeleteCard}
           term={terms[index]}
           definition={definitions[index]}
         />
