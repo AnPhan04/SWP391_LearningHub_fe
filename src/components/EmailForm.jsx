@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Grid, TextField, Button, Card, CardContent, Typography } from '@material-ui/core';
+
 
 const EmailForm = () => {
   const [firstName, setFirstName] = useState('');
@@ -9,22 +9,33 @@ const EmailForm = () => {
   const [phone, setPhone] = useState('');
   const [message, setMessage] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     const data = {
-      to: email,
-      subject: `Message from ${firstName} ${lastName}`,
-      content: `First Name: ${firstName}\nLast Name: ${lastName}\nEmail: ${email}\nPhone: ${phone}\n\n${message}`,
+      name: `${firstName} ${lastName}`,
+      email: email,
+      phone: phone,
+      mess: message
     };
-
-    try {
-      await axios.post('/api/email/send', data);
-      alert('Email sent successfully');
-    } catch (error) {
-      console.error('Failed to send email:', error);
-      alert('Failed to send email');
-    }
+  
+    fetch('http://localhost:8080/api/v1/user/contract', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Email sent successfully');
+        } else {
+          console.log('Failed to send email');
+        }
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   return (

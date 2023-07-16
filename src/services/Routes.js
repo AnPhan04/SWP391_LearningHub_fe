@@ -20,6 +20,7 @@ import LabelsList from "../components/MUIComponent/LabelList";
 import UpdateCoreLabel from "../pages/Admin/UpdateCoreLabel";
 import AdminMain from "../pages/Admin/AdminMain";
 import Deactive from "../pages/Auth/Deactive";
+import EmailForm from "../components/EmailForm";
 
 const routes = createBrowserRouter([
     {
@@ -116,9 +117,15 @@ const routes = createBrowserRouter([
         , errorElement: <ErrorPage />
     },
     {
+        path: "/contact",
+        element: <EmailForm />,
+        errorElement: <EmailForm />
+    },
+    {
         path: "/error",
         element: <ErrorPage />,
         errorElement: <ErrorPage />
     }
+    
 ]);
 export default routes;
