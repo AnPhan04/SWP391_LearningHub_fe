@@ -10,6 +10,7 @@ const CardAttachmentComponent = ({ cardId }) => {
   const [attachmentUrl, setAttachmentUrl] = useState('');
   const [attachmentName, setAttachmentName] = useState('');
   const [attachmentsList, setAttachmentsList] = useState([]);
+  const [showForm, setShowForm] = useState(false);
 
   const handleAttachmentChange = (e) => {
     setAttachment(e.target.files[0]);
@@ -51,11 +52,12 @@ const CardAttachmentComponent = ({ cardId }) => {
       setAttachmentUrl('');
       setAttachmentName('');
     }
+
+    setShowForm(false);
   };
 
   const handleUpdateAttachment = (attachmentId) => {
-    // fetch(`/api/v1/card-attachments/update?cardId=${cardId}&attachmentId=${attachmentId}`, {
-      fetch(`/api/v1/card-attachments/update?cardId=1&attachmentId=${attachmentId}`, {
+    fetch(`/api/v1/card-attachments/update?cardId=${cardId}&attachmentId=${attachmentId}`, {
       method: 'PUT',
     })
       .then((response) => {
@@ -113,35 +115,60 @@ const CardAttachmentComponent = ({ cardId }) => {
       });
   }, [cardId]);
 
+  const handleShowForm = () => {
+    setShowForm(true);
+  };
+
+  const handleCancelForm = () => {
+    setShowForm(false);
+    setAttachmentUrl('');
+    setAttachmentName('');
+  };
+
   return (
     <div>
-      <label>
-        Attachment:
-        <input type="file" onChange={handleAttachmentChange} />
-      </label>
-      <button onClick={handleAddAttachment}>Add Attachment</button>
-      <div>
-        <label>
-          Attachment URL:
-          <input type="text" value={attachmentUrl} onChange={handleAttachmentUrlChange} />
-        </label>
-        <br></br>
-        <br></br>
-        <label>
-          Attachment Name:
-          <input type="text" value={attachmentName} onChange={handleAttachmentNameChange} />
-        </label>
-        <br></br>
-        <br></br>
-        <button onClick={handleAddAttachment}><DoneOutlineIcon /></button>
-      </div>
       {attachmentsList.map((attachment) => (
         <div key={attachment.id}>
           {attachment.name}
-          <button onClick={() => handleUpdateAttachment(attachment.id)}><EditIcon /></button>
-          <button onClick={() => handleDeleteAttachment(attachment.id)}>< DeleteIcon /></button>
+          <button onClick={() => handleUpdateAttachment(attachment.id)}>
+            Edit
+          </button>
+          <button onClick={() => handleDeleteAttachment(attachment.id)}>
+            Delete
+          </button>
         </div>
       ))}
+
+      {!showForm && (
+        <div>
+          <Button variant="contained" onClick={handleShowForm}>
+            Add Link
+          </Button>
+        </div>
+      )}
+
+      {showForm && (
+        <div>
+          <label>
+            Attachment URL:
+            <input type="text" value={attachmentUrl} onChange={handleAttachmentUrlChange} />
+          </label>
+          <br />
+          <br />
+          <label>
+            Attachment Name:
+            <input type="text" value={attachmentName} onChange={handleAttachmentNameChange} />
+          </label>
+          <br />
+          <br />
+          <Button variant="contained" onClick={handleAddAttachment}>
+            <DoneOutlineIcon />
+          </Button>
+          <Button variant="contained" onClick={handleCancelForm}>
+            <CancelIcon />
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
