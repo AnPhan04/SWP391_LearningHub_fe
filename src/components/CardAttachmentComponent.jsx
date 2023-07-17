@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import CancelIcon from '@mui/icons-material/Cancel';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 
 const CardAttachmentComponent = ({ cardId }) => {
   const [attachment, setAttachment] = useState(null);
+  const [attachmentUrl, setAttachmentUrl] = useState('');
+  const [attachmentName, setAttachmentName] = useState('');
   const [attachmentsList, setAttachmentsList] = useState([]);
 
   const handleAttachmentChange = (e) => {
     setAttachment(e.target.files[0]);
+    setAttachmentName(e.target.files[0].name);
+  };
+
+  const handleAttachmentUrlChange = (e) => {
+    setAttachmentUrl(e.target.value);
+  };
+
+  const handleAttachmentNameChange = (e) => {
+    setAttachmentName(e.target.value);
   };
 
   const handleAddAttachment = () => {
-<<<<<<< Updated upstream
-    if (!attachment) {
-      return;
-=======
     if (attachment) {
       const formData = new FormData();
       formData.append('cardId', cardId);
@@ -38,31 +50,12 @@ const CardAttachmentComponent = ({ cardId }) => {
       setAttachmentsList([...attachmentsList, newAttachment]);
       setAttachmentUrl('');
       setAttachmentName('');
->>>>>>> Stashed changes
     }
-
-    const formData = new FormData();
-    formData.append('cardId', cardId);
-    formData.append('attachment', attachment);
-
-    fetch('/api/v1/card-attachments/add', {
-      method: 'POST',
-      body: formData,
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setAttachmentsList([...attachmentsList, data]);
-        // Xử lý sau khi thêm attachment thành công
-      })
-      .catch((error) => {
-        console.error(error);
-        // Xử lý khi có lỗi
-      });
   };
 
   const handleUpdateAttachment = (attachmentId) => {
-    fetch(`/api/v1/card-attachments/update?cardId=${cardId}&attachmentId=${attachmentId}`, {
+    // fetch(`/api/v1/card-attachments/update?cardId=${cardId}&attachmentId=${attachmentId}`, {
+      fetch(`/api/v1/card-attachments/update?cardId=1&attachmentId=${attachmentId}`, {
       method: 'PUT',
     })
       .then((response) => {
@@ -127,16 +120,28 @@ const CardAttachmentComponent = ({ cardId }) => {
         <input type="file" onChange={handleAttachmentChange} />
       </label>
       <button onClick={handleAddAttachment}>Add Attachment</button>
-
-      <ul>
-        {attachmentsList.map((attachment) => (
-          <li key={attachment.id}>
-            {attachment.name}
-            <button onClick={() => handleUpdateAttachment(attachment.id)}>Update</button>
-            <button onClick={() => handleDeleteAttachment(attachment.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <label>
+          Attachment URL:
+          <input type="text" value={attachmentUrl} onChange={handleAttachmentUrlChange} />
+        </label>
+        <br></br>
+        <br></br>
+        <label>
+          Attachment Name:
+          <input type="text" value={attachmentName} onChange={handleAttachmentNameChange} />
+        </label>
+        <br></br>
+        <br></br>
+        <button onClick={handleAddAttachment}><DoneOutlineIcon /></button>
+      </div>
+      {attachmentsList.map((attachment) => (
+        <div key={attachment.id}>
+          {attachment.name}
+          <button onClick={() => handleUpdateAttachment(attachment.id)}><EditIcon /></button>
+          <button onClick={() => handleDeleteAttachment(attachment.id)}>< DeleteIcon /></button>
+        </div>
+      ))}
     </div>
   );
 };
