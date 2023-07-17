@@ -9,8 +9,36 @@ const CardAttachmentComponent = ({ cardId }) => {
   };
 
   const handleAddAttachment = () => {
+<<<<<<< Updated upstream
     if (!attachment) {
       return;
+=======
+    if (attachment) {
+      const formData = new FormData();
+      formData.append('cardId', cardId);
+      formData.append('attachment', attachment);
+
+      fetch('/api/v1/card-attachments/add', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          setAttachmentsList([...attachmentsList, data]);
+          // Xử lý sau khi thêm attachment thành công
+        })
+        .catch((error) => {
+          console.error(error);
+          // Xử lý khi có lỗi
+        });
+    } else if (attachmentUrl) {
+      // Xử lý khi thêm attachment từ URL
+      const newAttachment = { id: Date.now(), name: attachmentName, url: attachmentUrl };
+      setAttachmentsList([...attachmentsList, newAttachment]);
+      setAttachmentUrl('');
+      setAttachmentName('');
+>>>>>>> Stashed changes
     }
 
     const formData = new FormData();
