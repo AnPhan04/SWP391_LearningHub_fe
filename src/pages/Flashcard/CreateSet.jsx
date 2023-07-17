@@ -17,11 +17,19 @@ const CreateSet = () => {
   const [cardListCount, setCardListCount] = useState(2);
   const [terms, setTerms] = useState([]); // State variable to store term values
   const [definitions, setDefinitions] = useState([]);
-  const [flashcardSetId, setFlashcardSetId] = useState(null);
+  const [flashcardSetId, setFlashcardSetId] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getCurrentUserEmail();
   }, []);
+
+  const navigateToViewSet = (id) => {
+    console.log("id",id);
+    console.log("title",encodeURIComponent(title));
+    const url = `/set?id=${id}&title=${encodeURIComponent(title)}`;
+    navigate(url);
+  };
 
   const getCurrentUserEmail = async () => {
     try {
@@ -76,7 +84,7 @@ const CreateSet = () => {
         if (latestSetResponse.ok) {
           const latestSetData = await latestSetResponse.json();
           const setId = latestSetData.data.id;
-          console.log(setId);
+          console.log("setId",setId);
           setFlashcardSetId(setId);
 
           // Create flashcards in the set
@@ -89,8 +97,7 @@ const CreateSet = () => {
             };
             await createFlashcard(cardListRequestBody);
           }
-
-          // navigateToViewSet();
+          navigateToViewSet(setId);
         }
       }
     } catch (error) {
@@ -132,14 +139,9 @@ const CreateSet = () => {
     setDescription("");
     setTerms([]);
     setDefinitions([]);
-    // await navigateToViewSet();
   };
 
-  // const navigate = useNavigate();
-  // const navigateToViewSet = () => {
-  //   const url = `/set?id=${flashcardSetId}&title=${encodeURIComponent(title)}`;
-  //   navigate(url);
-  // };
+
   const handleAddCard = () => {
     setCardListCount((prevCount) => prevCount + 1);
     console.log(flashcardSetId);
@@ -250,17 +252,17 @@ const CreateSet = () => {
         </FormHelperText>
       </FormControl>
       {cardListCount > 0 &&
-      [...Array(cardListCount)].map((_, index) => (
-        <CardList
-          key={index}
-          counter={index + 1}
-          handleTermChange={handleTermChange}
-          handleDefinitionChange={handleDefinitionChange}
-          handleDeleteCard={handleDeleteCard}
-          term={terms[index]}
-          definition={definitions[index]}
-        />
-      ))}
+        [...Array(cardListCount)].map((_, index) => (
+          <CardList
+            key={index}
+            counter={index + 1}
+            handleTermChange={handleTermChange}
+            handleDefinitionChange={handleDefinitionChange}
+            handleDeleteCard={handleDeleteCard}
+            term={terms[index]}
+            definition={definitions[index]}
+          />
+        ))}
       <Grid item xs={4} sx={{ mt: 3, textAlign: "left" }}>
         <Button
           variant="contained"
