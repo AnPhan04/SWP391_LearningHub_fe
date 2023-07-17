@@ -8,6 +8,7 @@ import TextField from "../MUIComponent/TextField";
 import TypoText from "../MUIComponent/TypoText";
 import dayjs from "dayjs";
 import { Button, Dialog } from "@mui/material";
+import CheckList from "../../pages/NoteScreen/CheckList";
 
 const AddTaskPopup = styled(Grid)`
   background: white;
@@ -26,10 +27,10 @@ const AddTaskPopup = styled(Grid)`
 export default function UpdateCard({ task, onClose }) {
   const [showAddScreen, setShowAddScreen] = useState(false);
 
-  console.log("updatecard task name: "+task.data.card.name);
+  console.log("updatecard task name: " + task.data.card.name);
   const [name, setName] = useState(task.data.card.name);
   const [label, setLabel] = useState(task.data.labels);
-  console.log("label",label);
+  console.log("label", label);
   const [description, setDescription] = useState(task.data.card.description);
   const [startDate, setStartDate] = useState(
     dayjs(task.data.card.dateStart, "YYYY-MM-DD")
@@ -167,6 +168,13 @@ export default function UpdateCard({ task, onClose }) {
             value={label}
             options={label}
             onChange={(selectedLabels) => setLabel(selectedLabels)}
+            renderValue={selected => {
+              if (selected.length === 0) {
+                return <em>Placeholder</em>;
+              }
+              // This will return a comma-separated list of the values.
+              return selected.join(", ");
+            }}
           />
         </Grid>
         <Grid item xs={12}>
@@ -247,6 +255,7 @@ export default function UpdateCard({ task, onClose }) {
             sx={{ width: "100%", padding: "0 5px" }}
           />
         </Grid>
+        <CheckList id={task.data.card.id}/>
         <Grid item xs={11} sx={{ textAlign: "right" }}>
           <Button
             variant="outlined"

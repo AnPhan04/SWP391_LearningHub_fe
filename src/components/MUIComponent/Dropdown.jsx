@@ -22,7 +22,7 @@ const Select = styled(MUISelect)(() => ({
   };
 } */
 
-export default function MultipleSelect({onChange}) {
+export default function MultipleSelect({onChange},props) {
   const [id, setId] = useSearchParams();
   const noteId = id.get("id");
 
@@ -63,7 +63,7 @@ export default function MultipleSelect({onChange}) {
     };
       getBoardId();
     getLabelsList();
-  }, [noteId, boardId]);
+  }, [noteId, boardId,labelName]);
 
   const handleChange = (event) => {
     const { value } = event.target;
@@ -71,12 +71,14 @@ export default function MultipleSelect({onChange}) {
     onChange(value);
   };
 
-  console.log("mul Label",label);
   return (
     <div>
       <FormControl sx={{ width: "100%", padding: "0 5px" }}>
         {/* <InputLabel id="demo-multiple-name-label">Label</InputLabel> */}
         <Select
+        defaultValue={
+          label
+        }
       multiple
       value={selectedLabels}
       onChange={handleChange}
@@ -84,8 +86,7 @@ export default function MultipleSelect({onChange}) {
         label
           .filter((l) => selected.includes(l.id))
           .map((l) => l.name)
-          .join(", ")
-      }
+          .join(", ")}
     >
           {label.map((l) => (
             <MenuItem

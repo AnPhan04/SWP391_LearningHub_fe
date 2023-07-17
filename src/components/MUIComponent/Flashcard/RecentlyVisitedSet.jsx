@@ -85,11 +85,10 @@ const RecentlyVisitedSet = () => {
     }
   };
 
-  const archiveNote = async (noteId) => {
-    console.log("Archive note " + noteId);
+  const archiveNote = async (setId) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/api/v1/note/sets?noteId=${noteId}`,
+        `http://localhost:8080/api/v1/flashcard/set?id=${setId}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -98,15 +97,15 @@ const RecentlyVisitedSet = () => {
           },
         }
       );
-      const jsonData = await response.json();
+
       if (response.ok) {
-        console.log(jsonData.message);
-        setFlashcardSets((prevNotes) =>
-          prevNotes.filter((note) => note.id !== noteId)
+        setFlashcardSets((prevSets) =>
+          prevSets.filter((set) => set.id !== setId)
         );
+        console.log("Set deleted successfully");
       }
     } catch (error) {
-      console.log("Archive note error: " + error);
+      console.log("Error deleting set: " + error);
     }
   };
 

@@ -17,6 +17,7 @@ import Landing from "../pages/Landing";
 import EditProfile from "../pages/User/EditProfile";
 import Labels from "../components/MUIComponent/Labels";
 import LabelsList from "../components/MUIComponent/LabelList";
+import CheckList from "../pages/NoteScreen/CheckList";
 import UpdateCoreLabel from "../pages/Admin/UpdateCoreLabel";
 import AdminMain from "../pages/Admin/AdminMain";
 import Deactive from "../pages/Auth/Deactive";
@@ -24,6 +25,8 @@ import Reactive from "../pages/Auth/Reactive";
 import AboutUs from "../pages/AboutUs";
 import EmailForm from "../components/EmailForm";
 import CardAttachmentComponent from "../components/CardAttachmentComponent";
+import CreateSet from "../pages/Flashcard/CreateSet";
+
 
 const routes = createBrowserRouter([
     {
@@ -141,6 +144,11 @@ const routes = createBrowserRouter([
     {
         path: "/error",
         element: <ErrorPage />,
+        errorElement: <ErrorPage />
+    },
+    {
+        path: "/create-set",
+        element: <CreateSet />,
         errorElement: <ErrorPage />
     }
 ]);

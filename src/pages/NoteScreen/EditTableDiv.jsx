@@ -20,7 +20,7 @@ function EditableDiv(props) {
 
   //Giải quyết sự kiến ấn vào nút cancel
   const handleCancelClick = (event) => {
-    console.log("oke");
+
     fetchData(parameter);
     setShow(false);
   };
