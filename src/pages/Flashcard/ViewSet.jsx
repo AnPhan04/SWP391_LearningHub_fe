@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import FlashcardSet from "../../components/MUIComponent/Flashcard/FlashcardSet";
 import "../../components/MUIComponent/Flashcard/FlashcardSet.css";
+import { Box, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 // get flashcards of set
 
 const ViewSet = () => {
@@ -10,6 +13,19 @@ const ViewSet = () => {
   const [title, setTitle] = useSearchParams();
   const flashcardSetId = id.get("id");
   const flashcardSetName = title.get("title");
+  const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+  const handleBack = () => {
+    navigate(-2);
+  };
 
   useEffect(() => {
     const getFlashcardsOfSet = async () => {
@@ -27,8 +43,47 @@ const ViewSet = () => {
 
   return (
     <div>
+      <Box
+        sx={{
+          fontWeight: "bold",
+          marginLeft: 3,
+        }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <ArrowBackIcon
+          onClick={handleBack}
+          fontSize="large"
+          sx={{
+            "&:hover": {
+              cursor: "pointer",
+              backgroundColor: "#F2F2F2",
+              borderRadius: "7px",
+            },
+          }}
+        />
+        {isHovered && (
+          <Typography
+            variant="subtitle1"
+            sx={{
+              fontWeight: "bold",
+              color: "white",
+              width: "75px",
+              height: "30px",
+              backgroundColor: "#767676",
+              p: 0.4,
+              borderRadius: "7px",
+              position: "fixed",
+              top: "35px",
+              left: "10px",
+            }}
+          >
+            Go back
+          </Typography>
+        )}
+      </Box>
       <div className="card-flip">
-        <FlashcardSet flashcards={flashcards} title={flashcardSetName}/>
+        <FlashcardSet flashcards={flashcards} title={flashcardSetName} />
       </div>
     </div>
   );
