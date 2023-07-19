@@ -9,13 +9,14 @@ import {
   Input,
 } from "@mui/material";
 import CardList from "./CardList";
+import Header from "../../components/layout/Header";
 
 const CreateSet = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [sessionUser, setSessionUser] = useState("");
   const [cardListCount, setCardListCount] = useState(2);
-  const [terms, setTerms] = useState([]); // State variable to store term values
+  const [terms, setTerms] = useState([]);
   const [definitions, setDefinitions] = useState([]);
   const [flashcardSetId, setFlashcardSetId] = useState(0);
   const navigate = useNavigate();
@@ -200,79 +201,84 @@ const CreateSet = () => {
   };
 
   return (
-    <div
-      style={{
-        padding: "3em 2.5rem",
-        maxWidth: "81.25em",
-        marginLeft: "auto",
-        marginRight: "auto",
-      }}
-    >
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <TypoText variant="h1">Create a new study set</TypoText>
+    <div>
+      <Header />
+      <div
+        style={{
+          padding: "3em 2.5rem",
+          maxWidth: "81.25em",
+          marginLeft: "auto",
+          marginRight: "auto",
+        }}
+      >
+        <Grid container spacing={2}>
+          <Grid item xs={8}>
+            <TypoText variant="h1">Create a new study set</TypoText>
+          </Grid>
+          <Grid item xs={4} sx={{ textAlign: "right" }}>
+            <Button
+              variant="contained"
+              size="large"
+              sx={{ background: "#9747ff", borderRadius: "5px" }}
+              onClick={handleCreateSet}
+            >
+              CREATE
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item xs={4} sx={{ textAlign: "right" }}>
+        <FormControl variant="standard" sx={{ m: 1, mt: 3, width: "50%" }}>
+          <Input
+            id="standard-adornment-weight"
+            aria-describedby="standard-weight-helper-text"
+            inputProps={{
+              "aria-label": "TITLE",
+            }}
+            placeholder="Enter a title, like 'SWP391'"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <FormHelperText id="standard-weight-helper-text">
+            TITLE
+          </FormHelperText>
+        </FormControl>
+        <FormControl variant="standard" sx={{ m: 1, mt: 1, width: "50%" }}>
+          <Input
+            id="standard-adornment-weight"
+            aria-describedby="standard-weight-helper-text"
+            inputProps={{
+              "aria-label": "DESCRIPTION",
+            }}
+            placeholder="Add a description..."
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+          <FormHelperText id="standard-weight-helper-text">
+            DESCRIPTION
+          </FormHelperText>
+        </FormControl>
+        {cardListCount > 0 &&
+          [...Array(cardListCount)].map((_, index) => (
+            <CardList
+              key={index}
+              counter={index + 1}
+              handleTermChange={handleTermChange}
+              handleDefinitionChange={handleDefinitionChange}
+              handleDeleteCard={handleDeleteCard}
+              term={terms[index]}
+              definition={definitions[index]}
+            />
+          ))}
+        <Grid item xs={4} sx={{ mt: 3, textAlign: "left" }}>
           <Button
             variant="contained"
             size="large"
             sx={{ background: "#9747ff", borderRadius: "5px" }}
-            onClick={handleCreateSet}
+            onClick={handleAddCard}
           >
-            CREATE
+            + ADD CARD
           </Button>
         </Grid>
-      </Grid>
-      <FormControl variant="standard" sx={{ m: 1, mt: 3, width: "50%" }}>
-        <Input
-          id="standard-adornment-weight"
-          aria-describedby="standard-weight-helper-text"
-          inputProps={{
-            "aria-label": "TITLE",
-          }}
-          placeholder="Enter a title, like 'SWP391'"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <FormHelperText id="standard-weight-helper-text">TITLE</FormHelperText>
-      </FormControl>
-      <FormControl variant="standard" sx={{ m: 1, mt: 1, width: "50%" }}>
-        <Input
-          id="standard-adornment-weight"
-          aria-describedby="standard-weight-helper-text"
-          inputProps={{
-            "aria-label": "DESCRIPTION",
-          }}
-          placeholder="Add a description..."
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        <FormHelperText id="standard-weight-helper-text">
-          DESCRIPTION
-        </FormHelperText>
-      </FormControl>
-      {cardListCount > 0 &&
-        [...Array(cardListCount)].map((_, index) => (
-          <CardList
-            key={index}
-            counter={index + 1}
-            handleTermChange={handleTermChange}
-            handleDefinitionChange={handleDefinitionChange}
-            handleDeleteCard={handleDeleteCard}
-            term={terms[index]}
-            definition={definitions[index]}
-          />
-        ))}
-      <Grid item xs={4} sx={{ mt: 3, textAlign: "left" }}>
-        <Button
-          variant="contained"
-          size="large"
-          sx={{ background: "#9747ff", borderRadius: "5px" }}
-          onClick={handleAddCard}
-        >
-          + ADD CARD
-        </Button>
-      </Grid>
+      </div>
     </div>
   );
 };

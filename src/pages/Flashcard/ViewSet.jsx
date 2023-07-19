@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import FlashcardSet from "../../components/MUIComponent/Flashcard/FlashcardSet";
 import "../../components/MUIComponent/Flashcard/FlashcardSet.css";
+import Header from "../../components/layout/Header";
 import { Box, Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
-// get flashcards of set
 
 const ViewSet = () => {
   const [flashcards, setFlashcards] = useState([]);
   const [id, setId] = useSearchParams();
   const [title, setTitle] = useSearchParams();
   const flashcardSetId = id.get("id");
-  const flashcardSetName = title.get("title");
+  const flashcardSetName = title.get("title");  
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
 
@@ -43,6 +43,9 @@ const ViewSet = () => {
 
   return (
     <div>
+      <Header />
+      
+      <div className="card-flip">
       <Box
         sx={{
           fontWeight: "bold",
@@ -82,7 +85,6 @@ const ViewSet = () => {
           </Typography>
         )}
       </Box>
-      <div className="card-flip">
         <FlashcardSet flashcards={flashcards} title={flashcardSetName} />
       </div>
     </div>

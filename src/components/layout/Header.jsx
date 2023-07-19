@@ -9,11 +9,13 @@ async function logout() {
   await fetch("http://localhost:8080/api/v1/user/logout", {
     method: "POST",
     credentials: "include",
-  }).then(response => {
-    if (response.ok) {
-      return (<></>)
-    }
-  }).catch(err => console.log(err));
+  })
+    .then((response) => {
+      if (response.ok) {
+        return <></>;
+      }
+    })
+    .catch((err) => console.log(err));
 }
 
 const Header = () => {
@@ -31,12 +33,12 @@ const Header = () => {
         console.log(json);
         setLogged(json.active);
         console.log(logged);
-        setUsername(json.email.substring(0, json.email.indexOf('@')));
+        setUsername(json.email.substring(0, json.email.indexOf("@")));
         setRole(json.role);
-        console.log(username)
+        console.log(username);
       })
       .catch((error) => setLogged(false));
-  }, [logged, username])
+  }, [logged, username]);
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
   };
@@ -45,7 +47,7 @@ const Header = () => {
       <div className="header">
         <div className="logo">
           <Link href="/" color={A.colors.white}>
-            Learning Hub
+            <h2 style={{marginBlockEnd: 0}}> Learning Hub</h2>
           </Link>
         </div>
         <div className="menu">
@@ -84,7 +86,11 @@ const Header = () => {
           )}
           {logged && (
             <>
-              <Link href="/contact" color={A.colors.white} style={{ marginRight: "15px" }}>
+              <Link
+                href="/contact"
+                color={A.colors.white}
+                style={{ marginRight: "15px" }}
+              >
                 Contact us
               </Link>
               <button className="menu-item user" onClick={toggleProfile}>
@@ -92,26 +98,42 @@ const Header = () => {
                 {isProfileOpen && (
                   <div className="profile-dropdown">
                     <Link href="/accountsetting">
-                      <button variant="cancel" style={{ "width": "100%" }} >
+                      <button variant="cancel" style={{ width: "100%" }}>
                         Account Setting
                       </button>
                     </Link>
 
-                    {role === "ADMIN" ?
+                    {role === "ADMIN" ? (
                       <Link Link href="/admin">
-                        <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
+                        <button
+                          variant="cancel"
+                          href="/dashboard"
+                          style={{ width: "100%" }}
+                        >
                           Dashboard
                         </button>
                       </Link>
-                      : <Link Link href="/dashboard">
-                        <button variant="cancel" href="/dashboard" style={{ "width": "100%" }}>
+                    ) : (
+                      <Link Link href="/dashboard">
+                        <button
+                          variant="cancel"
+                          href="/dashboard"
+                          style={{ width: "100%" }}
+                        >
                           Dashboard
                         </button>
                       </Link>
-                    }
+                    )}
 
                     <Link href="/landing">
-                      <button variant="cancel" onClick={() => { logout(); setLogged(false) }} style={{ "width": "100%" }} >
+                      <button
+                        variant="cancel"
+                        onClick={() => {
+                          logout();
+                          setLogged(false);
+                        }}
+                        style={{ width: "100%" }}
+                      >
                         Logout
                       </button>
                     </Link>
@@ -121,8 +143,7 @@ const Header = () => {
             </>
           )}
         </div>
-      </div >
-
+      </div>
     </>
   );
 };
