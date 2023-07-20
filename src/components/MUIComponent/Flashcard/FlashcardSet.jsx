@@ -42,7 +42,7 @@ const FlashcardSet = ({ flashcards, title }) => {
 
   return (
     <div className="set">
-      <div className="set-title">
+      <div className="set-title"  style={{margin: "3em"}}>
         <Grid container spacing={2}>
           <Grid item xs={6} sx={{ textAlign: "center" }}>
             <TypoText variant="h1">{title}</TypoText>
