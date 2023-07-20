@@ -308,7 +308,9 @@ function CheckList({id}) {
 
     //hàm giải quyết sự kiện ấn vào nút xóa 1 checklist
     const handleDeleteCheckList = (id) => {
-        fetchDeleteCheckListData(id)
+        if(!checked.includes(id)) {
+            fetchDeleteCheckListData(id)
+        }    
     }
 
     const handleArchive = () => {
@@ -357,7 +359,7 @@ function CheckList({id}) {
                             }}
                             onClick={handleArchive}
                         >
-                            Hiện những mục đã xong ({countChecked})
+                            Show checked items ({countChecked})
                         </Button>
                     ) : (
                         showButton && (
@@ -380,7 +382,7 @@ function CheckList({id}) {
                                 }}
                                 onClick={handleArchive}
                             >
-                                Ẩn các mục đã chọn
+                                Hide checked items
                             </Button>
                         )
                     )}
@@ -444,7 +446,7 @@ function CheckList({id}) {
                                         marginRight: 2
                                     }}
                                     onClick={() => handleSaveClick(index, list.id)}
-                                >Lưu
+                                >Add
                                 </Button>
                                 <Button variant="contained"
                                     onClick={() => handleCancel(index)}
@@ -459,7 +461,7 @@ function CheckList({id}) {
                                             boxShadow: "none"
                                         },
                                     }}
-                                >Hủy</Button>
+                                >Cancel</Button>
                             </Box>
                             )}
                         </Box>
@@ -484,7 +486,7 @@ function CheckList({id}) {
                                     }}>
                                     <MenuItem
                                         onClick={() => handleDeleteCheckList(list.id)}
-                                    >Xóa</MenuItem>
+                                    >Delete</MenuItem>
                                 </MenuList>
                             )}
                         </Box>
@@ -505,7 +507,7 @@ function CheckList({id}) {
                             width: '100%',
                         }}
                             value={name}
-                            placeholder="Thêm một mục"
+                            placeholder="Add an item"
                             onChange={(event) => setName(event.target.value)}
                         />
                     </Box>
@@ -517,7 +519,7 @@ function CheckList({id}) {
                             marginRight: 2
                         }}
                             onClick={createList}
-                        >Thêm</Button>
+                        >Add</Button>
                         <Button variant="contained" onClick={() => { setAdd(false); setError(false) }}
                             sx={{
                                 borderRadius: '5px', backgroundColor: "#E4E6EA", boxShadow: "none", color: "black",
@@ -530,7 +532,7 @@ function CheckList({id}) {
                                     boxShadow: "none"
                                 },
                             }}
-                        >Hủy</Button>
+                        >Cancel</Button>
                     </Box>
                 </>
             ) : (
@@ -547,7 +549,7 @@ function CheckList({id}) {
                                 boxShadow: "none"
                             },
                         }}
-                    >Thêm một mục</Button>
+                    >Add an item</Button>
                 </Box>
             )}
             {error && (
