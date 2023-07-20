@@ -118,7 +118,7 @@ function EditableDiv(props) {
         onClick={() => setShow(true)}
         contentEditable={true}
         ref={editContentRef}
-        style={{ wordWrap: 'break-word', width: 500, padding: '5px', fontSize: 20, color: '#8E8EAB' }}
+        style={{ wordWrap: 'break-word', padding: '5px', fontSize: 20, color: '#8E8EAB' }}
         dangerouslySetInnerHTML={{ __html: content }}
       />
       {show && (
