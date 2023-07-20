@@ -15,6 +15,7 @@ const ViewSet = () => {
   const flashcardSetName = title.get("title");
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
+  const [role,setRole] = useState(window.localStorage.getItem("role"));
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -24,7 +25,7 @@ const ViewSet = () => {
     setIsHovered(false);
   };
   const handleBack = () => {
-    navigate(-2);
+    role==="ADMIN"? navigate("/admin"): navigate("/dashboard");
   };
 
   useEffect(() => {

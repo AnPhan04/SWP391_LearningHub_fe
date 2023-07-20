@@ -30,10 +30,10 @@ const Header = () => {
       .then((json) => {
         console.log(json);
         setLogged(json.active);
-        console.log(logged);
         setUsername(json.email.substring(0, json.email.indexOf('@')));
-        setRole(json.role);
+        setRole(json.roleId);
         console.log(username)
+        console.log(role);
       })
       .catch((error) => setLogged(false));
   }, [logged, username])
