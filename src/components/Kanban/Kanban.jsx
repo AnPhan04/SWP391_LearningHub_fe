@@ -58,8 +58,11 @@ const init = {
 
 const Kanban = ({ countCardKey, id }) => {
   let [columns, setColumns] = useState(init);
+  const [selectedTask, setSelectedTask] = useState(null);
+
 
   useEffect(() => {
+    console.log("KANBAN/countCardKeyChange");
     const getData = async (id) => {
       console.log(id);
       fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
@@ -162,7 +165,6 @@ const Kanban = ({ countCardKey, id }) => {
     }
   };
 
-  const [selectedTask, setSelectedTask] = useState(null);
 
   const handleCardClick = (taskId) => {
     let task;
@@ -173,7 +175,6 @@ const Kanban = ({ countCardKey, id }) => {
         break;
       }
     }
-    console.log("kanban taskId: " + taskId);
     setSelectedTask(task ? task.id : null);
     setTaskData(null);
   };
@@ -181,6 +182,7 @@ const Kanban = ({ countCardKey, id }) => {
   const [taskData, setTaskData] = useState(null);
   useEffect(() => {
     // Fetch task data from the API
+    console.log("KANBAN/selectedTask");
     async function fetchData(cardId) {
       try {
         const response = await fetch(
@@ -250,16 +252,15 @@ const Kanban = ({ countCardKey, id }) => {
           </TaskColumnStyles>
         </Container>
       </DragDropContext>
-
-      <Dialog
-        open={selectedTask !== null}
-        onClose={() => setSelectedTask(null)}
-      >
-        {taskData && ( // Only render the UpdateCard component when taskData is available
+      {taskData && ( // Only render the UpdateCard component when taskData is available
+        <Dialog
+          open={selectedTask !== null}
+          // onClose={() => setSelectedTask(null)}
+        >
+          {console.log("open dialog")}
           <UpdateCard task={taskData} onClose={() => setSelectedTask(null)} />
-        )}
-        {console.log("taskData",taskData)}
-      </Dialog>
+        </Dialog>
+      )}
     </>
   );
 };

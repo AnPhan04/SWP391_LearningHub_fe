@@ -22,7 +22,7 @@ const Select = styled(MUISelect)(() => ({
   };
 } */
 
-export default function MultipleSelect({onChange},props) {
+export default function MultipleSelect({onChange, defaultValue}) {
   const [id, setId] = useSearchParams();
   const noteId = id.get("id");
 
@@ -30,10 +30,11 @@ export default function MultipleSelect({onChange},props) {
   const [labelName, setLabelName] = useState([]);
   const [label, setLabel] = useState([]);
   const [boardId, setBoardId] = useState(id.get("id"));
-  const [selectedLabels, setSelectedLabels] = useState([]);
+  const [selectedLabels, setSelectedLabels] = useState(defaultValue);
   
   useEffect(() => {
     const getBoardId = async () => {
+      console.log("def val",defaultValue);
       await fetch(`http://localhost:8080/api/v1/note/board?noteId=${noteId}`, {
         credentials: "include",
         method: "GET",
@@ -63,7 +64,7 @@ export default function MultipleSelect({onChange},props) {
     };
       getBoardId();
     getLabelsList();
-  }, [noteId, boardId,labelName]);
+  }, [noteId, boardId]);
 
   const handleChange = (event) => {
     const { value } = event.target;

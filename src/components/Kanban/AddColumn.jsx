@@ -127,7 +127,7 @@ function AddColumn({ boardId }) {
             {error && (
               <Box sx={{ marginTop: 2 }}>
                 <Alert variant="outlined" severity="error">
-                  This is an error alert — check it out!
+                  {error}
                 </Alert>
               </Box>
             )}
