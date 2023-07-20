@@ -47,7 +47,12 @@ const Header = () => {
       <div className="header">
         <div className="logo">
           <Link href="/" color={A.colors.white}>
-            <h2 style={{marginBlockEnd: 0}}> Learning Hub</h2>
+            <h2 style={{
+              fontSize: "20px",
+              fontFamily: "cursive",
+              marginBlockEnd: "0px",
+              fontWeight: 600}}> 
+              Learning Hub</h2>
           </Link>
         </div>
         <div className="menu">

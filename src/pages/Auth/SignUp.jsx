@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
 
 const SignUp = () => {
+  const regx = `^(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{8,}$`;
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
@@ -20,31 +21,38 @@ const SignUp = () => {
       email: data.get("email"),
       realName: data.get("name"),
       phoneNum: data.get("phone"),
-      password: data.get("password"),
+      password: data.get("password").trim(),
       roleId: "",
       isActive: "",
-      signupDate: "2023-06-04",
+      signupDate: currentDate,
     };
-    try {
-      const response = await fetch(
-        "http://127.0.0.1:8080/api/v1/user/register",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
+    if (!data.get("password").match(regx)) {
+      setErrorMessage("password is not in right format. Password must contain number, letter (both upper and lower) and has at least 8 character. No space character are allowed")
+    }
+    else {
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:8080/api/v1/user/register",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(requestBody),
+          }
+        );
+        const responseData = await response.json();
+        if (response.ok) {
+          console.log(responseData);
+          // setErrorMessage("Create new account successfully");
+          navigate("/login");
+        } else {
+          setErrorMessage(responseData.message);
         }
-      );
-      const responseData = await response.json();
-      if (response.ok) {
-        console.log(responseData);
-        // setErrorMessage("Create new account successfully");
-        navigate("/login");
-      } else {
-        setErrorMessage(responseData.message);
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) { }
+    }
   };
 
   return (
