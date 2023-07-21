@@ -2,6 +2,8 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import SettingsIcon from "@mui/icons-material/Settings";
+import A from "../../../common/assets";
 
 export default function SettingMenu({ onDelete, onEdit, onRestart }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -21,8 +23,13 @@ export default function SettingMenu({ onDelete, onEdit, onRestart }) {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        style={{
+          padding: 0,
+          justifyContent: "right",
+          color: A.colors.primary,
+        }}
       >
-        Dashboard
+        <SettingsIcon />
       </Button>
       <Menu
         id="basic-menu"
@@ -32,6 +39,9 @@ export default function SettingMenu({ onDelete, onEdit, onRestart }) {
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
+        style={{
+          borderRadius: "10px",
+          boxShadow: "0 0 10px #888888",}}
       >
         <MenuItem onClick={onEdit}>Edit</MenuItem>
         <MenuItem onClick={onRestart}>Restart Flashcards</MenuItem>

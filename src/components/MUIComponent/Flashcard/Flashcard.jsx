@@ -12,7 +12,10 @@ const Flashcard = ({ term, definition }) => {
 
   return (
     <div className="flashcard" onClick={handleFlip}>
-      <div className={`card ${isFlipped ? "isFlipped" : ""}`}>
+      <div
+        className={`card ${isFlipped ? "isFlipped" : ""}`}
+        style={{ marginBottom: 0 }}
+      >
         <div className="card-front">
           <TypoText variant="h2" style={{ padding: "3em" }}>
             {term}

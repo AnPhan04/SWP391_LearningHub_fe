@@ -26,8 +26,6 @@ const CreateSet = () => {
   }, []);
 
   const navigateToViewSet = (id) => {
-    console.log("id",id);
-    console.log("title",encodeURIComponent(title));
     const url = `/set?id=${id}&title=${encodeURIComponent(title)}`;
     navigate(url);
   };
@@ -73,7 +71,6 @@ const CreateSet = () => {
       );
 
       if (createSetResponse.ok) {
-        // Fetch the latest set ID
         const latestSetResponse = await fetch(
           "http://localhost:8080/api/v1/flashcard/set/latest",
           {
@@ -85,18 +82,26 @@ const CreateSet = () => {
         if (latestSetResponse.ok) {
           const latestSetData = await latestSetResponse.json();
           const setId = latestSetData.data.id;
-          console.log("setId",setId);
           setFlashcardSetId(setId);
 
           // Create flashcards in the set
-          for (let i = 1; i <= cardListCount; i++) {
-            const cardListRequestBody = {
-              setId: setId,
-              term: terms[i - 1], // Use the term value from the array
-              definition: definitions[i - 1],
-              position: i,
-            };
-            await createFlashcard(cardListRequestBody);
+          for (let i = 0; i < cardListCount; i++) {
+            const termValue = terms[i];
+            const definitionValue = definitions[i];
+            if (
+              termValue !== null &&
+              termValue !== "" &&
+              definitionValue !== null &&
+              definitionValue !== ""
+            ) {
+              const cardListRequestBody = {
+                setId: setId,
+                term: termValue,
+                definition: definitionValue,
+                position: i,
+              };
+              await createFlashcard(cardListRequestBody);
+            }
           }
           navigateToViewSet(setId);
         }
@@ -135,13 +140,31 @@ const CreateSet = () => {
       return;
     }
 
+    if (cardListCount < 2) {
+      alert("Please add at least two cards to create the set!");
+      return;
+    }
+
+    // đã nhập term hoặc definition thì phải có cái ngược lại
+    // nếu cả hai đều null thì không add vào set
+    for (let i = 0; i < cardListCount; i++) {
+      if (
+        !terms[i] ||
+        terms[i].trim() === "" ||
+        !definitions[i] ||
+        definitions[i].trim === ""
+      ) {
+        alert("Please fill all the terms and definitions!");
+        return;
+      }
+    }
+
     await createSet();
     setTitle("");
     setDescription("");
     setTerms([]);
     setDefinitions([]);
   };
-
 
   const handleAddCard = () => {
     setCardListCount((prevCount) => prevCount + 1);
@@ -164,40 +187,16 @@ const CreateSet = () => {
     });
   };
 
-  const handleDeleteCard = async (cardIndex) => {
-    // Get the flashcard ID based on the card index
-    const flashcardId = flashcardSetId - 1 + cardIndex;
+  const handleDeleteCard = (cardIndex) => {
+    // if (cardListCount <= 2) {
+    //   alert("You cannot delete the last two cards!");
+    //   return;
+    // }
 
-    try {
-      // Delete the flashcard via the API
-      const response = await fetch(
-        `http://localhost:8080/api/v1/flashcard/card/${flashcardId}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      if (response.ok) {
-        console.log("Flashcard deleted successfully");
-
-        // Update the state variables
-        setCardListCount((prevCount) => prevCount - 1);
-        setTerms((prevTerms) =>
-          prevTerms.filter((_, index) => index !== cardIndex - 1)
-        );
-        setDefinitions((prevDefinitions) =>
-          prevDefinitions.filter((_, index) => index !== cardIndex - 1)
-        );
-      } else {
-        console.log("Failed to delete flashcard");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    // setCardListCount((prevCount) => prevCount - 1);
+    // setTerms((prevTerms) => prevTerms.filter((_, index) => index !== cardIndex - 1));
+    // setDefinitions((prevDefinitions) => prevDefinitions.filter((_, index) => index !== cardIndex - 1));
+    console.log(cardIndex);
   };
 
   return (
@@ -221,6 +220,7 @@ const CreateSet = () => {
               size="large"
               sx={{ background: "#9747ff", borderRadius: "5px" }}
               onClick={handleCreateSet}
+              disabled={!title || cardListCount < 2}
             >
               CREATE
             </Button>
@@ -263,9 +263,9 @@ const CreateSet = () => {
               counter={index + 1}
               handleTermChange={handleTermChange}
               handleDefinitionChange={handleDefinitionChange}
-              handleDeleteCard={handleDeleteCard}
               term={terms[index]}
               definition={definitions[index]}
+              handleDeleteCard={handleDeleteCard}
             />
           ))}
         <Grid item xs={4} sx={{ mt: 3, textAlign: "left" }}>

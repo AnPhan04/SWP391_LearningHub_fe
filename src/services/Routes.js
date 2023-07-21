@@ -28,6 +28,7 @@ import CardAttachmentComponent from "../components/CardAttachmentComponent";
 import CreateSet from "../pages/Flashcard/CreateSet";
 import ResetPass from "../pages/FogetPassWord/ResetPass";
 import Otp from "../pages/FogetPassWord/Otp";
+import UpdateSet from "../pages/Flashcard/UpdateSet";
 
 const routes = createBrowserRouter([
     {
@@ -152,15 +153,20 @@ const routes = createBrowserRouter([
         element: <CreateSet />,
         errorElement: <ErrorPage />
     },
-    {    
+    {
         path: "/otp",
         element: <Otp />,
-
+        errorElement: <ErrorPage />
     },
-    {    
+    {
         path: "/resetpass",
         element: <ResetPass />,
-
+        errorElement: <ErrorPage />
+    },
+    {
+        path: "/update-set",
+        element: <UpdateSet />,
+        errorElement: <ErrorPage />
     }
 ]);
 export default routes;

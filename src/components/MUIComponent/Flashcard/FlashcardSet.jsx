@@ -4,6 +4,8 @@ import TypoText from "../TypoText";
 import "./FlashcardSet.css";
 import ProgressBar from "./ProgressBar";
 import { Grid } from "@mui/material";
+import SettingMenu from "./SettingMenu";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const FlashcardSet = ({ flashcards, title }) => {
   const [counter, setCounter] = useState(1);
@@ -39,7 +41,12 @@ const FlashcardSet = ({ flashcards, title }) => {
     console.log(flashcards.find((s) => s.setId === uniqueSetId));
   }, [flashcards]);
 
-  console.log(name);
+  const [id, setId] = useSearchParams();
+  const flashcardSetId = id.get("id");
+  const nav = useNavigate();
+  const handleEditSet = () => {
+    nav(`/update-set?id=${flashcardSetId}`);
+  };
 
   return (
     <div className="set">
@@ -56,22 +63,34 @@ const FlashcardSet = ({ flashcards, title }) => {
           definition={flashcards[currentCardIndex]?.definition}
         />
       </div>
-      <div className="setting-container">
-        <button className="setting-icon">
-          
-        </button>
-        <div className="progress-arrow">
-          <button onClick={handlePrevCard} disabled={disabledLeft}>
-            <i className="fa-solid fa-arrow-left fa-2xl"></i>
-          </button>
-          <TypoText style={{ display: "inline", margin: "1em" }}>
-            {counter}/{flashcards.length}
-          </TypoText>
-          <button onClick={handleNextCard} disabled={disabledRight}>
-            <i className="fa-solid fa-arrow-right fa-2xl"></i>
-          </button>
-        </div>
-      </div>
+      <Grid
+        container
+        spacing={2}
+        sx={{ width: "50em", margin: "0 auto", marginY: "1em" }}
+        style={{ alignItems: "center" }}
+      >
+        <Grid item sm={3} style={{ padding: 0 }}>
+          <div className="nothing" />
+        </Grid>
+        <Grid item sm={6} className="progress-arrow" style={{ padding: 0 }}>
+          <div className="">
+            <button onClick={handlePrevCard} disabled={disabledLeft}>
+              <i className="fa-solid fa-arrow-left fa-2xl"></i>
+            </button>
+            <TypoText style={{ display: "inline", margin: "1em" }}>
+              {counter}/{flashcards.length}
+            </TypoText>
+            <button onClick={handleNextCard} disabled={disabledRight}>
+              <i className="fa-solid fa-arrow-right fa-2xl"></i>
+            </button>
+          </div>
+        </Grid>
+        <Grid item sm={3} sx={{ textAlign: "right" }} style={{ padding: 0 }}>
+          <div className="setting-icon" style={{ margin: 0 }}>
+            <SettingMenu onEdit={handleEditSet} />
+          </div>
+        </Grid>
+      </Grid>
       <div>
         <ProgressBar flashcards={flashcards} counter={counter} />
       </div>

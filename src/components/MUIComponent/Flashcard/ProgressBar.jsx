@@ -15,8 +15,6 @@ const ProgressBar = ({ flashcards, counter }) => {
   }, [counter, flashcards.length]);
 
   return (
-    // <LinearProgress color="secondary" variant="determinate" value={progress} style={{width: '70%', height:'10px'}}></LinearProgress>
-
     <div
       style={{
         display: "flex",

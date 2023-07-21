@@ -3,14 +3,22 @@
 }
 
 .progress-arrow {
-    margin-bottom: 2em;
     text-align: center;
 }
 
 .progress-arrow button {
-    border-radius: 50%;
     background-color: transparent;
     /* color: white; */
     border: none;
     cursor: pointer;
+}
+
+.setting-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.setting-icon {
+    margin-right: 10px;
 }

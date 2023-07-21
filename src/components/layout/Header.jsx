@@ -32,9 +32,9 @@ const Header = () => {
       .then((json) => {
         console.log(json);
         setLogged(json.active);
-        setUsername(json.email.substring(0, json.email.indexOf('@')));
+        setUsername(json.email.substring(0, json.email.indexOf("@")));
         setRole(json.roleId);
-        console.log(username)
+        console.log(username);
         console.log(role);
       })
       .catch((error) => setLogged(false));
@@ -47,12 +47,16 @@ const Header = () => {
       <div className="header">
         <div className="logo">
           <Link href="/" color={A.colors.white}>
-            <h2 style={{
-              fontSize: "20px",
-              fontFamily: "cursive",
-              marginBlockEnd: "0px",
-              fontWeight: 600}}> 
-              Learning Hub</h2>
+            <h2
+              style={{
+                fontSize: "20px",
+                fontFamily: "cursive",
+                marginBlockEnd: "0px",
+                fontWeight: 600,
+              }}
+            >
+              Learning Hub
+            </h2>
           </Link>
         </div>
         <div className="menu">

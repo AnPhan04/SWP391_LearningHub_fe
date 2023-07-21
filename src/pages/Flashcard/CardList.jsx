@@ -1,28 +1,38 @@
 import React, { useState } from "react";
 import TypoText from "../../components/MUIComponent/TypoText";
-import CardInSet from "./CardInSet";
-import { IconButton } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  Grid,
+  IconButton,
+  Input,
+  Paper,
+} from "@mui/material";
+import { styled } from "@mui/material/styles";
 import { DeleteOutline, Edit } from "@mui/icons-material";
 import "./CardList.css"; // Import the CSS file for styling
-
+const Item = styled(Paper)(() => ({
+  textAlign: "left",
+  padding: "10px 20px",
+  color: "black",
+  height: "100%",
+}));
 const CardList = ({
   counter,
   handleTermChange,
   handleDefinitionChange,
   handleDeleteCard,
+  term,
+  definition,
 }) => {
-  const [term, setTerm] = useState("");
-  const [definition, setDefinition] = useState("");
-
   const handleTermInputChange = (event) => {
     const termValue = event.target.value;
-    setTerm(termValue);
     handleTermChange(termValue, counter);
   };
 
   const handleDefinitionInputChange = (event) => {
     const definitionValue = event.target.value;
-    setDefinition(definitionValue);
     handleDefinitionChange(definitionValue, counter);
   };
 
@@ -44,12 +54,54 @@ const CardList = ({
       </div>
 
       <div className="card-body">
-        <CardInSet
-          term={term}
-          definition={definition}
-          handleTermInputChange={handleTermInputChange}
-          handleDefinitionInputChange={handleDefinitionInputChange}
-        />
+        <Box className="card-list" sx={{ flexGrow: 1, border: "none" }}>
+          <Grid container spacing={0}>
+            <Grid item xs={7} sx={{ borderRight: "1px solid #888" }}>
+              <Item>
+                <FormControl
+                  variant="standard"
+                  sx={{ m: 1, mt: 3, width: "70%" }}
+                >
+                  <Input
+                    id="standard-adornment-term"
+                    aria-describedby="standard-term-helper-text"
+                    inputProps={{
+                      "aria-label": "TERM",
+                    }}
+                    placeholder="Enter term"
+                    value={term} // Use the received 'term' prop as the value for the input field
+                    onChange={handleTermInputChange}
+                  />
+                  <FormHelperText id="standard-weight-helper-text">
+                    TERM
+                  </FormHelperText>
+                </FormControl>
+              </Item>
+            </Grid>
+            <Grid item xs={5}>
+              <Item>
+                <FormControl
+                  variant="standard"
+                  sx={{ m: 1, mt: 3, width: "70%" }}
+                >
+                  <Input
+                    id="standard-adornment-definition"
+                    aria-describedby="standard-definition-helper-text"
+                    inputProps={{
+                      "aria-label": "DEFINITION",
+                    }}
+                    placeholder="Add a description..."
+                    value={definition} // Use the received 'definition' prop as the value for the input field
+                    onChange={handleDefinitionInputChange}
+                  />
+                  <FormHelperText id="standard-weight-helper-text">
+                    DEFINITION
+                  </FormHelperText>
+                </FormControl>
+              </Item>
+            </Grid>
+          </Grid>
+        </Box>
       </div>
     </div>
   );
