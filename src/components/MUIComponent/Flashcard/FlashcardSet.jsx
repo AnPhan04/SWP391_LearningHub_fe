@@ -4,8 +4,6 @@ import TypoText from "../TypoText";
 import "./FlashcardSet.css";
 import ProgressBar from "./ProgressBar";
 import { Grid } from "@mui/material";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
 
 const FlashcardSet = ({ flashcards, title }) => {
   const [counter, setCounter] = useState(1);
@@ -60,7 +58,7 @@ const FlashcardSet = ({ flashcards, title }) => {
       </div>
       <div className="setting-container">
         <button className="setting-icon">
-          <FontAwesomeIcon icon={faCog} />
+          
         </button>
         <div className="progress-arrow">
           <button onClick={handlePrevCard} disabled={disabledLeft}>
