@@ -26,7 +26,8 @@ import AboutUs from "../pages/AboutUs";
 import EmailForm from "../components/EmailForm";
 import CardAttachmentComponent from "../components/CardAttachmentComponent";
 import CreateSet from "../pages/Flashcard/CreateSet";
-
+import ResetPass from "../pages/FogetPassWord/ResetPass";
+import Otp from "../pages/FogetPassWord/Otp";
 
 const routes = createBrowserRouter([
     {
@@ -150,6 +151,16 @@ const routes = createBrowserRouter([
         path: "/create-set",
         element: <CreateSet />,
         errorElement: <ErrorPage />
+    },
+    {    
+        path: "/otp",
+        element: <Otp />,
+
+    },
+    {    
+        path: "/resetpass",
+        element: <ResetPass />,
+
     }
 ]);
 export default routes;
