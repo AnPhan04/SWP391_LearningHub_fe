@@ -8,6 +8,7 @@ import TextField from "../../components/MUIComponent/TextField";
 import Button from '@mui/material/Button';
 import { Style } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import GoBack from "../../components/layout/GoBack";
 const Deactive = () => {
     const [pass, setPass] = useState("");
     const [err, setErr] = useState("");
@@ -80,9 +81,7 @@ const Deactive = () => {
                     padding: "35px",
                 }}
             >
-                <Link href="/accountsetting" color={A.colors.black}>
-                    <i class="fa-solid fa-arrow-left fa-xl"></i>
-                </Link>
+               <GoBack url={"/accountsetting"}/>
                 <TypoText variant="h1">We sorry to see you go🥹 </TypoText>
                 <TypoText variant="h5">This action is cannot be undone, please enter your password to confirm that you want to deactivate account</TypoText>
                 <TextField

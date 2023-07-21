@@ -9,7 +9,7 @@ import Alert from '@mui/material/Alert';
 
 const ResetPass = () => {
   const location = useLocation();
-
+  const regx = `^(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{8,}$`;
   const data = location.state;
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -36,7 +36,10 @@ const ResetPass = () => {
         setReNewPassword('');
         setnewPassword('');
         setErrorMessage("Verification password or new password are not empty.Please try again!")
-      } else {
+      } else if (!newPassword.match(regx)) {
+        setErrorMessage("password is not in right format. Password must contain number, letter (both upper and lower) and has at least 8 character. No space character are allowed")
+      }
+      else {
         fetchSaveData();
       }
     } else {
@@ -123,14 +126,14 @@ const ResetPass = () => {
         {successMessage && (
           <Alert severity="success" style={{ marginBottom: "1em" }}>{successMessage}</Alert>
         )}
-        <Grid container spacing={2} justifyContent="right" sx={{justifyContent:'center'}}>
+        <Grid container spacing={2} justifyContent="right" sx={{ justifyContent: 'center' }}>
           <Grid item xs={6} textAlign="right">
             <Button variant="cancel" onClick={handleCancel}>Cancel</Button>
           </Grid>
           <Grid item xs={6} textAlign="left">
             <Button onClick={handleOnChange}>Change</Button>
           </Grid>
-          {correct&&<TypoText variant="h5" style={{marginTop:'10px'}}>
+          {correct && <TypoText variant="h5" style={{ marginTop: '10px' }}>
             Please <Link to={{
               pathname: '/login'
             }}>Click here</Link>  to log in

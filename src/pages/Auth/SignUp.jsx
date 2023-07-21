@@ -8,6 +8,7 @@ import TypoText from "../../components/MUIComponent/TypoText";
 import A from "../../common/assets";
 import { useNavigate } from "react-router-dom";
 import { Alert } from "@mui/material";
+import GoBack from "../../components/layout/GoBack";
 
 const SignUp = () => {
   const regx = `^(?=.*[\\d])(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).{8,}$`;
@@ -70,9 +71,7 @@ const SignUp = () => {
         padding: "35px",
       }}
     >
-      <Link href="/" color={A.colors.black}>
-        <i class="fa-solid fa-arrow-left fa-xl"></i>
-      </Link>
+      <GoBack url="/"/>
       <TypoText variant="h1" style={{ margin: "0" }}>
         Welcome to Learning Hub❤️
       </TypoText>

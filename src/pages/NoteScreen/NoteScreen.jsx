@@ -29,14 +29,15 @@ function NoteScreen() {
   const [isHovered, setIsHovered] = useState(false);
   const [id, setId] = useSearchParams();
   const noteId = id.get("id");
-  const [isAuthen, setIsAuthen] = useState(false);
+  const [isAuthen, setIsAuthen] = useState("no");
   const [countCardKey, setCountCardKey] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
   const kanbanRef = useRef(null);
   const updateTimeoutRef = useRef(null); // Thêm một ref để lưu trữ timeout ID
+  const [role, setRole] = useState(localStorage.getItem("role"));
 
 
-  useEffect(() => {
+  const checkAuthen = () => {
 
     fetch(`http://localhost:8080/api/v1/note?id=${Number(noteId)}`, {
       credentials: "include",
@@ -45,12 +46,14 @@ function NoteScreen() {
       .then((response) => response.json())
       .then((response) => {
         if (response.status === "Success") {
-          setIsAuthen(true);
+          setIsAuthen("ok");
+        } else {
+          setIsAuthen("no");
         }
       })
       .catch((err) => console.log(err));
 
-  }, [noteId]);
+  };
 
 
   const handleOnChange1 = (newData) => {
@@ -66,7 +69,8 @@ function NoteScreen() {
   };
 
   useEffect(() => {
-    console.log("render");
+    // console.log("render");
+    
     const kanbanElement = kanbanRef.current;
     const observer = new MutationObserver(() => {
       if (!isUpdating) {
@@ -75,7 +79,7 @@ function NoteScreen() {
         if (updateTimeoutRef.current) {
           clearTimeout(updateTimeoutRef.current); // Hủy bỏ timeout cũ nếu có
         }
-
+        
         updateTimeoutRef.current = setTimeout(() => {
           setCountCardKey((prev) => prev + 1);
           setIsUpdating(false);
@@ -93,6 +97,7 @@ function NoteScreen() {
 
     return () => {
       if (kanbanElement) {
+        
         observer.disconnect();
       }
 
@@ -100,14 +105,20 @@ function NoteScreen() {
         clearTimeout(updateTimeoutRef.current); // Hủy bỏ timeout nếu component bị unmount
       }
     };
-  }, [isUpdating]);
-
+  }, [isAuthen]);
+  useEffect(checkAuthen,[]);
   const navigate = useNavigate();
   const handleBack = () => {
-    navigate(-1);
-  };
+    if (role === "ADMIN") {
+      navigate("/admin");
+    } else {
+      navigate("/dashboard");
+    }
 
-  if (isAuthen) {
+  };
+ 
+
+  if (isAuthen==="ok") {
     return (
       <>
       <Header />
@@ -217,7 +228,7 @@ function NoteScreen() {
         <Footer />
       </>
     )
-  } else {
+  } else if(isAuthen==="no"){
     return (
       <>
         <ErrBox>
