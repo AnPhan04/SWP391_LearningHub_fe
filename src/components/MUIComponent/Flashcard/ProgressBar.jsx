@@ -25,7 +25,7 @@ const ProgressBar = ({ flashcards, counter }) => {
         height: "100%",
       }}
     >
-      <Box sx={{ width: "40%" }}>
+      <Box sx={{ width: "50em" }}>
         <LinearProgress
           color="secondary"
           variant="determinate"

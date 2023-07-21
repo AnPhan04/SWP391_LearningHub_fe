@@ -12,10 +12,10 @@ const ViewSet = () => {
   const [id, setId] = useSearchParams();
   const [title, setTitle] = useSearchParams();
   const flashcardSetId = id.get("id");
-  const flashcardSetName = title.get("title");  
+  const flashcardSetName = title.get("title");
   const [isHovered, setIsHovered] = useState(false);
   const navigate = useNavigate();
-  const [role,setRole] = useState(window.localStorage.getItem("role"));
+  const [role, setRole] = useState(window.localStorage.getItem("role"));
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -25,7 +25,7 @@ const ViewSet = () => {
     setIsHovered(false);
   };
   const handleBack = () => {
-    role==="ADMIN"? navigate("/admin"): navigate("/dashboard");
+    role === "ADMIN" ? navigate("/admin") : navigate("/dashboard");
   };
 
   useEffect(() => {
@@ -45,47 +45,47 @@ const ViewSet = () => {
   return (
     <div>
       <Header />
-      
+
       <div className="card-flip">
-      <Box
-        sx={{
-          fontWeight: "bold",
-          marginLeft: 3,
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <ArrowBackIcon
-          onClick={handleBack}
-          fontSize="large"
+        <Box
           sx={{
-            "&:hover": {
-              cursor: "pointer",
-              backgroundColor: "#F2F2F2",
-              borderRadius: "7px",
-            },
+            fontWeight: "bold",
+            marginLeft: 3,
           }}
-        />
-        {isHovered && (
-          <Typography
-            variant="subtitle1"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <ArrowBackIcon
+            onClick={handleBack}
+            fontSize="large"
             sx={{
-              fontWeight: "bold",
-              color: "white",
-              width: "75px",
-              height: "30px",
-              backgroundColor: "#767676",
-              p: 0.4,
-              borderRadius: "7px",
-              position: "fixed",
-              top: "35px",
-              left: "10px",
+              "&:hover": {
+                cursor: "pointer",
+                backgroundColor: "#F2F2F2",
+                borderRadius: "7px",
+              },
             }}
-          >
-            Go back
-          </Typography>
-        )}
-      </Box>
+          />
+          {isHovered && (
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: "bold",
+                color: "white",
+                width: "75px",
+                height: "30px",
+                backgroundColor: "#767676",
+                p: 0.4,
+                borderRadius: "7px",
+                position: "fixed",
+                top: "35px",
+                left: "10px",
+              }}
+            >
+              Go back
+            </Typography>
+          )}
+        </Box>
         <FlashcardSet flashcards={flashcards} title={flashcardSetName} />
       </div>
     </div>

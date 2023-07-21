@@ -4,6 +4,9 @@ import TypoText from "../TypoText";
 import "./FlashcardSet.css";
 import ProgressBar from "./ProgressBar";
 import { Grid } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCog } from "@fortawesome/free-solid-svg-icons";
+
 const FlashcardSet = ({ flashcards, title }) => {
   const [counter, setCounter] = useState(1);
   const [disabledRight, setDisabledRight] = useState(false);
@@ -42,7 +45,7 @@ const FlashcardSet = ({ flashcards, title }) => {
 
   return (
     <div className="set">
-      <div className="set-title"  style={{margin: "3em"}}>
+      <div className="set-title" style={{ margin: "3em" }}>
         <Grid container spacing={2}>
           <Grid item xs={6} sx={{ textAlign: "center" }}>
             <TypoText variant="h1">{title}</TypoText>
@@ -55,16 +58,21 @@ const FlashcardSet = ({ flashcards, title }) => {
           definition={flashcards[currentCardIndex]?.definition}
         />
       </div>
-      <div className="progress-arrow">
-        <button onClick={handlePrevCard} disabled={disabledLeft}>
-          <i className="fa-solid fa-arrow-left fa-2xl"></i>
+      <div className="setting-container">
+        <button className="setting-icon">
+          <FontAwesomeIcon icon={faCog} />
         </button>
-        <TypoText style={{ display: "inline", margin: "1em" }}>
-          {counter}/{flashcards.length}
-        </TypoText>
-        <button onClick={handleNextCard} disabled={disabledRight}>
-          <i className="fa-solid fa-arrow-right fa-2xl"></i>
-        </button>
+        <div className="progress-arrow">
+          <button onClick={handlePrevCard} disabled={disabledLeft}>
+            <i className="fa-solid fa-arrow-left fa-2xl"></i>
+          </button>
+          <TypoText style={{ display: "inline", margin: "1em" }}>
+            {counter}/{flashcards.length}
+          </TypoText>
+          <button onClick={handleNextCard} disabled={disabledRight}>
+            <i className="fa-solid fa-arrow-right fa-2xl"></i>
+          </button>
+        </div>
       </div>
       <div>
         <ProgressBar flashcards={flashcards} counter={counter} />
