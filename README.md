@@ -1,4 +1,22 @@
-# Getting Started with Create React App
+# SWP301_Learning Hub (Client side)
+Project for the SWP301 course at FPT University
+## Link to the server side of the project
+[Learning Hub server side](https://github.com/HC2102/SWP301_LearningHub.git)
+## Members
+- Phan Dang Truong (HC2102): HE170417
+- Phan Thanh An (AnPhan04)
+- Tran Quang Huy
+- Nguyen Hoang Minh Hieu
+- Chu Thanh Vinh
+## Set up
+1. Please set up the database and the server side successfully before you set the client side.
+2. Download all dependencies listed in **package-lock.json** by using command `npm i -f`.
+3. Run the client side by using command `npm start`
+4. Make sure the server side run at **localhost:8080** and the client side run at **localhost:3000**
+
+
+
+# React generation readme
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
