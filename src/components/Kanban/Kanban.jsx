@@ -77,7 +77,7 @@ const Kanban = ({ countCardKey, id }) => {
         .catch((err) => console.log(err));
     };
     getData(id);
-  }, [countCardKey]);
+  }, [countCardKey,id]);
 
   //save data to database every time the board from front end changed
   useEffect(() => {
@@ -93,7 +93,7 @@ const Kanban = ({ countCardKey, id }) => {
         .catch((err) => console.log(err));
     }
     saveData(id);
-  }, [columns]); // will call when the columns (data) has been changed
+  }, [columns,id]); // will call when the columns (data) has been changed
 
   //handle the action when user drag item
   const onDragEnd = (result, columns, setColumns) => {
