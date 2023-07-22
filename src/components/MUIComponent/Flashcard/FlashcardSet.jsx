@@ -31,6 +31,13 @@ const FlashcardSet = ({ flashcards, title }) => {
     }
   };
 
+  const handleRestartSet = () => {
+    setCounter(1);
+    setDisabledLeft(true);
+    setDisabledRight(false);
+    setCurrentCardIndex(0);
+  };
+
   const [name, setName] = useState(null);
 
   useEffect(() => {
@@ -85,7 +92,7 @@ const FlashcardSet = ({ flashcards, title }) => {
         </Grid>
         <Grid item sm={3} sx={{ textAlign: "right" }} style={{ padding: 0 }}>
           <div className="setting-icon" style={{ margin: 0 }}>
-            <SettingMenu onEdit={handleEditSet} />
+            <SettingMenu onEdit={handleEditSet} onRestart={handleRestartSet} />
           </div>
         </Grid>
       </Grid>

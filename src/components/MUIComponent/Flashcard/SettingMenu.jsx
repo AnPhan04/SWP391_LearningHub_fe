@@ -5,7 +5,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SettingsIcon from "@mui/icons-material/Settings";
 import A from "../../../common/assets";
 
-export default function SettingMenu({ onDelete, onEdit, onRestart }) {
+export default function SettingMenu({ onEdit, onRestart }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -48,7 +48,6 @@ export default function SettingMenu({ onDelete, onEdit, onRestart }) {
         <MenuItem
           sx={{
             color: "red",
-            // border: "1px solid red",
             "&:hover": {
               background: "red",
               color: "white",

@@ -43,7 +43,7 @@ export default function AddTask(props) {
   const [showAddScreen, setShowAddScreen] = useState(false);
   const [name, setName] = useState("");
   const [label, setLabel] = useState([]);
-  const [description, setDescription] = useState("");
+  const [description, setDescription] = useState(null);
 
   const handleEndDateChange = (newValue) => {
     if (startDate && newValue < startDate) {
@@ -86,18 +86,16 @@ export default function AddTask(props) {
         id: null,
         columnId: props.colId,
         name: name,
-        description: description,
-        dateStart: startDate.toISOString().split("T")[0],
-        dateEnd: endDate.toISOString().split("T")[0],
+        description: description ? description : null,
+        dateStart: startDate ? startDate.toISOString().split("T")[0] : null,
+        dateEnd: endDate ? endDate.toISOString().split("T")[0] : null,
         isActive: true,
         createdDate: new Date().toISOString().split("T")[0],
       },
-      labels:label.size === 0? []:label 
+      labels: label.size === 0 ? [] : label,
     };
-    
+
     try {
-      console.log(console.log(typeof label));
-      console.log(console.log(label));
       const response = await fetch("http://localhost:8080/api/v1/note/card", {
         method: "POST",
         credentials: "include",
@@ -106,17 +104,16 @@ export default function AddTask(props) {
         },
         body: JSON.stringify(requestBody),
       });
-  
+
       if (response.ok) {
         const jsonData = response.json();
-        console.log("AddTask: ", jsonData);
       } else {
         console.log("AddTask: Error in response");
       }
     } catch (error) {
       console.log("AddTask: ", error);
     }
-  
+
     handleClose();
     window.location.reload(false);
   };
