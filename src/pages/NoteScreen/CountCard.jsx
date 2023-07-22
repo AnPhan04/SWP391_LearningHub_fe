@@ -27,7 +27,6 @@ function CountCard({ countCardKey, id }) {
         { method: "GET" }
       );
       const data = await response.json();
-      // console.log(data); // Xử lý dữ liệu API ở đây
       let totalCount = 0;
       Object.values(data).forEach((item) => {
         totalCount += item.items.length;
@@ -36,8 +35,6 @@ function CountCard({ countCardKey, id }) {
         title: item.title,
         length: item.items.length,
       }));
-
-      // console.log(titles)
       setTitle(titles);
       setCount(totalCount);
     } catch (error) {

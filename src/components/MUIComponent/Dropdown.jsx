@@ -21,7 +21,6 @@ export default function MultipleSelect({ onChange, defaultValue }) {
 
   useEffect(() => {
     const getBoardId = async () => {
-      console.log("def val", defaultValue);
       await fetch(`http://localhost:8080/api/v1/note/board?noteId=${noteId}`, {
         credentials: "include",
         method: "GET",

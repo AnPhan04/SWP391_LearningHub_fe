@@ -59,7 +59,6 @@ const ResetPass = () => {
 
   async function fetchSaveData() {
     try {
-      console.log(JSON.stringify(Data));
       const response = await fetch(
         "http://localhost:8080/api/v1/user/reset/password",
         {

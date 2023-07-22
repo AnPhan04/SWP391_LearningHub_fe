@@ -90,8 +90,6 @@ export default function UpdateCard({ task, onClose }) {
     };
 
     try {
-      console.log(console.log(typeof label));
-      console.log(console.log(label));
       const response = await fetch("http://localhost:8080/api/v1/note/card", {
         method: "PUT",
         credentials: "include",
@@ -103,7 +101,6 @@ export default function UpdateCard({ task, onClose }) {
 
       if (response.ok) {
         const jsonData = response.json();
-        console.log("UpdateCard: ", jsonData);
       } else {
         console.log("UpdateCard: Error in response");
       }
@@ -117,7 +114,6 @@ export default function UpdateCard({ task, onClose }) {
 
   return (
     <>
-      {console.log("label prepare for def", label)}
       <AddTaskPopup
         container
         spacing={0.5}

@@ -23,7 +23,6 @@ const CardAttachmentComponent = ({ cardId }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setAttachmentsList([...attachmentsList, data]);
         // Xử lý sau khi thêm attachment thành công
       })
@@ -92,7 +91,6 @@ const CardAttachmentComponent = ({ cardId }) => {
     fetch(`/api/v1/card-attachments?cardId=${cardId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setAttachmentsList(data);
         // Xử lý sau khi lấy danh sách tệp đính kèm
       })

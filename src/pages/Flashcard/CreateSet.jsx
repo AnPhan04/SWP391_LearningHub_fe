@@ -40,7 +40,6 @@ const CreateSet = () => {
         }
       );
       const json = await response.json();
-      console.log("getCurrentUserEmail: " + json.email);
       setSessionUser(json.email);
     } catch (error) {
       console.log(error);
@@ -127,7 +126,6 @@ const CreateSet = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
       }
     } catch (error) {
       console.log(error);
@@ -184,7 +182,6 @@ const CreateSet = () => {
   };
 
   const handleDeleteCard = (index) => {
-    console.log(index);
     setCardListCount((prevCount) => prevCount - 1);
     setTerms((prevTerms) => {
       const newTerms = [...prevTerms];

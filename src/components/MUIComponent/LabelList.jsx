@@ -19,13 +19,11 @@ const LabelsList = ({ boardID, onchangedata1 }) => {
   const [data1, setData1] = useState(0);
   const [count, setCount] = useState(0);
 
-  console.log("data:" + data1);
   const handleDataChangeFather = (newData) => {
     setData1(newData);
   };
 
   useEffect(() => {
-    console.log("data_1:" + data1);
     fetchLabels(boardID);
   }, [data1]);
 
@@ -36,7 +34,6 @@ const LabelsList = ({ boardID, onchangedata1 }) => {
       );
       const data = await response.json();
       setLabelsList(data);
-      console.log("oke:" + JSON.stringify(data));
     } catch (error) {
       console.log("Error fetching core labels:", error);
     }

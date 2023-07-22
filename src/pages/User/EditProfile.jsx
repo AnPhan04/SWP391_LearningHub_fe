@@ -74,7 +74,6 @@ const EditProfile = () => {
           body: JSON.stringify(Data),
         });
         const json = await res.json();
-        console.log(json);
         if (json.status === "Success") {
           setSuccess("Data update successfully");
         } else {
@@ -92,7 +91,6 @@ const EditProfile = () => {
         credentials: "include",
       });
       const json = await res.json();
-      console.log(json);
       if (json.email !== null) {
         setUser(json);
         setName(json.realName);

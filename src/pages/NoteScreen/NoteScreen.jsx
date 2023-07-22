@@ -65,7 +65,6 @@ function NoteScreen() {
   };
 
   useEffect(() => {
-    // console.log("render");
 
     const kanbanElement = kanbanRef.current;
     const observer = new MutationObserver(() => {

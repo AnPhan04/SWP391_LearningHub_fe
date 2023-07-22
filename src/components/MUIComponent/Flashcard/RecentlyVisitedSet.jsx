@@ -51,7 +51,6 @@ const RecentlyVisitedSet = () => {
         if (jsonData.status === "Success" && jsonData.data) {
           setFlashcardSets(jsonData.data);
         }
-        console.log(jsonData);
       } catch (error) {
         console.log(error);
         setFlashcardSets([]);
@@ -78,7 +77,6 @@ const RecentlyVisitedSet = () => {
         }
       );
       const json = await response.json();
-      console.log("getCurrentUserEmail: " + json.email);
       setSessionUser(json.email);
     } catch (error) {
       console.log(error);

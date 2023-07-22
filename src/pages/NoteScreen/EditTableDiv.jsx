@@ -34,8 +34,6 @@ function EditableDiv(props) {
         }
       );
       const data = await response.json();
-      // console.log(data); // Xử lý dữ liệu API ở đây
-      // console.log(data.data.title)
       editTitleRef.current.innerText = data.data.title;
       editContentRef.current.innerText = data.data.description;
     } catch (error) {
@@ -47,7 +45,6 @@ function EditableDiv(props) {
   const handleSaveClick = (event) => {
     const editedTitle = sanitizeInput(editTitleRef.current.innerText);
     const editedContent = sanitizeInput(editContentRef.current.innerText);
-    console.log("Edited title:", editedTitle);
 
     const postData = {
       // Đối tượng bạn muốn truyền trong phần body
@@ -74,7 +71,6 @@ function EditableDiv(props) {
         body: JSON.stringify(postData),
       });
       const data = await response.json();
-      console.log(data); // Xử lý dữ liệu API ở đây
     } catch (error) {
       console.log("Lỗi:", error);
     }

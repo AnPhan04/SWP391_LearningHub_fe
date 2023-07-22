@@ -47,7 +47,6 @@ const Reactive = () => {
       if (response.status !== 200) {
         setErr(json.data);
       }
-      console.log(json);
     } catch (error) {
       console.log(error);
     }

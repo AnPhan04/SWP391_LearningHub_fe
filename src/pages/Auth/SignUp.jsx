@@ -45,8 +45,6 @@ const SignUp = () => {
         );
         const responseData = await response.json();
         if (response.ok) {
-          console.log(responseData);
-          // setErrorMessage("Create new account successfully");
           navigate("/login");
         } else {
           setErrorMessage(responseData.message);

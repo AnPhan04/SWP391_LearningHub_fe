@@ -78,7 +78,6 @@ const RecentlyVisited = () => {
         }
       );
       const json = await response.json();
-      console.log("getCurrentUserEmail: " + json.email);
       setSessionUser(json.email);
     } catch (error) {
       console.log(error);
@@ -124,7 +123,6 @@ const RecentlyVisited = () => {
   };
 
   const archiveNote = async (noteId) => {
-    console.log("Archive note " + noteId);
     try {
       const response = await fetch(
         `http://localhost:8080/api/v1/note/notes?noteId=${noteId}`,

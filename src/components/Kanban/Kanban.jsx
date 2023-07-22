@@ -61,16 +61,13 @@ const Kanban = ({ countCardKey, id }) => {
   const [selectedTask, setSelectedTask] = useState(null);
 
   useEffect(() => {
-    console.log("KANBAN/countCardKeyChange");
     const getData = async (id) => {
-      console.log(id);
       fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
         credentials: "include",
         method: "GET",
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
           setColumns(json);
         })
         .catch((err) => console.log(err));
@@ -132,7 +129,6 @@ const Kanban = ({ countCardKey, id }) => {
   };
 
   const handleDeleteTask = async (taskId) => {
-    console.log("Delete task: " + taskId);
     try {
       const response = await fetch(
         `http://localhost:8080/api/v1/note/card?id=${taskId}`,
@@ -146,7 +142,6 @@ const Kanban = ({ countCardKey, id }) => {
       );
       const jsonData = await response.json();
       if (response.ok) {
-        console.log("Delete task: " + jsonData.message);
         setColumns((prevColumns) => {
           const updatedColumns = { ...prevColumns };
           for (const columnId in updatedColumns) {
@@ -180,7 +175,6 @@ const Kanban = ({ countCardKey, id }) => {
   const [taskData, setTaskData] = useState(null);
   useEffect(() => {
     // Fetch task data from the API
-    console.log("KANBAN/selectedTask");
     async function fetchData(cardId) {
       try {
         const response = await fetch(
@@ -191,8 +185,7 @@ const Kanban = ({ countCardKey, id }) => {
           }
         );
         const jsonData = await response.json();
-        setTaskData(jsonData); // Store the task data in state
-        console.log(jsonData);
+        setTaskData(jsonData); 
       } catch (error) {
         console.log("Fetch task data error: " + error);
       }
@@ -255,7 +248,6 @@ const Kanban = ({ countCardKey, id }) => {
           open={selectedTask !== null}
           // onClose={() => setSelectedTask(null)}
         >
-          {console.log("open dialog")}
           <UpdateCard task={taskData} onClose={() => setSelectedTask(null)} />
         </Dialog>
       )}

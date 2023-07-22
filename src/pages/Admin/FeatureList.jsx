@@ -45,7 +45,6 @@ export default function FeatureList() {
         });
         const json = await res.json();
         setFeature(json.data);
-        console.log(feature.data);
       } catch (err) {
         console.log(err);
         setFeature([]);

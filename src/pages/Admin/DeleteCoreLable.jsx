@@ -42,7 +42,6 @@ export default function DeleteCoreLabel(props) {
   }, []);
   async function deleteLabel(target) {
     try {
-      console.log(target);
       const response = await fetch(
         `http://localhost:8080/api/v1/labels/deleteL?id=${target}`,
         {

@@ -28,7 +28,6 @@ const QuickAddSet = () => {
         }
       );
       const json = await response.json();
-      console.log("getCurrentUserEmail: " + json.email);
       setSessionUser(json.email);
     } catch (error) {
       console.log(error);
@@ -55,8 +54,6 @@ const QuickAddSet = () => {
       // Handle the response here if needed
       if (response.ok) {
         const data = await response.json();
-        console.log(data.data);
-        // return data.data.id;
       }
     } catch (error) {
       // Handle error here

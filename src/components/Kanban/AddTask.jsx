@@ -66,7 +66,6 @@ export default function AddTask(props) {
       } else {
         setDuration(diff + " day");
       }
-      console.log(diff);
     } else {
       setDuration(0);
     }

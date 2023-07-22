@@ -39,7 +39,6 @@ const Deactive = () => {
       if (response.status === 500) {
         setErr(json.data);
       }
-      console.log(json);
     } catch (error) {
       console.log(error);
     }
@@ -59,11 +58,9 @@ const Deactive = () => {
       await deactivateUser(json.email, pass);
       await logout();
       nav("/login");
-      console.log(json);
     } catch (error) {
       console.log(error);
     }
-    console.log("ref", pass);
   };
   return (
     <>

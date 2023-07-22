@@ -19,7 +19,6 @@ function CountCard({ countCardKey, id }) {
 
     useEffect(() => {
         fetchData(parameter);
-        console.log("param" + parameter) // Gọi API khi giá trị tham số thay đổi
     }, [countCardKey]);
 
     async function fetchData(parameter) {
@@ -29,7 +28,6 @@ function CountCard({ countCardKey, id }) {
                 method: "GET"
             });
             const data = await response.json();
-            // console.log(data); // Xử lý dữ liệu API ở đây
             let totalCount = 0;
             Object.values(data).forEach(item => {
                 totalCount += item.items.length;
@@ -40,7 +38,6 @@ function CountCard({ countCardKey, id }) {
                 length: item.items.length,
             }));
 
-            // console.log(titles)
             setTitle(titles)
             setCount(totalCount);
 

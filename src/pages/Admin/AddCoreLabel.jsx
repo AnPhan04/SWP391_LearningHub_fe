@@ -49,7 +49,6 @@ function AddCoreLabel() {
         }
       );
       const data = await response.json();
-      console.log(data); // Xử lý dữ liệu API ở đây
     } catch (error) {
       console.log("Lỗi:", error);
     }
