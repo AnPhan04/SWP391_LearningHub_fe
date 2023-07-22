@@ -142,7 +142,7 @@ export default function AboutUs() {
                 name={"Nguyen Hoang Minh Hieu"}
                 img={"/img/HNHM.jpg"}
                 desc={
-                  "Dreaming to become an expert full-stack web developer in the future. I believe that practical experience is as crucial as theory. I hoped of learning from expert developers and being motivated by an inspiring working environment to not only enforce my skills but bring value to the company as well."
+                  "Allow me  a shy but determined individual who embraces my reserved nature. Despite facing obstacles, I use my shyness as motivation to grow and step out of my comfort zone. With self-acceptance and patience, I celebrate every small victory on my journey of personal growth. Though quiet, I value collaboration and cherish my unique perspective."
                 }
                 link={"https://github.com/HC2102"}
               />

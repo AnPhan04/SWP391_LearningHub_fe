@@ -55,7 +55,7 @@ export default function UpdateCoreLabel() {
             console.log("Can not get the user data");
         }
     }
-    useEffect(()=>{isAuth()},[]);
+    useEffect(() => { isAuth() }, []);
     const renderUpdated = (e, id) => {
         const value = e.target.value;
         const updated = labels.map(label => {
@@ -90,14 +90,18 @@ export default function UpdateCoreLabel() {
                 default:
                     break;
             }
-            const res = await fetch(`http://localhost:8080/api/v1/labels/updateL`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(updatedLabels),
-            })
-            const json = await res.json();
+            if (updatedLabels.name !== "" && updatedLabels.color !== "") {
+                const res = await fetch(`http://localhost:8080/api/v1/labels/updateL`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(updatedLabels),
+                })
+                const json = await res.json();
+            }
+
+
         } catch (err) {
             console.log(err);
         }
