@@ -19,7 +19,8 @@ const UpdateSet = () => {
   const [cardListCount, setCardListCount] = useState(2);
   const [terms, setTerms] = useState([]);
   const [definitions, setDefinitions] = useState([]);
-  const [flashcards, setFlashcards] = useState([]);
+  const [flashcardsId, setFlashcardsId] = useState([]);
+  const [maxFlashcardId, setMaxFlashcardId] = useState("");
   const navigate = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -29,6 +30,7 @@ const UpdateSet = () => {
     getCurrentUserEmail();
     getSetDetails();
     getFlashcardsBySetId();
+    getMaxFlashcardId();
   }, []);
 
   const navigateToViewSet = (id) => {
@@ -46,7 +48,6 @@ const UpdateSet = () => {
         }
       );
       const json = await response.json();
-      console.log("getCurrentUserEmail: " + json.email);
       setSessionUser(json.email);
     } catch (error) {
       console.log(error);
@@ -80,7 +81,7 @@ const UpdateSet = () => {
         }
       );
       const flashcardsDetails = await response.json();
-      setFlashcards(flashcardsDetails.data.map((f) => f.id));
+      setFlashcardsId(flashcardsDetails.data.map((f) => f.id));
       setCardListCount(flashcardsDetails.data.length);
       setTerms(flashcardsDetails.data.map((f) => f.term));
       setDefinitions(flashcardsDetails.data.map((f) => f.definition));
@@ -89,8 +90,28 @@ const UpdateSet = () => {
     }
   };
 
+  const getMaxFlashcardId = async () => {
+    const response = await fetch(
+      "http://localhost:8080/api/v1/flashcard/card/latest",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    );
+    const jsonData = await response.json();
+    setMaxFlashcardId(jsonData.data.id);
+  };
+
   const handleBack = () => {
     navigate(-1);
+  };
+  const openAddCard = () => {
+    // Add new card fields
+    setTerms((prevTerms) => [...prevTerms, null]);
+    setDefinitions((prevDefinitions) => [...prevDefinitions, null]);
+    setCardListCount((prevCount) => prevCount + 1);
+    setFlashcardsId([...flashcardsId, maxFlashcardId + 1]);
+    setMaxFlashcardId(maxFlashcardId + 1); // Increment maxFlashcardId for the new card
   };
 
   const handleUpdateSet = async () => {
@@ -98,7 +119,14 @@ const UpdateSet = () => {
       alert("Please enter the set title!");
       return;
     }
+
+    if (cardListCount < 2) {
+      alert("A set need to have at least two cards!");
+      return;
+    }
+
     try {
+      // Update set
       const updatedSet = {
         id: parseInt(id),
         userId: sessionUser,
@@ -109,7 +137,6 @@ const UpdateSet = () => {
         learned: 0,
       };
 
-      // Update the set using API 1
       await fetch("http://localhost:8080/api/v1/flashcard/set", {
         method: "PUT",
         headers: {
@@ -117,21 +144,21 @@ const UpdateSet = () => {
         },
         body: JSON.stringify(updatedSet),
       });
-      // Update or add new cards using API 2
+
+      // Update cards
       for (let i = 0; i < cardListCount; i++) {
         const cardPayload = {
-          id: i < flashcards.length ? flashcards[i] : null,
+          id: flashcardsId[i],
           setId: parseInt(id),
           term: terms[i],
           definition: definitions[i],
           position: i,
         };
 
-        console.log(flashcards[i]);
-        console.log(terms[i]);
-        console.log(definitions[i]);
+        console.log(flashcardsId[i]);
+        console.log(maxFlashcardId);
 
-        if (i < terms.length) {
+        if (flashcardsId[i] !== maxFlashcardId) {
           // If the card exists (i.e., it has an ID), update it
           await fetch("http://localhost:8080/api/v1/flashcard/card", {
             method: "PUT",
@@ -141,7 +168,6 @@ const UpdateSet = () => {
             body: JSON.stringify(cardPayload),
           });
         } else {
-          // If the card does not exist (i.e., it does not have an ID), add it as a new card
           await fetch("http://localhost:8080/api/v1/flashcard/card", {
             method: "POST",
             headers: {
@@ -152,21 +178,10 @@ const UpdateSet = () => {
         }
       }
 
-      // Redirect to the set view page after successful update
       navigateToViewSet(id);
     } catch (error) {
       console.log(error);
     }
-  };
-
-  const handleAddCard = () => {
-    // Add new card fields
-    setTerms((prevTerms) => [...prevTerms, { id: null, term: "" }]);
-    setDefinitions((prevDefinitions) => [
-      ...prevDefinitions,
-      { id: null, definition: "" },
-    ]);
-    setCardListCount((prevCount) => prevCount + 1);
   };
 
   const handleTermChange = (index, term) => {
@@ -183,6 +198,34 @@ const UpdateSet = () => {
       newDefinitions[index] = definition;
       return newDefinitions;
     });
+  };
+
+  const handleDeleteCard = async (flashcardId, index) => {
+    console.log(flashcardId);
+    const response = await fetch(
+      `http://localhost:8080/api/v1/flashcard/card?id=${flashcardId}`,
+      {
+        method: "DELETE",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      setCardListCount((prevCount) => prevCount - 1);
+      setTerms((prevTerms) => {
+        const newTerms = [...prevTerms];
+        console.log(newTerms.splice(index, 1));
+        return newTerms;
+      });
+      setDefinitions((prevDefinitions) => {
+        const newDefinitions = [...prevDefinitions];
+        console.log(newDefinitions.splice(index, 1));
+        return newDefinitions;
+      });
+      console.log("Delete flashcard successfully!");
+    }
   };
 
   return (
@@ -267,6 +310,9 @@ const UpdateSet = () => {
               handleDefinitionChange={(definition) =>
                 handleDefinitionChange(index, definition)
               }
+              handleDeleteCard={() =>
+                handleDeleteCard(flashcardsId[index], index)
+              }
               term={terms[index]} // Pass the correct term value
               definition={definitions[index]} // Pass the correct definition value
             />
@@ -277,7 +323,7 @@ const UpdateSet = () => {
             variant="contained"
             size="large"
             sx={{ background: "#9747ff", borderRadius: "5px" }}
-            onClick={handleUpdateSet}
+            onClick={openAddCard}
           >
             + ADD CARD
           </Button>

@@ -70,7 +70,7 @@ const CardList = ({
                     }}
                     placeholder="Enter term"
                     value={term} // Use the received 'term' prop as the value for the input field
-                    onChange={handleTermInputChange}
+                    onChange={(e) => handleTermChange(e.target.value)}
                   />
                   <FormHelperText id="standard-weight-helper-text">
                     TERM
@@ -92,7 +92,7 @@ const CardList = ({
                     }}
                     placeholder="Add a description..."
                     value={definition} // Use the received 'definition' prop as the value for the input field
-                    onChange={handleDefinitionInputChange}
+                    onChange={(e) => handleDefinitionChange(e.target.value)}
                   />
                   <FormHelperText id="standard-weight-helper-text">
                     DEFINITION

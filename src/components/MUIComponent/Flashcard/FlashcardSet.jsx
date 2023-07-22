@@ -36,9 +36,7 @@ const FlashcardSet = ({ flashcards, title }) => {
   useEffect(() => {
     const uniqueSetId = [...new Set(flashcards.map((f) => f.setId))];
     const flSetName = flashcards.find((s) => s.setId === uniqueSetId);
-    console.log(flSetName);
     setName();
-    console.log(flashcards.find((s) => s.setId === uniqueSetId));
   }, [flashcards]);
 
   const [id, setId] = useSearchParams();

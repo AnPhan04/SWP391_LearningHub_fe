@@ -30,14 +30,11 @@ const Header = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
         setLogged(json.active);
         setUsername(json.email.substring(0, json.email.indexOf("@")));
         setRole(json.roleId);
-        console.log(username);
-        console.log(role);
       })
-      .catch((error) => setLogged(false));
+      .catch((error) => console.log(error));
   }, [logged, username]);
   const toggleProfile = () => {
     setIsProfileOpen(!isProfileOpen);
