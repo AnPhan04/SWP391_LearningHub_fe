@@ -169,8 +169,6 @@ const CreateSet = () => {
     });
   };
 
-  console.log(terms);
-
   const handleDefinitionChange = (definition, index) => {
     setDefinitions((prevDefinitions) => {
       const updatedDefinitions = [...prevDefinitions];
@@ -185,16 +183,19 @@ const CreateSet = () => {
     setDefinitions((prevDefinitions) => [...prevDefinitions, ""]);
   };
 
-  const handleDeleteCard = (cardIndex) => {
-    // if (cardListCount <= 2) {
-    //   alert("You cannot delete the last two cards!");
-    //   return;
-    // }
-
-    // setCardListCount((prevCount) => prevCount - 1);
-    // setTerms((prevTerms) => prevTerms.filter((_, index) => index !== cardIndex - 1));
-    // setDefinitions((prevDefinitions) => prevDefinitions.filter((_, index) => index !== cardIndex - 1));
-    console.log(cardIndex);
+  const handleDeleteCard = (index) => {
+    console.log(index);
+    setCardListCount((prevCount) => prevCount - 1);
+    setTerms((prevTerms) => {
+      const newTerms = [...prevTerms];
+      newTerms.splice(index - 1, 1);
+      return newTerms;
+    });
+    setDefinitions((prevDefinitions) => {
+      const newDefinitions = [...prevDefinitions];
+      newDefinitions.splice(index - 1, 1);
+      return newDefinitions;
+    });
   };
 
   return (
@@ -260,7 +261,9 @@ const CreateSet = () => {
               key={index}
               counter={index + 1}
               handleTermChange={(term) => handleTermChange(term, index)}
-              handleDefinitionChange={(definition) => handleDefinitionChange(definition, index)}
+              handleDefinitionChange={(definition) =>
+                handleDefinitionChange(definition, index)
+              }
               term={terms[index]}
               definition={definitions[index]}
               handleDeleteCard={handleDeleteCard}
