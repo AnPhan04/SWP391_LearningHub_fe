@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, useSearchParams, useParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   Button,
@@ -106,12 +106,9 @@ const UpdateSet = () => {
     navigate(-1);
   };
   const openAddCard = () => {
-    // Add new card fields
     setTerms((prevTerms) => [...prevTerms, null]);
     setDefinitions((prevDefinitions) => [...prevDefinitions, null]);
     setCardListCount((prevCount) => prevCount + 1);
-    setFlashcardsId([...flashcardsId, maxFlashcardId + 1]);
-    setMaxFlashcardId(maxFlashcardId + 1); // Increment maxFlashcardId for the new card
   };
 
   const handleUpdateSet = async () => {
@@ -121,8 +118,24 @@ const UpdateSet = () => {
     }
 
     if (cardListCount < 2) {
-      alert("A set need to have at least two cards!");
+      alert("A set needs to have at least two cards!");
       return;
+    }
+
+    const cardsToAdd = [];
+
+    for (let i = 0; i < cardListCount; i++) {
+      const term = terms[i];
+      const definition = definitions[i];
+
+      if (term && definition) {
+        // Both term and definition are filled, add the card to the list of cards to add
+        cardsToAdd.push({ term, definition });
+      } else if (term || definition) {
+        // Only one of the fields is filled, display an alert
+        alert(`Please fill both term and definition for Card ${i + 1}`);
+        return;
+      }
     }
 
     try {
@@ -145,29 +158,26 @@ const UpdateSet = () => {
         body: JSON.stringify(updatedSet),
       });
 
-      // Update cards
-      for (let i = 0; i < cardListCount; i++) {
+      for (const card of cardsToAdd) {
         const cardPayload = {
-          id: flashcardsId[i],
           setId: parseInt(id),
-          term: terms[i],
-          definition: definitions[i],
-          position: i,
+          term: card.term,
+          definition: card.definition,
+          position: cardsToAdd.indexOf(card),
         };
 
-        console.log(flashcardsId[i]);
-        console.log(maxFlashcardId);
-
-        if (flashcardsId[i] !== maxFlashcardId) {
-          // If the card exists (i.e., it has an ID), update it
+        if (flashcardsId[cardsToAdd.indexOf(card)]) {
+          // Update existing card
+          cardPayload.id = flashcardsId[cardsToAdd.indexOf(card)];
           await fetch("http://localhost:8080/api/v1/flashcard/card", {
-            method: "PUT",
+            method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify(cardPayload),
           });
         } else {
+          // Create new card
           await fetch("http://localhost:8080/api/v1/flashcard/card", {
             method: "POST",
             headers: {
@@ -201,30 +211,39 @@ const UpdateSet = () => {
   };
 
   const handleDeleteCard = async (flashcardId, index) => {
-    console.log(flashcardId);
-    const response = await fetch(
-      `http://localhost:8080/api/v1/flashcard/card?id=${flashcardId}`,
-      {
-        method: "DELETE",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/v1/flashcard/card?id=${flashcardId}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        // Create new arrays without the deleted card
+        const newTerms = [...terms];
+        const newDefinitions = [...definitions];
+        const newFlashcardsId = [...flashcardsId];
+
+        newTerms.splice(index, 1);
+        newDefinitions.splice(index, 1);
+        newFlashcardsId.splice(index, 1);
+
+        // Update the state with the new arrays
+        setTerms(newTerms);
+        setDefinitions(newDefinitions);
+        setFlashcardsId(newFlashcardsId);
+
+        // Update the card list count
+        setCardListCount((prevCount) => prevCount - 1);
+
+        console.log("Delete flashcard successfully!");
       }
-    );
-    if (response.ok) {
-      setCardListCount((prevCount) => prevCount - 1);
-      setTerms((prevTerms) => {
-        const newTerms = [...prevTerms];
-        console.log(newTerms.splice(index, 1));
-        return newTerms;
-      });
-      setDefinitions((prevDefinitions) => {
-        const newDefinitions = [...prevDefinitions];
-        console.log(newDefinitions.splice(index, 1));
-        return newDefinitions;
-      });
-      console.log("Delete flashcard successfully!");
+    } catch (error) {
+      console.log(error);
     }
   };
 

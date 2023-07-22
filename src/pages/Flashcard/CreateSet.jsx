@@ -15,7 +15,7 @@ const CreateSet = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [sessionUser, setSessionUser] = useState("");
-  const [cardListCount, setCardListCount] = useState(2);
+  const [cardListCount, setCardListCount] = useState(1);
   const [terms, setTerms] = useState([]);
   const [definitions, setDefinitions] = useState([]);
   const [flashcardSetId, setFlashcardSetId] = useState(0);
