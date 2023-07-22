@@ -41,22 +41,22 @@ export default function SettingMenu({ onDelete, onEdit, onRestart }) {
         }}
         style={{
           borderRadius: "10px",
-          boxShadow: "0 0 10px #888888",}}
+          boxShadow: "0 0 10px #888888",
+        }}
       >
         <MenuItem onClick={onEdit}>Edit</MenuItem>
-        <MenuItem onClick={onRestart}>Restart Flashcards</MenuItem>
         <MenuItem
           sx={{
             color: "red",
-            border: "1px solid red",
+            // border: "1px solid red",
             "&:hover": {
               background: "red",
               color: "white",
             },
           }}
-          onClick={onDelete}
+          onClick={onRestart}
         >
-          Delete
+          Restart Flashcards
         </MenuItem>
       </Menu>
     </div>
