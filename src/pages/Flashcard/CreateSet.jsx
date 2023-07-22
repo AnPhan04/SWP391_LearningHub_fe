@@ -148,12 +148,7 @@ const CreateSet = () => {
     // đã nhập term hoặc definition thì phải có cái ngược lại
     // nếu cả hai đều null thì không add vào set
     for (let i = 0; i < cardListCount; i++) {
-      if (
-        !terms[i] ||
-        terms[i].trim() === "" ||
-        !definitions[i] ||
-        definitions[i].trim === ""
-      ) {
+      if (terms[i] === "" || definitions[i] === "") {
         alert("Please fill all the terms and definitions!");
         return;
       }
@@ -166,25 +161,28 @@ const CreateSet = () => {
     setDefinitions([]);
   };
 
-  const handleAddCard = () => {
-    setCardListCount((prevCount) => prevCount + 1);
-    console.log(flashcardSetId);
-  };
-
   const handleTermChange = (term, index) => {
     setTerms((prevTerms) => {
       const updatedTerms = [...prevTerms];
-      updatedTerms[index - 1] = term;
+      updatedTerms[index] = term;
       return updatedTerms;
     });
   };
 
+  console.log(terms);
+
   const handleDefinitionChange = (definition, index) => {
     setDefinitions((prevDefinitions) => {
       const updatedDefinitions = [...prevDefinitions];
-      updatedDefinitions[index - 1] = definition;
+      updatedDefinitions[index] = definition;
       return updatedDefinitions;
     });
+  };
+
+  const handleAddCard = () => {
+    setCardListCount((prevCount) => prevCount + 1);
+    setTerms((prevTerms) => [...prevTerms, ""]);
+    setDefinitions((prevDefinitions) => [...prevDefinitions, ""]);
   };
 
   const handleDeleteCard = (cardIndex) => {
@@ -261,8 +259,8 @@ const CreateSet = () => {
             <CardList
               key={index}
               counter={index + 1}
-              handleTermChange={handleTermChange}
-              handleDefinitionChange={handleDefinitionChange}
+              handleTermChange={(term) => handleTermChange(term, index)}
+              handleDefinitionChange={(definition) => handleDefinitionChange(definition, index)}
               term={terms[index]}
               definition={definitions[index]}
               handleDeleteCard={handleDeleteCard}
