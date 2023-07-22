@@ -1,17 +1,8 @@
-/* body {
-  margin: 0;
-}
-
-.flashcard-container {
-  display: flex;
-  flex-wrap: wrap;
-  margin-top: 20px;
-} */
 .dashboard-container {
   margin: 0;
   padding: 0;
   display: flex;
-  
+
 }
 
 .left-column {
@@ -33,21 +24,3 @@
   /* background-color: wheat; */
   width: 75%;
 }
-
-/* Media Query for smaller screens */
-/* @media (max-width: 768px) {
-  .left-column {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .right-column {
-    width: 100%;
-    padding: 10px;
-  }
-
-  .flashcard-set,
-  .add-new-set {
-    width: calc(50% - 20px);
-  }
-} */

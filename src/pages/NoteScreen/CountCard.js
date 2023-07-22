@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
+import { useEffect, useState } from 'react';
 import TypoText from '../../components/MUIComponent/TypoText';
 
-function CountCard({ countCardKey,id }) {
+function CountCard({ countCardKey, id }) {
 
     const [parameter, setParameter] = useState(id);
     const [Count, setCount] = useState(0);
@@ -19,14 +19,15 @@ function CountCard({ countCardKey,id }) {
 
     useEffect(() => {
         fetchData(parameter);
-        console.log("param"+parameter) // Gọi API khi giá trị tham số thay đổi
+        console.log("param" + parameter) // Gọi API khi giá trị tham số thay đổi
     }, [countCardKey]);
 
     async function fetchData(parameter) {
         try {
-            const response = await fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${parameter}`, { 
-                credentials:"include",    
-            method: "GET" });
+            const response = await fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${parameter}`, {
+                credentials: "include",
+                method: "GET"
+            });
             const data = await response.json();
             // console.log(data); // Xử lý dữ liệu API ở đây
             let totalCount = 0;
@@ -63,7 +64,7 @@ function CountCard({ countCardKey,id }) {
                 <Box
                     sx={{
                         display: 'flex',
-                        flexWrap:'wrap',
+                        flexWrap: 'wrap',
                         flex: '10',
                         justifyContent: 'center',
                         alignItems: 'center',

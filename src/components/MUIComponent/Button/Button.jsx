@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "./Button.module.css";
 import A from "../../../common/assets";
+import styles from "./Button.module.css";
 
 const Button = (props) => {
   const { onClick, variant, children, style } = props;

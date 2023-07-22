@@ -1,14 +1,14 @@
+import { Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 import React, { useState } from "react";
 import styled from "styled-components";
+import CheckList from "../../pages/NoteScreen/CheckList";
 import MultipleSelect from "../MUIComponent/Dropdown";
 import TextField from "../MUIComponent/TextField";
 import TypoText from "../MUIComponent/TypoText";
-import dayjs from "dayjs";
-import { Button, Dialog } from "@mui/material";
-import CheckList from "../../pages/NoteScreen/CheckList";
 
 const AddTaskPopup = styled(Grid)`
   background: white;
@@ -71,15 +71,18 @@ export default function UpdateCard({ task, onClose }) {
   };
 
   const handleUpdateChange = async () => {
-
     const requestBody = {
       card: {
         id: task.data.card.id,
         columnId: task.data.card.columnId,
         name: name,
         description: description ? description : null,
-        dateStart: startDate ? dayjs(startDate, "MM-DD-YYYY").format("YYYY-MM-DD") : null,
-        dateEnd: endDate ? dayjs(endDate, "MM-DD-YYYY").format("YYYY-MM-DD") : null,
+        dateStart: startDate
+          ? dayjs(startDate, "MM-DD-YYYY").format("YYYY-MM-DD")
+          : null,
+        dateEnd: endDate
+          ? dayjs(endDate, "MM-DD-YYYY").format("YYYY-MM-DD")
+          : null,
         isActive: true,
         createdDate: new Date().toISOString().split("T")[0],
       },
@@ -114,7 +117,7 @@ export default function UpdateCard({ task, onClose }) {
 
   return (
     <>
-    {console.log("label prepare for def",label)}
+      {console.log("label prepare for def", label)}
       <AddTaskPopup
         container
         spacing={0.5}
@@ -247,7 +250,7 @@ export default function UpdateCard({ task, onClose }) {
             sx={{ width: "100%", padding: "0 5px" }}
           />
         </Grid>
-        <CheckList id={task.data.card.id}/>
+        <CheckList id={task.data.card.id} />
         <Grid item xs={11} sx={{ textAlign: "right" }}>
           <Button
             variant="outlined"

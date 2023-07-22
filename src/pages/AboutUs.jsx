@@ -1,6 +1,3 @@
-import React from "react";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
 import {
   Avatar,
   Button,
@@ -11,6 +8,9 @@ import {
   Grid,
   Typography,
 } from "@mui/material";
+import React from "react";
+import Footer from "../components/layout/Footer";
+import Header from "../components/layout/Header";
 
 const AuthorCard = (props) => {
   return (

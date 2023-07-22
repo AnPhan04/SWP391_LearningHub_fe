@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./Header.css";
-import Link from "../MUIComponent/Link";
-import ButtonLink from "../MUIComponent/ButtonLink";
+import React, { useEffect, useState } from "react";
 import A from "../../common/assets";
+import ButtonLink from "../MUIComponent/ButtonLink";
+import Link from "../MUIComponent/Link";
+import "./Header.css";
 
 async function logout() {
   localStorage.clear();

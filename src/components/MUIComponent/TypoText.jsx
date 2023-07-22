@@ -1,5 +1,5 @@
-import React from "react";
 import styled from "@emotion/styled";
+import React from "react";
 
 const TypoContent = styled.h3`
   font-family: inter, sans-serif;

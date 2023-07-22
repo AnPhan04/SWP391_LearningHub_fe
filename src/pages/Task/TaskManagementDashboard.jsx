@@ -1,9 +1,8 @@
 import React from "react";
-import "../Dashboard.css";
 import RecentlyVisited from "../../components/MUIComponent/RecentlyVisited";
 import TypoText from "../../components/MUIComponent/TypoText";
+import "../Dashboard.css";
 const TaskManagementDashBoard = () => {
-
   console.log(`
   __          __  _                            _                 
   \\ \\        / / | |                          | |                
@@ -22,10 +21,7 @@ const TaskManagementDashBoard = () => {
   return (
     <div>
       <div>
-        <TypoText 
-          variant="h1"
-          style={{ fontWeight: "bold", margin: "30px" }}
-        >
+        <TypoText variant="h1" style={{ fontWeight: "bold", margin: "30px" }}>
           YOUR NOTES
         </TypoText>
         <div className="dashboard-container-content notes-container">

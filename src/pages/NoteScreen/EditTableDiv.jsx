@@ -1,13 +1,12 @@
-import { useRef, useState, useEffect } from 'react';
-import Button from '@mui/material/Button'
-import Stack from '@mui/material/Stack'
-import Typography from '@mui/material/Typography';
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { useEffect, useRef, useState } from "react";
 
 function EditableDiv(props) {
-
   const [parameter, setParameter] = useState(props.param);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
 
   const [show, setShow] = useState(false);
   const editTitleRef = useRef(null);
@@ -20,7 +19,6 @@ function EditableDiv(props) {
 
   //Giải quyết sự kiến ấn vào nút cancel
   const handleCancelClick = (event) => {
-
     fetchData(parameter);
     setShow(false);
   };
@@ -28,17 +26,20 @@ function EditableDiv(props) {
   //Hàm gọi api,lấy dữ liệu của 1 note
   async function fetchData(parameter) {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/note?id=${parameter}`, {
-        method: "GET",
-        credentials: "include"
-      });
+      const response = await fetch(
+        `http://localhost:8080/api/v1/note?id=${parameter}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
+      );
       const data = await response.json();
       // console.log(data); // Xử lý dữ liệu API ở đây
       // console.log(data.data.title)
       editTitleRef.current.innerText = data.data.title;
       editContentRef.current.innerText = data.data.description;
     } catch (error) {
-      console.log('Lỗi:', error);
+      console.log("Lỗi:", error);
     }
   }
 
@@ -46,7 +47,7 @@ function EditableDiv(props) {
   const handleSaveClick = (event) => {
     const editedTitle = sanitizeInput(editTitleRef.current.innerText);
     const editedContent = sanitizeInput(editContentRef.current.innerText);
-    console.log('Edited title:', editedTitle);
+    console.log("Edited title:", editedTitle);
 
     const postData = {
       // Đối tượng bạn muốn truyền trong phần body
@@ -64,10 +65,10 @@ function EditableDiv(props) {
   //Hàm gọi api,cập nhật lại dữ liệu cả 1 note
   async function fetchSaveData(postData) {
     try {
-      const response = await fetch('http://localhost:8080/api/v1/note', {
-        method: 'PUT',
+      const response = await fetch("http://localhost:8080/api/v1/note", {
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         credentials: "include",
         body: JSON.stringify(postData),
@@ -75,14 +76,14 @@ function EditableDiv(props) {
       const data = await response.json();
       console.log(data); // Xử lý dữ liệu API ở đây
     } catch (error) {
-      console.log('Lỗi:', error);
+      console.log("Lỗi:", error);
     }
   }
 
   //hàm check dữ liệu đầu vào
   const sanitizeInput = (input) => {
     // Loại bỏ các thẻ HTML và ký tự đặc biệt không mong muốn
-    const sanitizedText = input.replace(/<[^>]+>/g, '');
+    const sanitizedText = input.replace(/<[^>]+>/g, "");
     return sanitizedText;
   };
 
@@ -94,37 +95,52 @@ function EditableDiv(props) {
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   });
 
   return (
-    <div
-      ref={divRef}
-      style={{ width: "100%" }}
-    >
+    <div ref={divRef} style={{ width: "100%" }}>
       <Typography
-        variant='h4' gutterBottom
+        variant="h4"
+        gutterBottom
         onClick={() => setShow(true)}
         contentEditable={true}
         ref={editTitleRef}
-        style={{ wordWrap: 'break-word', width: 500, padding: '5px', fontSize: 40, margin: 0, fontWeight: 'bold' }}
+        style={{
+          wordWrap: "break-word",
+          width: 500,
+          padding: "5px",
+          fontSize: 40,
+          margin: 0,
+          fontWeight: "bold",
+        }}
         dangerouslySetInnerHTML={{ __html: title }}
       />
-      <Typography gutterBottom
+      <Typography
+        gutterBottom
         onClick={() => setShow(true)}
         contentEditable={true}
         ref={editContentRef}
-        style={{ wordWrap: 'break-word', padding: '5px', fontSize: 20, color: '#8E8EAB' }}
+        style={{
+          wordWrap: "break-word",
+          padding: "5px",
+          fontSize: 20,
+          color: "#8E8EAB",
+        }}
         dangerouslySetInnerHTML={{ __html: content }}
       />
       {show && (
-        <Stack direction='row' spacing={1}>
-          <Button variant='contained' onClick={handleSaveClick}>Save</Button>
-          <Button variant='contained' onClick={handleCancelClick}>Cancel</Button>
+        <Stack direction="row" spacing={1}>
+          <Button variant="contained" onClick={handleSaveClick}>
+            Save
+          </Button>
+          <Button variant="contained" onClick={handleCancelClick}>
+            Cancel
+          </Button>
         </Stack>
       )}
     </div>

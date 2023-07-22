@@ -1,19 +1,19 @@
+import {
+  Button,
+  CardContent,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Grid,
+  TextField,
+} from "@mui/material";
+import Card from "@mui/material/Card";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "@mui/material/Card";
-import {
-  CardContent,
-  Grid,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  TextField,
-  DialogActions,
-  Button,
-} from "@mui/material";
-import TypoText from "./TypoText";
 import MenuList from "../MUIComponent/MenuList";
 import QuickAdd from "./QuickAdd";
+import TypoText from "./TypoText";
 
 const RecentlyVisited = () => {
   const Current = async () => {
@@ -107,15 +107,15 @@ const RecentlyVisited = () => {
       if (response.ok) {
         console.log(jsonData.message);
         setNotes((prevNotes) =>
-        prevNotes.map((note) => {
-          if (note.id === noteId) {
-            // return with a new title and desc
-            return { ...note, title, description };
-          } else {
-            return note;
-          }
-        })
-      );
+          prevNotes.map((note) => {
+            if (note.id === noteId) {
+              // return with a new title and desc
+              return { ...note, title, description };
+            } else {
+              return note;
+            }
+          })
+        );
       }
     } catch (error) {
       console.log(error);

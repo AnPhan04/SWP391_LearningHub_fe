@@ -1,11 +1,11 @@
+import { Grid } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import Flashcard from "./Flashcard";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import TypoText from "../TypoText";
+import Flashcard from "./Flashcard";
 import "./FlashcardSet.css";
 import ProgressBar from "./ProgressBar";
-import { Grid } from "@mui/material";
 import SettingMenu from "./SettingMenu";
-import { useNavigate, useSearchParams } from "react-router-dom";
 
 const FlashcardSet = ({ flashcards, title }) => {
   const [counter, setCounter] = useState(1);

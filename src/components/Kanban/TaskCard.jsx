@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Draggable } from "react-beautiful-dnd";
 import styled from "@emotion/styled";
 import DeleteIcon from "@mui/icons-material/Delete";
-import UpdateCard from "./UpdateCard";
+import React from "react";
+import { Draggable } from "react-beautiful-dnd";
 
 const Tag = styled.span`
   background-color: #10957d;

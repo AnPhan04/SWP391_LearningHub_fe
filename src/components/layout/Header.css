@@ -63,14 +63,15 @@
     background-color: #fff;
     color: #3c1683;
     font-weight: 400;
-    font-size:medium;
+    font-size: medium;
     border: none;
     margin-bottom: 5px;
     padding: 5px;
     border-radius: 4px;
-    
+
 }
-.profile-dropdown button:hover{
+
+.profile-dropdown button:hover {
     background-color: #3c1683;
     color: #fff;
 }

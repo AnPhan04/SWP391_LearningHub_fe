@@ -1,18 +1,18 @@
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/MUIComponent/Button/Button";
 import TextField from "../../components/MUIComponent/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
-import Alert from '@mui/material/Alert';
 
 const ChangePassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [oldPassword,setOldPassword] = useState();
-  const [newPassword,setnewPassword] = useState();
-  const [reNewPassword,setReNewPassword] = useState();
+  const [oldPassword, setOldPassword] = useState();
+  const [newPassword, setnewPassword] = useState();
+  const [reNewPassword, setReNewPassword] = useState();
   const navigate = useNavigate();
 
   const handleCancel = (event) => {
@@ -20,20 +20,20 @@ const ChangePassword = () => {
     navigate(-1);
   };
 
-  const handleOldp =(e)=>{
+  const handleOldp = (e) => {
     setOldPassword(e.target.value);
-  }
-  const handleNewp =(e)=>{
+  };
+  const handleNewp = (e) => {
     setnewPassword(e.target.value);
-  }
-  const handleRep =(e)=>{
+  };
+  const handleRep = (e) => {
     setReNewPassword(e.target.value);
-  }
+  };
   const Data = {
     oldpass: oldPassword,
     verpass: reNewPassword,
     newpass: newPassword,
-  }
+  };
   const handleOnChange = async () => {
     try {
       console.log(JSON.stringify(Data));
@@ -45,13 +45,13 @@ const ChangePassword = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(Data)
+          body: JSON.stringify(Data),
         }
       );
       if (response.ok) {
         const res = await response.json();
         setErrorMessage("");
-        setSuccessMessage(res.message)
+        setSuccessMessage(res.message);
       } else {
         const errorData = await response.json();
         setErrorMessage(errorData.message);
@@ -79,10 +79,7 @@ const ChangePassword = () => {
       <TypoText variant="h5">
         Change your current password to a more secure one
       </TypoText>
-      <Box
-        noValidate
-        sx={{ mt: 1, margin: "0 22px" }}
-      >
+      <Box noValidate sx={{ mt: 1, margin: "0 22px" }}>
         <TextField
           required
           fullWidth
@@ -106,14 +103,20 @@ const ChangePassword = () => {
           onChange={handleRep}
         />
         {errorMessage && (
-          <Alert severity="warning" style={{ marginBottom: "1em" }}>{errorMessage}</Alert>
+          <Alert severity="warning" style={{ marginBottom: "1em" }}>
+            {errorMessage}
+          </Alert>
         )}
         {successMessage && (
-          <Alert severity="success" style={{ marginBottom: "1em" }}>{successMessage}</Alert>
+          <Alert severity="success" style={{ marginBottom: "1em" }}>
+            {successMessage}
+          </Alert>
         )}
         <Grid container spacing={2} justifyContent="right">
           <Grid item xs={6} textAlign="right">
-            <Button variant="cancel" onClick={handleCancel}>Cancel</Button>
+            <Button variant="cancel" onClick={handleCancel}>
+              Cancel
+            </Button>
           </Grid>
           <Grid item xs={6} textAlign="left">
             <Button onClick={handleOnChange}>Change</Button>
