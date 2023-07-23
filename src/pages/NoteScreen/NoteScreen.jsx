@@ -29,7 +29,7 @@ function NoteScreen() {
   const [isHovered, setIsHovered] = useState(false);
   const [id, setId] = useSearchParams();
   const noteId = id.get("id");
-  const [isAuthen, setIsAuthen] = useState("no");
+  const [isAuthen, setIsAuthen] = useState("");
   const [countCardKey, setCountCardKey] = useState(0);
   const [isUpdating, setIsUpdating] = useState(false);
   const kanbanRef = useRef(null);
