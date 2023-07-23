@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import styled from "styled-components";
 import TypoText from "../../components/MUIComponent/TypoText";
-import Alert from "@mui/material/Alert";
+import Alert from '@mui/material/Alert';
 export const Button = styled.button`
   background-color: white;
   color: white;

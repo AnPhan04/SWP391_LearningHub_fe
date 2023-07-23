@@ -1,12 +1,12 @@
-import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import { Dialog } from "@mui/material";
 import Box from "@mui/material/Box";
-import Fab from "@mui/material/Fab";
 import TextField from "@mui/material/TextField";
 import React, { useState } from "react";
 import styled from "styled-components";
 import TypoText from "../../components/MUIComponent/TypoText";
+import Fab from '@mui/material/Fab';
+import AddIcon from '@mui/icons-material/Add';
 export const Button = styled.button`
   background-color: white;
   color: white;
@@ -21,20 +21,20 @@ export const Button = styled.button`
   border: none;
 `;
 function AddCoreLabel() {
-  const [show, setShow] = useState(false);
-  const [name, setName] = useState("");
-  const [color, setColor] = useState("");
+    const [show, setShow] = useState(false);
+    const [name, setName] = useState("");
+    const [color, setColor] = useState("");
 
-  const handleOnClick = () => {
-    const Data = {
-      // Đối tượng bạn muốn truyền trong phần body
-      name: name,
-      color: color,
+    const handleOnClick = () => {
+        const Data = {
+            // Đối tượng bạn muốn truyền trong phần body
+            name: name,
+            color: color,
+        };
+        fetchSaveData(Data);
+        setShow(false);
+        window.location.reload(false);
     };
-    fetchSaveData(Data);
-    setShow(false);
-    window.location.reload(false);
-  };
 
   async function fetchSaveData(Data) {
     try {

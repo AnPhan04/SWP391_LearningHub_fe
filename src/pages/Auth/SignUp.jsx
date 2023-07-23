@@ -1,13 +1,13 @@
-import { Alert } from "@mui/material";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import A from "../../common/assets";
 import Button from "../../components/MUIComponent/Button/Button";
-import Link from "../../components/MUIComponent/Link";
 import TextField from "../../components/MUIComponent/TextField";
+import Link from "../../components/MUIComponent/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
+import A from "../../common/assets";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
 import GoBack from "../../components/layout/GoBack";
 
 const SignUp = () => {
@@ -28,10 +28,9 @@ const SignUp = () => {
       signupDate: currentDate,
     };
     if (!data.get("password").match(regx)) {
-      setErrorMessage(
-        "password is not in right format. Password must contain number, letter (both upper and lower) and has at least 8 character. No space character are allowed"
-      );
-    } else {
+      setErrorMessage("password is not in right format. Password must contain number, letter (both upper and lower) and has at least 8 character. No space character are allowed")
+    }
+    else {
       try {
         const response = await fetch(
           "http://127.0.0.1:8080/api/v1/user/register",
@@ -70,7 +69,7 @@ const SignUp = () => {
         padding: "35px",
       }}
     >
-      <GoBack url="/" />
+      <GoBack url="/"/>
       <TypoText variant="h1" style={{ margin: "0" }}>
         Welcome to Learning Hub❤️
       </TypoText>
@@ -118,7 +117,10 @@ const SignUp = () => {
         style={{ marginTop: 0, marginBottom: 0 }}
       />
       <Button style={{ width: "100%" }}>Sign Up</Button>
-      {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+      {errorMessage && (
+        <Alert severity="error">
+          {errorMessage}</Alert>
+      )}
       <Grid container justifyContent="center">
         <Grid item>
           <Grid

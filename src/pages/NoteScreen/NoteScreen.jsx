@@ -1,28 +1,28 @@
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import InfoIcon from "@mui/icons-material/Info";
-import { Alert, Stack } from "@mui/material";
-import Box from "@mui/material/Box";
+import { useRef, useState, useEffect } from "react";
+import Kanban from "../../components/Kanban/Kanban";
+import EditableDiv from "./EditTableDiv";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { styled } from "styled-components";
-import Kanban from "../../components/Kanban/Kanban";
-import LabelsList from "../../components/MUIComponent/LabelList";
-import Footer from "../../components/layout/Footer";
-import Header from "../../components/layout/Header";
+import Box from "@mui/material/Box";
+import InfoIcon from "@mui/icons-material/Info";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CountCard from "./CountCard";
-import EditableDiv from "./EditTableDiv";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import LabelsList from "../../components/MUIComponent/LabelList";
+import { styled } from "styled-components";
+import { Alert, Stack } from "@mui/material";
+import Header from "../../components/layout/Header"
+import Footer from "../../components/layout/Footer"
 
 const ErrBox = styled.div`
-  width: 50%;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  top: 10%;
-  right: 0;
-  text-align: center;
+width:50%;
+position: absolute;
+margin-left: auto;
+margin-right: auto;
+left: 0;
+top: 10%;
+right: 0;
+text-align: center;
 `;
 
 function NoteScreen() {
@@ -36,7 +36,9 @@ function NoteScreen() {
   const updateTimeoutRef = useRef(null); // Thêm một ref để lưu trữ timeout ID
   const [role, setRole] = useState(localStorage.getItem("role"));
 
+
   const checkAuthen = () => {
+
     fetch(`http://localhost:8080/api/v1/note?id=${Number(noteId)}`, {
       credentials: "include",
       method: "GET",
@@ -50,7 +52,9 @@ function NoteScreen() {
         }
       })
       .catch((err) => console.log(err));
+
   };
+
 
   const handleOnChange1 = (newData) => {
     const countKey = `${newData}`;
@@ -74,7 +78,7 @@ function NoteScreen() {
         if (updateTimeoutRef.current) {
           clearTimeout(updateTimeoutRef.current); // Hủy bỏ timeout cũ nếu có
         }
-
+        
         updateTimeoutRef.current = setTimeout(() => {
           setCountCardKey((prev) => prev + 1);
           setIsUpdating(false);
@@ -92,6 +96,7 @@ function NoteScreen() {
 
     return () => {
       if (kanbanElement) {
+        
         observer.disconnect();
       }
 
@@ -100,7 +105,7 @@ function NoteScreen() {
       }
     };
   }, [isAuthen]);
-  useEffect(checkAuthen, []);
+  useEffect(checkAuthen,[]);
   const navigate = useNavigate();
   const handleBack = () => {
     if (role === "ADMIN") {
@@ -108,18 +113,21 @@ function NoteScreen() {
     } else {
       navigate("/dashboard");
     }
-  };
 
-  if (isAuthen === "ok") {
+  };
+ 
+
+  if (isAuthen==="ok") {
     return (
       <>
-        <Header />
+      <Header />
         <div>
           <Box
             sx={{
               fontWeight: "bold",
               marginLeft: 3,
-            }}
+            }
+            }
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
@@ -134,25 +142,27 @@ function NoteScreen() {
                 },
               }}
             />
-            {isHovered && (
-              <Typography
-                variant="subtitle1"
-                sx={{
-                  fontWeight: "bold",
-                  color: "white",
-                  width: "75px",
-                  height: "30px",
-                  backgroundColor: "#767676",
-                  p: 0.4,
-                  borderRadius: "7px",
-                  position: "fixed",
-                  top: "35px",
-                  left: "10px",
-                }}
-              >
-                Go back
-              </Typography>
-            )}
+            {
+              isHovered && (
+                <Typography
+                  variant="subtitle1"
+                  sx={{
+                    fontWeight: "bold",
+                    color: "white",
+                    width: "75px",
+                    height: "30px",
+                    backgroundColor: "#767676",
+                    p: 0.4,
+                    borderRadius: "7px",
+                    position: "fixed",
+                    top: "35px",
+                    left: "10px",
+                  }}
+                >
+                  Go back
+                </Typography>
+              )
+            }
           </Box>
           <Container fixed marginTop={15} style={{ paddingTop: 30 }}>
             <EditableDiv param={noteId} />
@@ -173,9 +183,9 @@ function NoteScreen() {
             >
               <InfoIcon color="primary" sx={{ marginRight: 1 }} />
               <Typography variant="subtitle1">
-                A single page to help you stay on top of all the moving parts.
-                This note is currently includes task tracker board and label
-                list for you so you customize it on your own!
+                A single page to help you stay on top of all the moving parts. This
+                note is currently includes task tracker board and label list for you
+                so you customize it on your own!
               </Typography>
             </Box>
             <hr style={{ backgroundColor: "#E0E0E0", height: "2px" }} />
@@ -202,8 +212,8 @@ function NoteScreen() {
               <InfoIcon color="primary" sx={{ marginRight: 1 }} />
               <Typography variant="subtitle1">
                 Click on any card to view and update details. Click{" "}
-                <strong>+</strong> to add tasks. Drag and drop cards to move
-                tasks through the stages.
+                <strong>+</strong> to add tasks. Drag and drop cards to move tasks
+                through the stages.
               </Typography>
             </Box>
           </Container>
@@ -213,18 +223,16 @@ function NoteScreen() {
           <Container fixed>
             <LabelsList boardID={noteId} onchangedata1={handleOnChange1} />
           </Container>
-        </div>
+        </div >
         <Footer />
       </>
-    );
-  } else if (isAuthen === "no") {
+    )
+  } else if(isAuthen==="no"){
     return (
       <>
         <ErrBox>
           <Stack spacing={1} style={{ display: "inline-block" }}>
-            <Alert severity="error">
-              You do not have permission to access this note!
-            </Alert>
+            <Alert severity="error">You do not have permission to access this note!</Alert>
           </Stack>
         </ErrBox>
       </>

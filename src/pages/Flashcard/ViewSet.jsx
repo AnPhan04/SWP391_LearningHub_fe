@@ -46,7 +46,47 @@ const ViewSet = () => {
   return (
     <div>
       <Header />
+
       <div className="card-flip">
+        {/* <Box
+          sx={{
+            fontWeight: "bold",
+            marginLeft: 3,
+          }}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
+          <ArrowBackIcon
+            onClick={handleBack}
+            fontSize="large"
+            sx={{
+              "&:hover": {
+                cursor: "pointer",
+                backgroundColor: "#F2F2F2",
+                borderRadius: "7px",
+              },
+            }}
+          />
+          {isHovered && (
+            <Typography
+              variant="subtitle1"
+              sx={{
+                fontWeight: "bold",
+                color: "white",
+                width: "75px",
+                height: "30px",
+                backgroundColor: "#767676",
+                p: 0.4,
+                borderRadius: "7px",
+                position: "fixed",
+                top: "35px",
+                left: "10px",
+              }}
+            >
+              Go back
+            </Typography>
+          )}
+        </Box> */}
         <FlashcardSet flashcards={flashcards} title={flashcardSetName} />
       </div>
     </div>

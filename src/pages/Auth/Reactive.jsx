@@ -1,18 +1,21 @@
-import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { React, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import A from "../../common/assets";
 import Link from "../../components/MUIComponent/Link";
-import TextField from "../../components/MUIComponent/TextField";
+import A from "../../common/assets";
+import Alert from '@mui/material/Alert';
 import TypoText from "../../components/MUIComponent/TypoText";
+import TextField from "../../components/MUIComponent/TextField";
+import Button from '@mui/material/Button';
+import { Style } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 const Reactive = () => {
-  const [pass, setPass] = useState("");
-  const [err, setErr] = useState("");
-  const [params, setParams] = useSearchParams();
-  const nav = useNavigate();
-  const email = params.get("email");
+    const [pass, setPass] = useState("");
+    const [err, setErr] = useState("");
+    const [params, setParams] = useSearchParams();
+    const [role, setRole] = useState("");
+    const nav = useNavigate();
+    const email = params.get("email");
 
   const handleOnChange = (e) => {
     setPass(e.target.value);
@@ -52,62 +55,58 @@ const Reactive = () => {
     }
   };
 
-  const onSummitHandle = async () => {
-    try {
-      await reactiveUser(email, pass);
-    } catch (error) {
-      console.log(error);
+    const onSummitHandle = async () => {
+        try {
+            await reactiveUser(email, pass);
+        } catch (error) {
+            console.log(error);
+        }
     }
-  };
-  return (
-    <>
-      <Box
-        sx={{
-          textAlign: "center",
-          width: "30%",
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          background: "#eaeaea",
-          padding: "35px",
-        }}
-      >
-        <Link href="/" color={A.colors.black}>
-          <i class="fa-solid fa-arrow-left fa-xl"></i>
-        </Link>
-        <TypoText variant="h1">Welcome back 😍 </TypoText>
-        <TypoText variant="h5">
-          Please re-enter your password to re-active the account{" "}
-        </TypoText>
-        <TextField
-          fullWidth
-          required
-          name="password"
-          label="Password"
-          type="password"
-          id="password"
-          onChange={handleOnChange}
-        />
-        {err !== "" && (
-          <Alert severity="error" style={{ width: "100%" }}>
-            {err}
-          </Alert>
-        )}
-        <Button
-          size="large"
-          color="success"
-          style={{ marginTop: "1rem" }}
-          variant="contained"
-          onClick={() => {
-            pass !== "" && onSummitHandle();
-          }}
-        >
-          Re-activate my account
-        </Button>
-      </Box>
-    </>
-  );
+    return (
+        <>
+            <Box
+                sx={{
+                    textAlign: "center",
+                    width: "30%",
+                    position: "absolute",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    background: "#eaeaea",
+                    padding: "35px",
+                }}
+            >
+                <Link href="/" color={A.colors.black}>
+                    <i class="fa-solid fa-arrow-left fa-xl"></i>
+                </Link>
+                <TypoText variant="h1">Welcome back 😍 </TypoText>
+                <TypoText variant="h5">Please re-enter your password to re-active the account </TypoText>
+                <TextField
+                    fullWidth
+                    required
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    onChange={handleOnChange}
+                />
+                {err !== "" &&
+                    <Alert severity="error" style={{ width: "100%" }}>{err}</Alert>
+                }
+                <Button
+                    size="large"
+                    color="success"
+                    style={{ marginTop: "1rem" }}
+                    variant="contained"
+                    onClick={() => {
+                        pass !== "" && onSummitHandle()
+                    }}>
+                    Re-activate my account
+                </Button>
+
+            </Box>
+        </>
+    );
 };
 
 export default Reactive;

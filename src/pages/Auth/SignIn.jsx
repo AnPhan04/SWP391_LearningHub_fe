@@ -1,18 +1,21 @@
-import { Alert } from "@mui/material";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import React, { useRef, useState } from "react";
-import { Link as DomLink, useNavigate } from "react-router-dom";
-import A from "../../common/assets";
+import React, { useState, useRef } from "react";
+import { Route, useNavigate } from "react-router-dom";
 import Button from "../../components/MUIComponent/Button/Button";
-import Link from "../../components/MUIComponent/Link";
 import TextField from "../../components/MUIComponent/TextField";
+import Link from "../../components/MUIComponent/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
+import A from "../../common/assets";
+import { Link as DomLink } from "react-router-dom";
+import UserDashBoard from "../User/UserDashboard";
+import { Alert } from "@mui/material";
 
 const CustomLink = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
   return <DomLink to={href} ref={ref} {...other} />;
 });
+
 
 const SignIn = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -44,7 +47,8 @@ const SignIn = () => {
         setRole(responseData.data[0].roleId);
         setErrorMessage("");
         setIsAuthenticated(true);
-      } else {
+      }
+      else {
         const errorData = await response.json();
         setErrorMessage(errorData.data);
         setErrStat(response.status);
@@ -58,14 +62,18 @@ const SignIn = () => {
   if (isAuthenticated) {
     if (role === "ADMIN") {
       localStorage.setItem("role", role);
-      return navigate("/admin");
+      return (navigate("/admin"));
     } else {
-      return navigate("/dashboard");
+      return (
+        navigate("/dashboard")
+      );
     }
+
   }
 
   return (
     <>
+
       <Box
         component="form"
         onSubmit={handleSubmit}
@@ -111,15 +119,10 @@ const SignIn = () => {
 
         <Button style={{ width: "100%" }}>Sign In</Button>
         {errorMessage && (
-          <Alert severity="error" style={{ marginTop: "1rem" }}>
-            {errorMessage}
-            {errStat === 401 ? (
-              <Link href={"/reactive?email=" + email}>
-                Want to reactive account?
-              </Link>
-            ) : (
-              ""
-            )}
+          <Alert severity="error" style={{ "marginTop": "1rem" }}>{errorMessage}
+            {
+              errStat === 401 ? (<Link href={"/reactive?email="+email}>Want to reactive account?</Link>) : ""
+            }
           </Alert>
         )}
 
@@ -132,10 +135,7 @@ const SignIn = () => {
               justifyContent="center"
             >
               <Grid item>
-                <TypoText
-                  variant="h5"
-                  style={{ textAlign: "center", margin: 0 }}
-                >
+                <TypoText variant="h5" style={{ textAlign: "center", margin: 0 }}>
                   Don't have an account?
                 </TypoText>
               </Grid>

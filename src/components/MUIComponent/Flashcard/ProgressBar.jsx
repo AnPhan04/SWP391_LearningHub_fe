@@ -1,6 +1,6 @@
-import Box from "@mui/material/Box";
-import LinearProgress from "@mui/material/LinearProgress";
 import React, { useEffect, useState } from "react";
+import LinearProgress from "@mui/material/LinearProgress";
+import Box from "@mui/material/Box";
 
 const ProgressBar = ({ flashcards, counter }) => {
   const [progress, setProgress] = useState(0);

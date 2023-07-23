@@ -1,14 +1,14 @@
+import React, { useEffect, useState, useRef } from "react";
 import Button from "@mui/material/Button";
 import ClickAwayListener from "@mui/material/ClickAwayListener";
 import Grow from "@mui/material/Grow";
-import MenuItem from "@mui/material/MenuItem";
-import MenuList from "@mui/material/MenuList";
 import Paper from "@mui/material/Paper";
 import Popper from "@mui/material/Popper";
+import MenuItem from "@mui/material/MenuItem";
+import MenuList from "@mui/material/MenuList";
 import Stack from "@mui/material/Stack";
-import React, { useEffect, useRef, useState } from "react";
 
-export default function MenuListComposition({ onEdit, onDelete }) {
+export default function MenuListComposition({onEdit, onDelete}) {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
 
@@ -80,6 +80,7 @@ export default function MenuListComposition({ onEdit, onDelete }) {
                     aria-labelledby="composition-button"
                     onKeyDown={handleListKeyDown}
                   >
+                    
                     <MenuItem onClick={onDelete}>Delete</MenuItem>
                   </MenuList>
                 </ClickAwayListener>

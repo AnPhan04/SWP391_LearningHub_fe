@@ -24,8 +24,7 @@
     overflow: hidden;
 }
 
-.card-front,
-.card-back {
+.card-front, .card-back {
     background-color: white;
     color: black;
     display: flex;
@@ -34,5 +33,10 @@
 }
 
 .card-back {
+    /* background-color: #e4ccff;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center; */
     transform: rotateY(180deg);
 }

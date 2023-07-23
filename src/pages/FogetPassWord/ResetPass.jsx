@@ -1,11 +1,11 @@
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import Button from "../../components/MUIComponent/Button/Button";
 import TextField from "../../components/MUIComponent/TextField";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
+import Alert from '@mui/material/Alert';
 
 const ResetPass = () => {
   const location = useLocation();
@@ -23,39 +23,35 @@ const ResetPass = () => {
     navigate(-1);
   };
 
+
   const handleNewp = (e) => {
     setnewPassword(e.target.value);
-  };
+  }
   const handleRep = (e) => {
     setReNewPassword(e.target.value);
-  };
+  }
   const handleOnChange = () => {
     if (newPassword === reNewPassword) {
       if (newPassword === "" || reNewPassword === "") {
-        setReNewPassword("");
-        setnewPassword("");
-        setErrorMessage(
-          "Verification password or new password are not empty.Please try again!"
-        );
+        setReNewPassword('');
+        setnewPassword('');
+        setErrorMessage("Verification password or new password are not empty.Please try again!")
       } else if (!newPassword.match(regx)) {
-        setErrorMessage(
-          "password is not in right format. Password must contain number, letter (both upper and lower) and has at least 8 character. No space character are allowed"
-        );
-      } else {
+        setErrorMessage("password is not in right format. Password must contain number, letter (both upper and lower) and has at least 8 character. No space character are allowed")
+      }
+      else {
         fetchSaveData();
       }
     } else {
-      setReNewPassword("");
-      setnewPassword("");
-      setErrorMessage(
-        "Verification password and new password are not the same.Please try again!"
-      );
+      setReNewPassword('');
+      setnewPassword('');
+      setErrorMessage("Verification password and new password are not the same.Please try again!")
     }
   };
   const Data = {
     email: data,
-    password: newPassword,
-  };
+    password: newPassword
+  }
 
   async function fetchSaveData() {
     try {
@@ -67,13 +63,13 @@ const ResetPass = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(Data),
+          body: JSON.stringify(Data)
         }
       );
       if (response.ok) {
         const res = await response.json();
         setErrorMessage("");
-        setSuccessMessage(res.message);
+        setSuccessMessage(res.message)
         setCorect(true);
       } else {
         const errorData = await response.json();
@@ -101,7 +97,11 @@ const ResetPass = () => {
       <TypoText variant="h5">
         Change your current password to a more secure one
       </TypoText>
-      <Box noValidate sx={{ mt: 1, margin: "0 22px" }}>
+      <Box
+        noValidate
+        sx={{ mt: 1, margin: "0 22px" }}
+      >
+
         <TextField
           required
           fullWidth
@@ -120,42 +120,23 @@ const ResetPass = () => {
           onChange={handleRep}
         />
         {errorMessage && (
-          <Alert severity="warning" style={{ marginBottom: "1em" }}>
-            {errorMessage}
-          </Alert>
+          <Alert severity="warning" style={{ marginBottom: "1em" }}>{errorMessage}</Alert>
         )}
         {successMessage && (
-          <Alert severity="success" style={{ marginBottom: "1em" }}>
-            {successMessage}
-          </Alert>
+          <Alert severity="success" style={{ marginBottom: "1em" }}>{successMessage}</Alert>
         )}
-        <Grid
-          container
-          spacing={2}
-          justifyContent="right"
-          sx={{ justifyContent: "center" }}
-        >
+        <Grid container spacing={2} justifyContent="right" sx={{ justifyContent: 'center' }}>
           <Grid item xs={6} textAlign="right">
-            <Button variant="cancel" onClick={handleCancel}>
-              Cancel
-            </Button>
+            <Button variant="cancel" onClick={handleCancel}>Cancel</Button>
           </Grid>
           <Grid item xs={6} textAlign="left">
             <Button onClick={handleOnChange}>Change</Button>
           </Grid>
-          {correct && (
-            <TypoText variant="h5" style={{ marginTop: "10px" }}>
-              Please{" "}
-              <Link
-                to={{
-                  pathname: "/login",
-                }}
-              >
-                Click here
-              </Link>{" "}
-              to log in
-            </TypoText>
-          )}
+          {correct && <TypoText variant="h5" style={{ marginTop: '10px' }}>
+            Please <Link to={{
+              pathname: '/login'
+            }}>Click here</Link>  to log in
+          </TypoText>}
         </Grid>
       </Box>
     </div>

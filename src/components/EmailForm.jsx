@@ -1,30 +1,24 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  Grid,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { Alert, CircularProgress } from "@mui/material";
-import { Container } from "@mui/system";
-import React, { useState } from "react";
-import Footer from "./layout/Footer";
-import Header from "./layout/Header";
+import React, { useState } from 'react';
+import { Grid, TextField, Button, Card, CardContent, Typography } from '@material-ui/core';
+import Header from './layout/Header';
+import Footer from './layout/Footer';
+import { Container } from '@mui/system';
+import { Alert, CircularProgress } from '@mui/material';
 const loadingStyle = {
-  margin: "10px auto",
-  display: "flex",
+  "margin": "10px auto",
+  "display": "flex",
   "justify-content": "center",
-};
+}
 
 const EmailForm = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [message, setMessage] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,56 +28,45 @@ const EmailForm = () => {
       name: `${firstName} ${lastName}`,
       email: email,
       phone: phone,
-      mess: message,
+      mess: message
     };
 
-    fetch("http://localhost:8080/api/v1/user/contact", {
-      method: "POST",
+    fetch('http://localhost:8080/api/v1/user/contact', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     })
       .then((response) => {
         if (response.ok) {
-          setErrorMessage("Email sent successfully");
+          setErrorMessage('Email sent successfully');
         } else {
-          setErrorMessage("Failed to send email");
+          setErrorMessage('Failed to send email');
         }
       })
       .catch((error) => {
-        setErrorMessage("Error:", error);
-      })
-      .finally(() => setIsLoading(false));
+        setErrorMessage('Error:', error);
+      }).finally(()=>setIsLoading(false))
   };
 
   return (
     <div className="App">
       <Header />
-      <Container
-        sx={{
-          margin: "3rem auto",
-        }}
-      >
+      <Container sx={{
+        margin: "3rem auto"
+      }}>
         <Typography gutterBottom variant="h3" align="center">
           Learning-Hub
         </Typography>
         <Grid>
-          <Card
-            style={{ maxWidth: 450, padding: "20px 5px", margin: "0 auto" }}
-          >
+          <Card style={{ maxWidth: 450, padding: '20px 5px', margin: '0 auto' }}>
             <CardContent>
               <Typography gutterBottom variant="h5">
                 Contact Us
               </Typography>
-              <Typography
-                variant="body2"
-                color="textSecondary"
-                component="p"
-                gutterBottom
-              >
-                Fill up the form and our team will get back to you within 24
-                hours.
+              <Typography variant="body2" color="textSecondary" component="p" gutterBottom>
+                Fill up the form and our team will get back to you within 24 hours.
               </Typography>
               <form onSubmit={handleSubmit}>
                 <Grid container spacing={1}>
@@ -147,21 +130,11 @@ const EmailForm = () => {
                     />
                   </Grid>
                   <Grid item xs={12}>
-                    {!isLoading && (
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                      >
+                    {!isLoading &&
+                      <Button type="submit" variant="contained" color="primary" fullWidth>
                         Submit
-                      </Button>
-                    )}
-                    {isLoading && (
-                      <div style={loadingStyle}>
-                        <CircularProgress />
-                      </div>
-                    )}
+                      </Button>}
+                    {isLoading && <div style={loadingStyle}><CircularProgress /></div>}
                     {errorMessage && (
                       <Alert severity="info">{errorMessage}</Alert>
                     )}

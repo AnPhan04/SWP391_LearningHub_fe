@@ -1,59 +1,62 @@
-import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import { React, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import TextField from "../../components/MUIComponent/TextField";
+import Link from "../../components/MUIComponent/Link";
+import A from "../../common/assets";
+import Alert from '@mui/material/Alert';
 import TypoText from "../../components/MUIComponent/TypoText";
+import TextField from "../../components/MUIComponent/TextField";
+import Button from '@mui/material/Button';
+import { Style } from "@mui/icons-material";
+import { useNavigate } from "react-router-dom";
 import GoBack from "../../components/layout/GoBack";
 const Deactive = () => {
-  const [pass, setPass] = useState("");
-  const [err, setErr] = useState("");
-  const nav = useNavigate();
-  const handleOnChange = (e) => {
-    setPass(e.target.value);
-  };
-  async function logout() {
-    localStorage.clear();
-    await fetch("http://localhost:8080/api/v1/user/logout", {
-      method: "POST",
-      credentials: "include",
-    })
-      .then((response) => {
-        if (response.ok) {
-          return <></>;
-        }
-      })
-      .catch((err) => console.log(err));
-  }
-  const deactivateUser = async (email, pass) => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/v1/user/?email=${email}&password=${pass}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
-      const json = await response.json();
-      if (response.status === 500) {
-        setErr(json.data);
-      }
-    } catch (error) {
-      console.log(error);
+    const [pass, setPass] = useState("");
+    const [err, setErr] = useState("");
+    const [role, setRole] = useState("");
+    const nav = useNavigate();
+    const handleOnChange = (e) => {
+        setPass(e.target.value);
     }
-  };
-
-  const onSummitHandle = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/v1/user/current",
-        {
-          method: "GET",
+    async function logout() {
+        localStorage.clear();
+        await fetch("http://localhost:8080/api/v1/user/logout", {
+          method: "POST",
           credentials: "include",
+        }).then(response => {
+          if (response.ok) {
+            return (<></>)
+          }
+        }).catch(err => console.log(err));
+      }
+    const deactivateUser = async (email,pass) =>{
+        try {
+            const response = await fetch(
+                `http://localhost:8080/api/v1/user/?email=${email}&password=${pass}`,
+                {
+                    method: "DELETE",
+                    credentials:"include"
+                }
+            );
+            const json = await response.json();
+            if(response.status === 500){
+                setErr(json.data);
+            }
+            console.log(json);
+        } catch (error) {
+            console.log(error);
         }
-      );
-      const json = await response.json();
+    }
+
+    const onSummitHandle = async () => {
+        try {
+            const response = await fetch(
+                "http://localhost:8080/api/v1/user/current",
+                {
+                    method: "GET",
+                    credentials: "include",
+                }
+            );
+            const json = await response.json();
 
       await deactivateUser(json.email, pass);
       await logout();

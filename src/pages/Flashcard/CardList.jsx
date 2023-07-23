@@ -1,4 +1,5 @@
-import { DeleteOutline } from "@mui/icons-material";
+import React, { useState } from "react";
+import TypoText from "../../components/MUIComponent/TypoText";
 import {
   Box,
   FormControl,
@@ -9,8 +10,7 @@ import {
   Paper,
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import React from "react";
-import TypoText from "../../components/MUIComponent/TypoText";
+import { DeleteOutline, Edit } from "@mui/icons-material";
 import "./CardList.css"; // Import the CSS file for styling
 const Item = styled(Paper)(() => ({
   textAlign: "left",

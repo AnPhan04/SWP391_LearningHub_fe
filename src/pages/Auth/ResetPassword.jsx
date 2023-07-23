@@ -1,26 +1,29 @@
-import { CircularProgress } from "@mui/material";
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import A from "../../common/assets";
 import Button from "../../components/MUIComponent/Button/Button";
-import Link from "../../components/MUIComponent/Link";
 import TextField from "../../components/MUIComponent/TextField";
+import Link from "../../components/MUIComponent/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
+import A from "../../common/assets";
+import { CircularProgress } from "@mui/material";
+import Alert from '@mui/material/Alert';
+import { useNavigate } from "react-router-dom";
+import { red } from "@mui/material/colors";
 
 const loadingStyle = {
-  margin: "10px auto",
-  display: "flex",
+  "margin": "10px auto",
+  "display": "flex",
   "justify-content": "center",
-};
+}
 
 const ResetPassword = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
+
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -99,17 +102,11 @@ const ResetPassword = () => {
         name="email"
         style={{ marginBottom: "1em" }}
       />
-      {!isLoading && (
-        <Button onClick={handleSubmit} style={{ width: "100%" }}>
-          Reset Password
-        </Button>
+      {!isLoading && <Button onClick={handleSubmit} style={{ width: "100%" }}>Reset Password</Button>}
+      {isLoading && <div style={loadingStyle}><CircularProgress /></div>}
+      {errorMessage && (
+        <Alert severity="info">{errorMessage}</Alert>
       )}
-      {isLoading && (
-        <div style={loadingStyle}>
-          <CircularProgress />
-        </div>
-      )}
-      {errorMessage && <Alert severity="info">{errorMessage}</Alert>}
       <Grid container justifyContent="center">
         <Grid item>
           <Grid

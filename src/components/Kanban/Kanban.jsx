@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { Dialog } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
 import AddColumn from "./AddColumn";
@@ -7,6 +6,7 @@ import AddTask from "./AddTask";
 import ArchiveColumn from "./ArchiveColumn";
 import TaskCard from "./TaskCard";
 import UpdateCard from "./UpdateCard";
+import { Dialog } from "@mui/material";
 const Container = styled.div`
   display: flex;
   // justify-content: space-around;
@@ -60,6 +60,7 @@ const Kanban = ({ countCardKey, id }) => {
   let [columns, setColumns] = useState(init);
   const [selectedTask, setSelectedTask] = useState(null);
 
+
   useEffect(() => {
     const getData = async (id) => {
       fetch(`http://localhost:8080/api/v1/note/kanban/data?boardId=${id}`, {
@@ -73,7 +74,7 @@ const Kanban = ({ countCardKey, id }) => {
         .catch((err) => console.log(err));
     };
     getData(id);
-  }, [countCardKey, id]);
+  }, [countCardKey,id]);
 
   //save data to database every time the board from front end changed
   useEffect(() => {
@@ -89,7 +90,7 @@ const Kanban = ({ countCardKey, id }) => {
         .catch((err) => console.log(err));
     }
     saveData(id);
-  }, [columns, id]); // will call when the columns (data) has been changed
+  }, [columns,id]); // will call when the columns (data) has been changed
 
   //handle the action when user drag item
   const onDragEnd = (result, columns, setColumns) => {
@@ -158,6 +159,7 @@ const Kanban = ({ countCardKey, id }) => {
       console.log("Delete task error: " + error);
     }
   };
+
 
   const handleCardClick = (taskId) => {
     let task;

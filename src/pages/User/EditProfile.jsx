@@ -1,25 +1,25 @@
-import Alert from "@mui/material/Alert";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
 import { React, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { styled } from "styled-components";
-import A from "../../common/assets";
 import Button from "../../components/MUIComponent/Button/Button";
 import TextField from "../../components/MUIComponent/TextField";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import TypoText from "../../components/MUIComponent/TypoText";
+import A from "../../common/assets";
+import Skeleton from '@mui/material/Skeleton';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
+import { styled } from "styled-components";
 
 const SkeletonBox = styled.div`
-  width: 50%;
-  position: absolute;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  top: 10%;
-  right: 0;
-  text-align: center;
+width:50%;
+position: absolute;
+margin-left: auto;
+margin-right: auto;
+left: 0;
+top: 10%;
+right: 0;
+text-align: center;
 `;
 const EditProfile = () => {
   const [user, setUser] = useState("");
@@ -30,7 +30,7 @@ const EditProfile = () => {
   const [phoneE, setPhoneE] = useState("");
   const [success, setSuccess] = useState("");
   function isPhoneNumber(char) {
-    if (typeof char !== "string") {
+    if (typeof char !== 'string') {
       return false;
     }
     for (const element of char) {
@@ -42,17 +42,19 @@ const EditProfile = () => {
   }
   const onNameChange = (e) => {
     setName(e.target.value);
-  };
+  }
   const onPhoneChange = (e) => {
     setPhone(e.target.value);
     if (e.target.value.length <= 8) {
       setPhoneE("This phone number must be more than 8");
-    } else if (!isPhoneNumber(e.target.value)) {
+    }
+    else if (!isPhoneNumber(e.target.value)) {
       setPhoneE("this field can not contain any letter");
     } else {
       setPhoneE("");
     }
-  };
+
+  }
   const Data = {
     email: user.email,
     realName: name,
@@ -61,7 +63,7 @@ const EditProfile = () => {
     roleId: user.roleId,
     active: true,
     signupDate: user.signupDate,
-  };
+  }
   const onSubmitHandle = async () => {
     try {
       if (name !== "" && phone !== "" && isPhoneNumber(phone)) {
@@ -71,7 +73,7 @@ const EditProfile = () => {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(Data),
+          body: JSON.stringify(Data)
         });
         const json = await res.json();
         if (json.status === "Success") {
@@ -83,7 +85,7 @@ const EditProfile = () => {
     } catch (err) {
       setErr("Can not get the user data");
     }
-  };
+  }
   const getCurrent = async () => {
     try {
       const res = await fetch("http://localhost:8080/api/v1/user/current", {
@@ -95,17 +97,19 @@ const EditProfile = () => {
         setUser(json);
         setName(json.realName);
         setPhone(json.phoneNum);
+
       } else {
         setErr("User data not found ");
       }
     } catch (err) {
       setErr("Can not get the user data");
     }
-  };
+  }
   useEffect(() => {
     getCurrent();
-  }, []);
+  }, [])
   const navigate = useNavigate();
+
 
   const handleCancel = (event) => {
     event.preventDefault();
@@ -114,14 +118,13 @@ const EditProfile = () => {
 
   return (
     <>
-      {err !== "" || name == null || phone == null ? (
+      {err !== "" || name == null || phone == null ?
         <SkeletonBox>
           <Stack spacing={1} style={{ display: "inline-block" }}>
             <Alert severity="error">{err}</Alert>
             <Skeleton variant="rectangular" width={400} height={500} />
           </Stack>
-        </SkeletonBox>
-      ) : (
+        </SkeletonBox> :
         <div
           style={{
             width: "25rem",
@@ -136,10 +139,10 @@ const EditProfile = () => {
           <TypoText variant="h1" style={{ margin: "0" }}>
             Edit Profile 📝
           </TypoText>
-          <TypoText variant="h5">
-            Change anything you want except email
-          </TypoText>
-          <Box sx={{ mt: 1, margin: "0 22px" }}>
+          <TypoText variant="h5">Change anything you want except email</TypoText>
+          <Box
+            sx={{ mt: 1, margin: "0 22px" }}
+          >
             <label style={{ color: A.colors.disabled }}>
               <TypoText
                 variant="h5"
@@ -177,9 +180,8 @@ const EditProfile = () => {
                   type="text"
                   id="name"
                 />
-                {name === "" && (
-                  <Alert severity="warning">This field can not be empty</Alert>
-                )}
+                {name === "" &&
+                  <Alert severity="warning">This field can not be empty</Alert>}
               </TypoText>
             </label>
             <label>
@@ -200,10 +202,10 @@ const EditProfile = () => {
                   type="text"
                   id="phone"
                 />
-                {phone === "" && (
-                  <Alert severity="warning">This field can not be empty</Alert>
-                )}
-                {phoneE !== "" && <Alert severity="warning">{phoneE}</Alert>}
+                {phone === "" &&
+                  <Alert severity="warning">This field can not be empty</Alert>}
+                {phoneE !== "" &&
+                  <Alert severity="warning">{phoneE}</Alert>}
               </TypoText>
             </label>
             <label>
@@ -224,13 +226,10 @@ const EditProfile = () => {
                   type="date"
                   id="name"
                   style={{ marginBottom: "2em" }}
-                />
-              </TypoText>
-              {success !== "" && (
-                <Alert severity="success" style={{ marginBottom: "1rem" }}>
-                  {success}
-                </Alert>
-              )}
+                /></TypoText>
+              {success !== "" &&
+                <Alert severity="success" style={{marginBottom: "1rem"}}>{success}</Alert>
+              }
             </label>
 
             <Grid container spacing={2} justifyContent="right">
@@ -244,8 +243,10 @@ const EditProfile = () => {
               </Grid>
             </Grid>
           </Box>
+
         </div>
-      )}
+
+      }
     </>
   );
 };

@@ -1,10 +1,10 @@
 import {
-  Button,
   Card,
   CardContent,
   Dialog,
   DialogContent,
   TextField,
+  Button,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import TypoText from "./TypoText";
@@ -41,7 +41,7 @@ const QuickAdd = () => {
       description: description,
       userId: sessionUser,
       createdDate: new Date().toISOString().split("T")[0],
-      active: true,
+      active: true
     };
     try {
       const response = await fetch("http://localhost:8080/api/v1/note/notes", {

@@ -1,14 +1,14 @@
-import DeleteIcon from "@mui/icons-material/Delete";
-import { Box } from "@mui/material";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import IconButton from "@mui/material/IconButton";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState,useEffect } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import { Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export default function DeleteCoreLabel(props) {
   const [open, setOpen] = useState(false);
@@ -58,41 +58,37 @@ export default function DeleteCoreLabel(props) {
     }
   }
 
-  return (
-    <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <Box>
-          <DialogTitle id="alert-dialog-title">
-            {"Do you want to delete this labels?"}
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              This action cannot be undone. Do you wish to delete this core
-              label?
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Disagree</Button>
-            <Button
-              onClick={() => {
-                handleClose();
-                deleteLabel(props.target);
-              }}
-              autoFocus
+    return (
+        <>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
             >
-              Agree
-            </Button>
-          </DialogActions>
-        </Box>
-      </Dialog>
-      <IconButton onClick={handleClickOpen} aria-label="delete">
-        <DeleteIcon />
-      </IconButton>
-    </>
-  );
+                <Box>
+                    <DialogTitle id="alert-dialog-title">
+                        {"Do you want to delete this labels?"}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            This action cannot be undone. Do you wish to delete this core label?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Disagree</Button>
+                        <Button onClick={() => {
+                            handleClose();
+                            deleteLabel(props.target);
+                        }} autoFocus>
+                            Agree
+                        </Button>
+                    </DialogActions>
+                </Box>
+            </Dialog>
+            <IconButton onClick={handleClickOpen} aria-label="delete" >
+                <DeleteIcon />
+            </IconButton>
+        </>
+    )
 }

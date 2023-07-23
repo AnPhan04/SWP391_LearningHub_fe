@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from 'react';
 
 const CardAttachmentComponent = ({ cardId }) => {
   const [attachment, setAttachment] = useState(null);
@@ -14,11 +14,11 @@ const CardAttachmentComponent = ({ cardId }) => {
     }
 
     const formData = new FormData();
-    formData.append("cardId", cardId);
-    formData.append("attachment", attachment);
+    formData.append('cardId', cardId);
+    formData.append('attachment', attachment);
 
-    fetch("/api/v1/card-attachments/add", {
-      method: "POST",
+    fetch('/api/v1/card-attachments/add', {
+      method: 'POST',
       body: formData,
     })
       .then((response) => response.json())
@@ -33,21 +33,18 @@ const CardAttachmentComponent = ({ cardId }) => {
   };
 
   const handleUpdateAttachment = (attachmentId) => {
-    fetch(
-      `/api/v1/card-attachments/update?cardId=${cardId}&attachmentId=${attachmentId}`,
-      {
-        method: "PUT",
-      }
-    )
+    fetch(`/api/v1/card-attachments/update?cardId=${cardId}&attachmentId=${attachmentId}`, {
+      method: 'PUT',
+    })
       .then((response) => {
         if (response.status === 200) {
-          console.log("Attachment updated successfully");
+          console.log('Attachment updated successfully');
           // Xử lý sau khi cập nhật attachment thành công
         } else if (response.status === 404) {
-          console.log("Attachment not found");
+          console.log('Attachment not found');
           // Xử lý khi không tìm thấy attachment
         } else {
-          console.log("Error updating attachment");
+          console.log('Error updating attachment');
           // Xử lý khi có lỗi
         }
       })
@@ -58,26 +55,19 @@ const CardAttachmentComponent = ({ cardId }) => {
   };
 
   const handleDeleteAttachment = (attachmentId) => {
-    fetch(
-      `/api/v1/card-attachments/delete?cardId=${cardId}&attachmentId=${attachmentId}`,
-      {
-        method: "DELETE",
-      }
-    )
+    fetch(`/api/v1/card-attachments/delete?cardId=${cardId}&attachmentId=${attachmentId}`, {
+      method: 'DELETE',
+    })
       .then((response) => {
         if (response.status === 204) {
-          console.log("Attachment deleted successfully");
-          setAttachmentsList(
-            attachmentsList.filter(
-              (attachment) => attachment.id !== attachmentId
-            )
-          );
+          console.log('Attachment deleted successfully');
+          setAttachmentsList(attachmentsList.filter((attachment) => attachment.id !== attachmentId));
           // Xử lý sau khi xóa attachment thành công
         } else if (response.status === 404) {
-          console.log("Attachment not found");
+          console.log('Attachment not found');
           // Xử lý khi không tìm thấy attachment
         } else {
-          console.log("Error deleting attachment");
+          console.log('Error deleting attachment');
           // Xử lý khi có lỗi
         }
       })
@@ -112,12 +102,8 @@ const CardAttachmentComponent = ({ cardId }) => {
         {attachmentsList.map((attachment) => (
           <li key={attachment.id}>
             {attachment.name}
-            <button onClick={() => handleUpdateAttachment(attachment.id)}>
-              Update
-            </button>
-            <button onClick={() => handleDeleteAttachment(attachment.id)}>
-              Delete
-            </button>
+            <button onClick={() => handleUpdateAttachment(attachment.id)}>Update</button>
+            <button onClick={() => handleDeleteAttachment(attachment.id)}>Delete</button>
           </li>
         ))}
       </ul>

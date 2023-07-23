@@ -1,8 +1,8 @@
-import SettingsIcon from "@mui/icons-material/Settings";
+import * as React from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import * as React from "react";
+import SettingsIcon from "@mui/icons-material/Settings";
 import A from "../../../common/assets";
 
 export default function SettingMenu({ onEdit, onRestart }) {

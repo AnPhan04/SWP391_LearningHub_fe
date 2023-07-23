@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import TypoText from "../../components/MUIComponent/TypoText";
 import {
   Button,
   FormControl,
@@ -5,11 +8,8 @@ import {
   Grid,
   Input,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import TypoText from "../../components/MUIComponent/TypoText";
-import Header from "../../components/layout/Header";
 import CardList from "./CardList";
+import Header from "../../components/layout/Header";
 
 const CreateSet = () => {
   const [title, setTitle] = useState("");

@@ -1,15 +1,16 @@
-import Checkbox from "@mui/material/Checkbox";
-import Paper from "@mui/material/Paper";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import { green, pink } from "@mui/material/colors";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 import TypoText from "../../components/MUIComponent/TypoText";
+import { green, pink } from '@mui/material/colors';
+import Checkbox from '@mui/material/Checkbox';
+import { useNavigate } from "react-router-dom";
+
 
 export default function FeatureList() {
   const [feature, setFeature] = useState([]);
@@ -24,24 +25,23 @@ export default function FeatureList() {
       if (res.ok) {
         const json = await res.json();
         if (json.roleId !== "ADMIN") {
-          navigate("/error");
+          navigate("/error")
         }
-      } else {
+      }
+      else {
         navigate("/error");
       }
     } catch (err) {
       console.log("Can not get the user data");
     }
-  };
-  useEffect(() => {
-    isAuth();
-  }, []);
+  }
+  useEffect(() => { isAuth() }, []);
   useEffect(() => {
     const getList = async () => {
       try {
         const res = await fetch("http://localhost:8080/api/v1/feature", {
           method: "GET",
-          credentials: "include",
+          credentials: "include"
         });
         const json = await res.json();
         setFeature(json.data);
@@ -49,27 +49,29 @@ export default function FeatureList() {
         console.log(err);
         setFeature([]);
       }
-    };
+    }
     getList();
   }, []);
   const setActive = async (id, mess) => {
     try {
-      await fetch(
-        `http://localhost:8080/api/v1/feature/active?id=${id}&mess=${mess}`,
-        {
-          method: "PUT",
-          credentials: "include",
-          headers: {},
-        }
-      );
+      await fetch(`http://localhost:8080/api/v1/feature/active?id=${id}&mess=${mess}`, {
+        method: "PUT",
+        credentials: "include",
+        headers: {
+
+        },
+      });
       window.location.reload(false);
     } catch (err) {
       console.log(err);
     }
-  };
+  }
   return (
     <>
-      <TypoText variant="h1" style={{ fontWeight: "bold", margin: "30px" }}>
+      <TypoText
+        variant="h1"
+        style={{ fontWeight: "bold", margin: "30px" }}
+      >
         Application Feature
       </TypoText>
       <div>
@@ -87,7 +89,7 @@ export default function FeatureList() {
               {feature.map((item) => (
                 <TableRow
                   key={item.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
                     {item.id}
@@ -95,21 +97,14 @@ export default function FeatureList() {
                   <TableCell align="center">{item.name}</TableCell>
                   <TableCell align="center">{item.description}</TableCell>
                   <TableCell align="center">
-                    <Checkbox
-                      checked={item.active}
-                      sx={{
-                        color: pink[800],
-                        "&.Mui-checked": { color: green[600] },
-                      }}
+                    <Checkbox checked={item.active} sx={{ color: pink[800], '&.Mui-checked': { color: green[600], }, }}
                       readOnly={readOnly}
                       onInput={() => {
                         let mess = prompt("Update the description");
                         if (mess !== null) {
                           setActive(item.id, mess);
                         }
-                      }}
-                      value={item.id}
-                    />
+                      }} value={item.id} />
                   </TableCell>
                 </TableRow>
               ))}
@@ -118,5 +113,5 @@ export default function FeatureList() {
         </TableContainer>
       </div>
     </>
-  );
+  )
 }
